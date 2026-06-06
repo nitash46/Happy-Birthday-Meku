@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift For You ✨</title>
     <style>
-        /* RESET & BASE */
+        /* RESET & BASE SYSTEM */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +36,7 @@
             pointer-events: none;
         }
 
-        /* FULLSCREEN BACKGROUND CONFETTI CANVAS */
+        /* FULLSCREEN MAGICAL BACKGROUND CANVAS */
         canvas {
             position: absolute;
             top: 0;
@@ -47,37 +47,7 @@
             pointer-events: none;
         }
 
-        /* INTERACTIVE SPARKLER PARTICLES */
-        .spark {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 4;
-            animation: burn 0.6s ease-out forwards;
-        }
-
-        @keyframes burn {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-                background-color: #ffffcc;
-            }
-            30% {
-                background-color: #ff9900;
-                box-shadow: 0 0 8px #ff9900;
-            }
-            70% {
-                background-color: #ff3300;
-                box-shadow: 0 0 4px #ff3300;
-            }
-            100% {
-                transform: translate(var(--x), var(--y)) scale(0);
-                opacity: 0;
-            }
-        }
-
-        /* CARD DISPLAY PLATE CONTAINER */
+        /* CARD DISPLAY PLATFORM CONTAINER */
         .card-container {
             width: 90%;
             max-width: 420px;
@@ -119,7 +89,7 @@
         h1 { font-size: 2.3rem; font-weight: normal; margin: 5px 0 15px 0; color: #2f3640; }
         p { font-size: 1.1rem; line-height: 1.6; color: #57606f; margin-bottom: 30px; }
 
-        /* BUTTON LAYOUT CONFIGURATIONS */
+        /* INTERACTIVE NAVIGATION BUTTONS */
         .button-group { display: flex; gap: 15px; justify-content: center; width: 100%; }
         .btn {
             background-color: #f1f2f6; color: #2f3640; border: 2px solid #ced6e0;
@@ -131,7 +101,7 @@
         .btn-primary { background-color: #ff4757; color: white; border-color: #ff4757; }
         .btn:active { transform: scale(0.96); }
 
-        /* MEMORIES GALLERY SCROLL SYSTEM */
+        /* SCROLLABLE ALBUM GALLERY */
         .photo-container {
             width: 100%; height: 42vh; overflow-y: scroll;
             display: flex; flex-direction: column; gap: 15px; padding-right: 3px;
@@ -145,7 +115,7 @@
 </head>
 <body>
 
-    <canvas id="confettiCanvas"></canvas>
+    <canvas id="magicCanvas"></canvas>
 
     <div class="card-container">
 
@@ -200,13 +170,13 @@
                 <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
             </div>
             
-            <p class="signature animate-fade">Happy Birthday Mekuye 🎂💖</p>
+            <p class="signature animate-fade">Happy Birthday Meku 🎂💖</p>
         </div>
 
     </div>
 
     <script>
-        /* SCREEN TRANSITION CONTROLLER */
+        /* SCREEN SELECTION NAVIGATION FUNCTIONS */
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
@@ -218,52 +188,15 @@
             }
         }
 
-        /* INTERACTIVE SPARKLER ENGINE */
-        function createSpark(x, y) {
-            const spark = document.createElement('div');
-            spark.classList.add('spark');
-
-            const size = Math.random() * 4 + 3; 
-            spark.style.width = `${size}px`;
-            spark.style.height = `${size}px`;
-
-            const angle = Math.random() * 2 * Math.PI;
-            const distance = Math.random() * 100 + 30;
-            
-            const tx = Math.cos(angle) * distance;
-            const ty = Math.sin(angle) * distance;
-
-            spark.style.setProperty('--x', `${tx}px`);
-            spark.style.setProperty('--y', `${ty}px`);
-            
-            spark.style.left = `${x}px`;
-            spark.style.top = `${y}px`;
-
-            document.body.appendChild(spark);
-
-            setTimeout(() => {
-                spark.remove();
-            }, 600);
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            createSpark(e.clientX, e.clientY);
-            if(Math.random() > 0.5) createSpark(e.clientX, e.clientY);
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            createSpark(touch.clientX, touch.clientY);
-            if(Math.random() > 0.5) createSpark(touch.clientX, touch.clientY);
-        });
-
-
-        /* HTML CANVAS CONFETTI SYSTEM */
-        const canvas = document.getElementById('confettiCanvas');
+        /* RE-INTEGRATED CANVASES ENGINE */
+        const canvas = document.getElementById('magicCanvas');
         const ctx = canvas.getContext('2d');
 
-        let confettiPieces = [];
-        const totalConfetti = 100; 
+        let elementsArray = [];
+        const totalBalloons = 12;
+        const totalSparkles = 40;
+
+        const mouse = { x: null, y: null };
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -272,75 +205,189 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
+        // Pointer Movement Action Triggers
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            for(let i=0; i<2; i++) {
+                elementsArray.push(new Sparkle(mouse.x, mouse.y, true));
+            }
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+            for(let i=0; i<2; i++) {
+                elementsArray.push(new Sparkle(mouse.x, mouse.y, true));
+            }
+        });
+
         const colors = [
-            '#ff4081', '#ff80ab', '#00e5ff', '#ffea00', '#bca3ff', '#fff', '#ff5252'
+            {r: 255, g: 82, b: 142}, 
+            {r: 206, g: 104, b: 255}, 
+            {r: 255, g: 164, b: 208}, 
+            {r: 51, g: 219, b: 255}, 
+            {r: 255, g: 210, b: 76}
         ];
 
-        class Confetti {
+        /* BALLOON VECTOR CLASS STRUCTURE */
+        class Balloon {
             constructor() {
+                this.type = 'balloon';
                 this.reset();
-                this.y = Math.random() * canvas.height; 
+                this.y = Math.random() * (canvas.height + 300); 
             }
 
             reset() {
                 this.x = Math.random() * canvas.width;
-                this.y = -20; 
-                this.width = Math.random() * 8 + 6;   
-                this.height = Math.random() * 12 + 10; 
+                this.y = canvas.height + 150;
+                this.radius = Math.random() * 15 + 20; 
+                this.heightRatio = 1.3; 
                 this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speedY = Math.random() * 0.6 + 0.4;
+                this.swingSpeed = Math.random() * 0.015 + 0.008;
+                this.swingRange = Math.random() * 1.0 + 0.4;
+                this.angle = Math.random() * Math.PI;
+                this.opacity = Math.random() * 0.2 + 0.4;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.angle += this.swingSpeed;
+                this.x += Math.sin(this.angle) * this.swingRange;
+
+                if (this.y < -this.radius * 3) this.reset();
+            }
+
+            draw() {
+                const rgbaBase = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
+                ctx.save();
                 
-                this.speedY = Math.random() * 2.5 + 1.5; 
-                this.speedX = Math.random() * 2 - 1;     
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y + (this.radius * this.heightRatio));
+                ctx.quadraticCurveTo(
+                    this.x + Math.sin(this.angle) * 12, 
+                    this.y + (this.radius * this.heightRatio) + 25,
+                    this.x, 
+                    this.y + (this.radius * this.heightRatio) + 50
+                );
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.translate(this.x, this.y);
+                ctx.scale(1, this.heightRatio);
                 
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = Math.random() * 4 + 1;
+                let gradient = ctx.createRadialGradient(
+                    -this.radius * 0.3, -this.radius * 0.3, this.radius * 0.08, 
+                    0, 0, this.radius
+                );
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                gradient.addColorStop(0.3, rgbaBase);
+                gradient.addColorStop(1, `rgba(${this.color.r * 0.3}, ${this.color.g * 0.3}, ${this.color.b * 0.3}, ${this.opacity})`);
                 
-                this.scaleY = 1;
-                this.scaleSpeed = Math.random() * 0.1 + 0.05;
+                ctx.fillStyle = gradient;
+                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.moveTo(-4, this.radius - 1);
+                ctx.lineTo(4, this.radius - 1);
+                ctx.lineTo(5, this.radius + 3);
+                ctx.lineTo(-4, this.radius + 3);
+                ctx.closePath();
+                ctx.fillStyle = rgbaBase;
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        /* MAGICAL SPARKLES DESIGN STRUCTURE */
+        class Sparkle {
+            constructor(x = null, y = null, isMouseTrail = false) {
+                this.type = 'sparkle';
+                this.isMouseTrail = isMouseTrail;
+                if (isMouseTrail) {
+                    this.x = x;
+                    this.y = y;
+                    this.size = Math.random() * 2.5 + 1.5;
+                    this.speedY = Math.random() * 1.4 - 0.5;
+                    this.speedX = Math.random() * 1.8 - 0.9;
+                } else {
+                    this.reset();
+                    this.y = Math.random() * canvas.height;
+                }
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 0.6 + 0.3;
+                this.speedX = Math.sin(Math.random() * 2) * 0.2;
             }
 
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y / 30) * 0.5; 
-                
-                this.rotation += this.rotationSpeed;
-                this.scaleY = Math.sin(this.y / 15);
+                this.x += this.speedX;
 
-                if (this.y > canvas.height || this.x < -20 || this.x > canvas.width + 20) {
+                if (this.isMouseTrail) {
+                    this.size -= 0.05; 
+                } else if (this.y > canvas.height) {
                     this.reset();
                 }
             }
 
             draw() {
+                if (this.size <= 0) return;
+                const picked = colors[Math.floor(Math.random() * colors.length)];
+                
                 ctx.save();
-                ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.scale(1, this.scaleY); 
-
-                ctx.fillStyle = this.color;
-                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.globalAlpha = this.isMouseTrail ? Math.max(0, this.size) : 0.7;
+                ctx.shadowBlur = this.size * 3;
+                ctx.shadowColor = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
+                ctx.fillStyle = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
+                
+                ctx.beginPath();
+                ctx.translate(this.x, this.y);
+                for (let i = 0; i < 4; i++) {
+                    ctx.lineTo(0, this.size * 2.5);
+                    ctx.lineTo(this.size * 0.5, this.size * 0.5);
+                    ctx.rotate(Math.PI / 2);
+                }
+                ctx.closePath();
+                ctx.fill();
                 ctx.restore();
             }
         }
 
-        function initConfetti() {
-            for (let i = 0; i < totalConfetti; i++) {
-                confettiPieces.push(new Confetti());
-            }
+        function init() {
+            elementsArray = [];
+            for (let i = 0; i < totalBalloons; i++) elementsArray.push(new Balloon());
+            for (let i = 0; i < totalSparkles; i++) elementsArray.push(new Sparkle());
         }
 
-        function animateConfetti() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let i = 0; i < confettiPieces.length; i++) {
-                confettiPieces[i].update();
-                confettiPieces[i].draw();
+            for (let i = 0; i < elementsArray.length; i++) {
+                elementsArray[i].update();
+                elementsArray[i].draw();
+                
+                // Housekeeping optimization: clean up faded mouse sparks
+                if (elementsArray[i].type === 'sparkle' && elementsArray[i].isMouseTrail && elementsArray[i].size <= 0) {
+                    elementsArray.splice(i, 1);
+                    i--;
+                }
             }
-            requestAnimationFrame(animateConfetti);
+            requestAnimationFrame(animate);
         }
 
-        initConfetti();
-        animateConfetti();
+        init();
+        animate();
     </script>
 </body>
 </html>

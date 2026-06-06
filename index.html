@@ -29,6 +29,36 @@
             pointer-events: none;
         }
 
+        /* SPARKLER EFFECT ANIMATION STYLES */
+        .spark {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            animation: burn 0.6s ease-out forwards;
+        }
+
+        @keyframes burn {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                background-color: #ffffcc;
+            }
+            30% {
+                background-color: #ff9900;
+                box-shadow: 0 0 8px #ff9900;
+            }
+            70% {
+                background-color: #ff3300;
+                box-shadow: 0 0 4px #ff3300;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+
         .card-container {
             width: 90%;
             max-width: 420px;
@@ -147,7 +177,7 @@
                 <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
             </div>
             
-            <p class="signature animate-fade">Happy Birthday Mekuye🎂</p>
+            <p class="signature animate-fade">Happy June 8! 🎂💖</p>
         </div>
 
     </div>
@@ -163,6 +193,46 @@
                 nextTarget.classList.add('active');
             }
         }
+
+        /* INTEGRATED INTERACTIVE SPARKLER EFFECT ENGINE */
+        function createSpark(x, y) {
+            const spark = document.createElement('div');
+            spark.classList.add('spark');
+
+            const size = Math.random() * 4 + 3; 
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+
+            const angle = Math.random() * 2 * Math.PI;
+            const distance = Math.random() * 100 + 30;
+            
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+
+            spark.style.setProperty('--x', `${tx}px`);
+            spark.style.setProperty('--y', `${ty}px`);
+            
+            spark.style.left = `${x}px`;
+            spark.style.top = `${y}px`;
+
+            document.body.appendChild(spark);
+
+            setTimeout(() => {
+                spark.remove();
+            }, 600);
+        }
+
+        // Generates sparklers following touch or mouse movements automatically across the window
+        window.addEventListener('mousemove', (e) => {
+            createSpark(e.clientX, e.clientY);
+            if(Math.random() > 0.5) createSpark(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            createSpark(touch.clientX, touch.clientY);
+            if(Math.random() > 0.5) createSpark(touch.clientX, touch.clientY);
+        });
     </script>
 </body>
 </html>

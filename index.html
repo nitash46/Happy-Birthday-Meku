@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift For You ✨</title>
     <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 0; padding: 0;
             background-image: url('https://img.freepik.com/premium-vector/happy-birthday-party-celebration-banner-with-cake-balloons_dny-illustration_1253026-64.jpg');
             background-size: cover;
             background-position: center center;
@@ -20,22 +26,34 @@
             position: relative;
         }
 
+        /* Ambient background contrast tint */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(47, 54, 64, 0.25);
+            background-color: rgba(47, 54, 64, 0.2);
             z-index: 1;
             pointer-events: none;
         }
 
-        /* SPARKLER EFFECT ANIMATION STYLES */
+        /* FULLSCREEN BACKGROUND CONFETTI CANVAS */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* INTERACTIVE SPARKLER PARTICLES */
         .spark {
             position: absolute;
             background-color: white;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 3;
+            z-index: 4;
             animation: burn 0.6s ease-out forwards;
         }
 
@@ -59,15 +77,16 @@
             }
         }
 
+        /* CARD DISPLAY PLATE CONTAINER */
         .card-container {
             width: 90%;
             max-width: 420px;
             padding: 35px 25px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.35);
             color: #2f3640;
-            z-index: 2;
+            z-index: 3;
             text-align: center;
             box-sizing: border-box;
             backdrop-filter: blur(4px);
@@ -100,6 +119,7 @@
         h1 { font-size: 2.3rem; font-weight: normal; margin: 5px 0 15px 0; color: #2f3640; }
         p { font-size: 1.1rem; line-height: 1.6; color: #57606f; margin-bottom: 30px; }
 
+        /* BUTTON LAYOUT CONFIGURATIONS */
         .button-group { display: flex; gap: 15px; justify-content: center; width: 100%; }
         .btn {
             background-color: #f1f2f6; color: #2f3640; border: 2px solid #ced6e0;
@@ -111,6 +131,7 @@
         .btn-primary { background-color: #ff4757; color: white; border-color: #ff4757; }
         .btn:active { transform: scale(0.96); }
 
+        /* MEMORIES GALLERY SCROLL SYSTEM */
         .photo-container {
             width: 100%; height: 42vh; overflow-y: scroll;
             display: flex; flex-direction: column; gap: 15px; padding-right: 3px;
@@ -123,6 +144,8 @@
     </style>
 </head>
 <body>
+
+    <canvas id="confettiCanvas"></canvas>
 
     <div class="card-container">
 
@@ -177,12 +200,13 @@
                 <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
             </div>
             
-            <p class="signature animate-fade">Happy June 8! 🎂❣️💖</p>
+            <p class="signature animate-fade">Happy Birthday Mekuye 🎂💖</p>
         </div>
 
     </div>
 
     <script>
+        /* SCREEN TRANSITION CONTROLLER */
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
@@ -194,7 +218,7 @@
             }
         }
 
-        /* INTEGRATED INTERACTIVE SPARKLER EFFECT ENGINE */
+        /* INTERACTIVE SPARKLER ENGINE */
         function createSpark(x, y) {
             const spark = document.createElement('div');
             spark.classList.add('spark');
@@ -222,7 +246,6 @@
             }, 600);
         }
 
-        // Generates sparklers following touch or mouse movements automatically across the window
         window.addEventListener('mousemove', (e) => {
             createSpark(e.clientX, e.clientY);
             if(Math.random() > 0.5) createSpark(e.clientX, e.clientY);
@@ -233,6 +256,91 @@
             createSpark(touch.clientX, touch.clientY);
             if(Math.random() > 0.5) createSpark(touch.clientX, touch.clientY);
         });
+
+
+        /* HTML CANVAS CONFETTI SYSTEM */
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let confettiPieces = [];
+        const totalConfetti = 100; 
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const colors = [
+            '#ff4081', '#ff80ab', '#00e5ff', '#ffea00', '#bca3ff', '#fff', '#ff5252'
+        ];
+
+        class Confetti {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height; 
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20; 
+                this.width = Math.random() * 8 + 6;   
+                this.height = Math.random() * 12 + 10; 
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                this.speedY = Math.random() * 2.5 + 1.5; 
+                this.speedX = Math.random() * 2 - 1;     
+                
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 4 + 1;
+                
+                this.scaleY = 1;
+                this.scaleSpeed = Math.random() * 0.1 + 0.05;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y / 30) * 0.5; 
+                
+                this.rotation += this.rotationSpeed;
+                this.scaleY = Math.sin(this.y / 15);
+
+                if (this.y > canvas.height || this.x < -20 || this.x > canvas.width + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.scale(1, this.scaleY); 
+
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                ctx.restore();
+            }
+        }
+
+        function initConfetti() {
+            for (let i = 0; i < totalConfetti; i++) {
+                confettiPieces.push(new Confetti());
+            }
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < confettiPieces.length; i++) {
+                confettiPieces[i].update();
+                confettiPieces[i].draw();
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+
+        initConfetti();
+        animateConfetti();
     </script>
 </body>
 </html>

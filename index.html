@@ -1,30 +1,22 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday! 🎂</title>
     <style>
-        /* A beautiful shifting background gradient that works on ALL mobile browsers */
         body {
-            margin: 0; padding: 0; 
-            color: white;
+            margin: 0; padding: 0; background-color: #080808; color: white;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; height: 100vh; text-align: center;
             overflow: hidden; position: relative;
-            
-            /* Gradient Styling */
-            background: linear-gradient(-45deg, #0d0d0d, #1a0505, #2d0b11, #0d0d0d);
-            background-size: 400% 400%;
-            animation: gradientBG 8s ease infinite;
         }
 
-        /* Smooth background shift movement */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* FULL SCREEN CANVAS BACKGROUND ANIMATION */
+        #bgCanvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
         }
 
         /* Smooth Screen Transitions */
@@ -36,35 +28,40 @@
             justify-content: center; 
             width: 90%; 
             max-width: 400px;
-            opacity: 0; z-index: 2;
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-            transform: scale(0.95) translateY(10px);
+            z-index: 2;
+            opacity: 0; /* Keep hidden initially */
         }
 
-        .active { 
+        /* BACKGROUND FOCUS FIRST ANIMATION SEQUENCE */
+        .screen.active { 
             display: flex; 
-            opacity: 1; 
-            transform: scale(1) translateY(0); 
+            animation: cinematicReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 1.8s; /* Forces a full 1.8 seconds of pure background animation focus first */
         }
 
-        h1 { font-size: 2.3rem; margin-bottom: 20px; color: #f5f5f5; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
-        p { font-size: 1.15rem; color: #e0e0e0; margin-bottom: 35px; line-height: 1.7; padding: 0 15px; text-shadow: 0 1px 5px rgba(0,0,0,0.6); }
+        @keyframes cinematicReveal {
+            from { opacity: 0; transform: scale(0.92) translateY(20px); filter: blur(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        h1 { font-size: 2.3rem; margin-bottom: 20px; color: #ffffff; font-weight: 700; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+        p { font-size: 1.15rem; color: #e5e5e5; margin-bottom: 35px; line-height: 1.7; padding: 0 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
         /* Premium Reactive Shimmer Button */
         .btn {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: white; border: none; padding: 16px 45px; font-size: 1.15rem;
             font-weight: bold; border-radius: 30px; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4);
+            box-shadow: 0 4px 25px rgba(255, 75, 43, 0.5);
             position: relative; overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             animation: pulseGlow 2.5s infinite;
         }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
-            50% { box-shadow: 0 4px 30px rgba(255, 75, 43, 0.7); transform: scale(1.02); }
-            100% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
+            0% { box-shadow: 0 4px 25px rgba(255, 75, 43, 0.5); }
+            50% { box-shadow: 0 4px 35px rgba(255, 75, 43, 0.8); transform: scale(1.02); }
+            100% { box-shadow: 0 4px 25px rgba(255, 75, 43, 0.5); }
         }
 
         .btn:active { transform: scale(0.95); animation: none; }
@@ -93,7 +90,7 @@
 
         /* Smooth Photo Reveal */
         .birthday-photo {
-            width: 100%; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+            width: 100%; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.7);
             object-fit: cover; animation: slideInUp 0.8s ease-out forwards;
         }
         @keyframes slideInUp {
@@ -103,6 +100,8 @@
     </style>
 </head>
 <body>
+
+    <canvas id="bgCanvas"></canvas>
 
     <div id="screen1" class="screen active">
         <h1>መልካም ልደት</h1>
@@ -144,13 +143,47 @@
     </div>
 
     <script>
-        function nextScreen(screenNumber) {
-            const currentScreen = document.querySelector('.screen.active');
-            currentScreen.classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('screen' + screenNumber).classList.add('active');
-            }, 50); 
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const colors = ['#ff416c', '#ff4b2b', '#ffffff', '#ff8e9b'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    </script>
-</body>
-</html>
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedY = Math.random() * 1.2 + 0.4;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y > canvas.height) {
+                    this.y = -10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push(new

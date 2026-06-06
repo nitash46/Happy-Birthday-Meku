@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Beautiful 🎂</title>
+    <title>Happy Birthday! 🎂</title>
     <style>
         body {
             margin: 0; padding: 0; background-color: #050505; color: white;
@@ -13,7 +13,7 @@
             overflow: hidden; position: relative;
         }
 
-        /* DRAMATIC SPACE HYPERDRIVE BACKGROUND STREAKS */
+        /* PREMIUM HIGH-SPEED WARP BACKGROUND STREAKS */
         .warp-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none; overflow: hidden;
@@ -64,9 +64,10 @@
             display: flex; 
         }
 
+        /* HORIZONTAL FLOW & UPWARD MOVEMENT COMBINATION */
         .screen.active h1 {
             animation: lineExpandHorizontal 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
-            animation-delay: 2s; 
+            animation-delay: 2s; /* Give background 2 full seconds to dominate the screen first */
         }
 
         .screen.active p, .screen.active .btn {
@@ -147,14 +148,14 @@
     </div>
 
     <div id="screen1" class="screen active">
-        <h1>መልካም ልደት</h1>
+        <h1>Happy Birthday Meku</h1>
         <div style="height: 20px;"></div> 
         <button class="btn" onclick="nextScreen(2)">Start the Journey ✨</button>
     </div>
 
     <div id="screen2" class="screen">
         <h1>🔴 Favorite Fan</h1>
-        <p>Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.Honestly, I think you're beautiful and I love your vibe</p>
+        <p>Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.</p>
         <button class="btn" onclick="nextScreen(3)">Next Thought ✨</button>
     </div>
 
@@ -171,7 +172,7 @@
     </div>
 
     <div id="screen5" class="screen">
-        <h1>📸 Beautiful Photos</h1>
+        <h1>📸 Beautiful Memories</h1>
         <p style="margin-bottom: 10px; font-size: 1rem; color: #b3b3b3; opacity: 1 !important; animation: none !important;">Scroll down to see your pictures...</p>
         <div class="photo-container">
             <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">

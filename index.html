@@ -6,17 +6,48 @@
     <title>Happy Birthday! 🎂</title>
     <style>
         body {
-            margin: 0; padding: 0; background-color: #080808; color: white;
+            margin: 0; padding: 0; 
+            background: #080808;
+            color: white;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; height: 100vh; text-align: center;
             overflow: hidden; position: relative;
         }
 
-        /* FULL SCREEN CANVAS BACKGROUND ANIMATION */
-        #bgCanvas {
+        /* 100% RELIABLE PURE CSS FALLING CELEBRATION GRID */
+        .star-field {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; pointer-events: none;
+            z-index: 1; pointer-events: none; overflow: hidden;
+        }
+
+        /* Creating glowing celebratory star elements */
+        .star {
+            position: absolute;
+            top: -20px;
+            background: linear-gradient(to bottom, #ff416c, #ffffff);
+            border-radius: 50%;
+            animation: fallDown linear infinite;
+            box-shadow: 0 0 8px #ff4b2b;
+        }
+
+        /* Explicit CSS layout instructions that browsers cannot bypass */
+        .s1  { left: 10%; width: 4px; height: 4px; animation-duration: 6s; animation-delay: 0s; }
+        .s2  { left: 25%; width: 6px; height: 6px; animation-duration: 8s; animation-delay: 2s; box-shadow: 0 0 12px #ff416c; }
+        .s3  { left: 40%; width: 3px; height: 3px; animation-duration: 5s; animation-delay: 1s; }
+        .s4  { left: 55%; width: 7px; height: 7px; animation-duration: 9s; animation-delay: 4s; }
+        .s5  { left: 70%; width: 5px; height: 5px; animation-duration: 7s; animation-delay: 1.5s; }
+        .s6  { left: 85%; width: 4px; height: 4px; animation-duration: 6.5s; animation-delay: 3s; }
+        .s7  { left: 18%; width: 5px; height: 5px; animation-duration: 7.5s; animation-delay: 4.5s; }
+        .s8  { left: 62%; width: 3px; height: 3px; animation-duration: 5.8s; animation-delay: 0.5s; }
+        .s9  { left: 93%; width: 6px; height: 6px; animation-duration: 8.2s; animation-delay: 2.5s; }
+        .s10 { left: 48%; width: 5px; height: 5px; animation-duration: 6.8s; animation-delay: 5s; }
+
+        @keyframes fallDown {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(105vh); opacity: 0; }
         }
 
         /* Smooth Screen Transitions */
@@ -29,18 +60,18 @@
             width: 90%; 
             max-width: 400px;
             z-index: 2;
-            opacity: 0; /* Keep hidden initially */
+            opacity: 0;
         }
 
-        /* BACKGROUND FOCUS FIRST ANIMATION SEQUENCE */
+        /* CINEMATIC TIMING: Background plays alone first, text arrives beautifully at 1.8 seconds */
         .screen.active { 
             display: flex; 
-            animation: cinematicReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            animation-delay: 1.8s; /* Forces a full 1.8 seconds of pure background animation focus first */
+            animation: cinematicReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 1.8s; 
         }
 
         @keyframes cinematicReveal {
-            from { opacity: 0; transform: scale(0.92) translateY(20px); filter: blur(8px); }
+            from { opacity: 0; transform: scale(0.93) translateY(15px); filter: blur(5px); }
             to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
@@ -101,7 +132,18 @@
 </head>
 <body>
 
-    <canvas id="bgCanvas"></canvas>
+    <div class="star-field">
+        <div class="star s1"></div>
+        <div class="star s2"></div>
+        <div class="star s3"></div>
+        <div class="star s4"></div>
+        <div class="star s5"></div>
+        <div class="star s6"></div>
+        <div class="star s7"></div>
+        <div class="star s8"></div>
+        <div class="star s9"></div>
+        <div class="star s10"></div>
+    </div>
 
     <div id="screen1" class="screen active">
         <h1>መልካም ልደት</h1>
@@ -143,47 +185,20 @@
     </div>
 
     <script>
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let particles = [];
-        const colors = ['#ff416c', '#ff4b2b', '#ffffff', '#ff8e9b'];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function nextScreen(screenNumber) {
+            const currentScreen = document.querySelector('.screen.active');
+            if (currentScreen) {
+                currentScreen.classList.remove('active');
+                currentScreen.style.animation = 'none'; 
+            }
+            
+            setTimeout(() => {
+                const nextTarget = document.getElementById('screen' + screenNumber);
+                nextTarget.style.animationDelay = '0s'; 
+                nextTarget.style.animationDuration = '0.5s';
+                nextTarget.classList.add('active');
+            }, 50); 
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1;
-                this.speedY = Math.random() * 1.2 + 0.4;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                if (this.y > canvas.height) {
-                    this.y = -10;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = this.opacity;
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            particles = [];
-            for (let i = 0; i < 60; i++) {
-                particles.push(new
+    </script>
+</body>
+</html>

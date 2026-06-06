@@ -3,55 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magical Birthday Gift ✨</title>
+    <title>Birthday Gift ✨</title>
     <style>
-        /* CORE RESET & LAYOUT LOCK */
+        /* Core Reset & Screen Lock */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
         body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: linear-gradient(135deg, #16002c 0%, #3a0050 50%, #58004f 100%);
+            /* Luxurious dark purple cosmic backdrop gradient */
+            background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
         }
-
-        /* BACKGROUND ENGINE LAYER */
-        canvas {
+        
+        /* Background Layer for Stars & Balloons */
+        .bg-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none;
         }
 
-        /* POPUP PRESENTATION PLATE */
+        /* Beautiful Frosted Glass Container */
         .card-container {
+            position: relative;
+            z-index: 2;
             width: 90%;
-            max-width: 400px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
-                        0 0 40px rgba(255, 126, 179, 0.2);
-            z-index: 3;
-            box-sizing: border-box;
-            backdrop-filter: blur(4px);
-            animation: cardPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 380px;
+            height: auto;
+            border-radius: 32px;
+            overflow: hidden; /* Clips the internal animation to the card shape */
+            
+            /* High-end glassmorphism border and shadow */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 
+                        0 0 30px rgba(255, 126, 179, 0.15);
+            animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
         }
 
-        /* CARD SCREEN DISPLAY ARCHITECTURE */
+        /* The Animated Moving Color Layer inside the popup box */
+        .card-bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* Frosted blur filter effect */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        /* The Content Layer over the internal card animation */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 45px 30px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.04); /* Soft premium tint */
+        }
+
+        /* Card Screen Display Architecture */
         .screen {
             display: none;
             flex-direction: column;
@@ -64,109 +86,107 @@
             animation: softReveal 0.8s ease-out forwards;
         }
 
-        /* CARD MOTION DECORATIONS */
+        /* Decoration Layout */
         .emoji-row {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
             display: flex;
             justify-content: center;
             gap: 15px;
             align-items: center;
         }
-        
         .checkmark {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             color: #00e5ff;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
             font-style: normal;
         }
-
         .cute-sticker {
             font-size: 3.2rem; 
-            margin-bottom: 12px; 
+            margin-bottom: 15px; 
             display: inline-block;
             animation: floatSticker 4s ease-in-out infinite;
         }
 
-        /* TYPOGRAPHY CONFIGURATION */
+        /* Elegant Glowing Typography */
         h1 {
-            font-size: 2.2rem;
-            color: #2b1055;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 2.4rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-        
         p {
-            font-size: 1.1rem;
-            color: #555;
+            font-size: 1.15rem;
+            color: #fecfef;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            font-weight: 300;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             line-height: 1.6;
-            margin-bottom: 30px;
         }
 
-        /* INTERACTIVE BUTTONS */
+        /* Interactive UI Buttons */
         .btn-group {
             display: flex;
             gap: 15px;
             width: 100%;
             justify-content: center;
         }
-        
         .btn {
             flex: 1;
-            padding: 15px 20px;
+            padding: 16px 20px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            outline: none;
             letter-spacing: 0.5px;
+            outline: none;
         }
-        
         .btn-yes {
             background: linear-gradient(45deg, #ff4081, #ff758c);
             color: white;
-            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
         }
-        
         .btn-yes:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 64, 129, 0.4);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6);
         }
-        
         .btn-no {
-            background: #f0f0f5;
-            color: #666;
-            border: 1px solid #ddd;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
         }
-        
         .btn-no:hover {
-            background: #e4e4ec;
-            color: #444;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* MEMORIES PHOTO ALBUM VIEWPORT */
+        /* Memories Scrollable Photo Album Viewport */
         .photo-container {
             width: 100%; 
-            height: 38vh; 
+            height: 35vh; 
             overflow-y: scroll;
             display: flex; 
             flex-direction: column; 
             gap: 15px; 
-            padding-right: 3px;
+            padding-right: 5px;
             box-sizing: border-box; 
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .photo-container::-webkit-scrollbar { width: 4px; }
         .photo-container::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 10px; }
-        .birthday-photo { width: 100%; border-radius: 12px; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.1rem; }
+        .birthday-photo { width: 100%; border-radius: 16px; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-        /* ENGINE ANIMATION SYSTEMS */
-        @keyframes cardPop {
-            0% { transform: scale(0.8); opacity: 0; }
+        /* Animation Keyframe Pools */
+        @keyframes cardPopUp {
+            0% { transform: scale(0.85); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         @keyframes softReveal {
@@ -180,72 +200,76 @@
 </head>
 <body>
 
-    <canvas id="birthdayCanvas"></canvas>
+    <canvas id="outerBgCanvas" class="bg-canvas"></canvas>
 
     <div class="card-container">
-
-        <div id="screen1" class="screen active">
-            <div class="emoji-row">
-                <i class="checkmark">✓</i>
-                <span>🐱</span>
-                <span>✨</span>
-            </div>
-            <h1 class="animate-fade">Hello there _!</h1>
-            <p class="animate-fade">do you want to see your gift?</p>
-            <div class="btn-group animate-fade">
-                <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
-                <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
-            </div>
-        </div>
-
-        <div id="screen2" class="screen">
-            <span class="cute-sticker">🔴⚽</span>
-            <h1 class="animate-fade">Favorite Fan</h1>
-            <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.</p>
-            <div class="btn-group animate-fade">
-                <button class="btn btn-yes" onclick="nextScreen(3)">Next Thought ✨</button>
-            </div>
-        </div>
-
-        <div id="screen3" class="screen">
-            <span class="cute-sticker">✨🎂</span>
-            <h1 class="animate-fade">Special Day</h1>
-            <p class="animate-fade">I hope you have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do.</p>
-            <div class="btn-group animate-fade">
-                <button class="btn btn-yes" onclick="nextScreen(4)">Continue... 👑</button>
-            </div>
-        </div>
-
-        <div id="screen4" class="screen">
-            <span class="cute-sticker">🌸👑</span>
-            <h1 class="animate-fade">Beautiful Vibe</h1>
-            <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑</p>
-            <div class="btn-group animate-fade">
-                <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
-            </div>
-        </div>
-
-        <div id="screen5" class="screen">
-            <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Our Memories 📸</h1>
-            <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 10px; font-style: italic;">Scroll down to see your beautiful pictures...</p>
+        <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
+        
+        <div class="card-content">
             
-            <div class="photo-container animate-fade">
-                <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
-                <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+            <div id="screen1" class="screen active">
+                <div class="emoji-row">
+                    <span class="checkmark">✔</span>
+                    <span>🎂</span>
+                    <span>✨</span>
+                </div>
+                <h1>Happy Birthday Mekuye</h1>
+                <p>do you want to see your gift?</p>
+                <div class="btn-group">
+                    <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
+                    <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
+                </div>
             </div>
-            
-            <p class="signature animate-fade">Happy Birthday Meku 🎂💖</p>
-        </div>
 
+            <div id="screen2" class="screen">
+                <span class="cute-sticker">🔴⚽</span>
+                <h1 class="animate-fade">Favorite Fan</h1>
+                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(3)">Next Thought ✨</button>
+                </div>
+            </div>
+
+            <div id="screen3" class="screen">
+                <span class="cute-sticker">✨🎂</span>
+                <h1 class="animate-fade">Special Day</h1>
+                <p class="animate-fade">I hope you have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do.</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(4)">Continue... 👑</button>
+                </div>
+            </div>
+
+            <div id="screen4" class="screen">
+                <span class="cute-sticker">🌸👑</span>
+                <h1 class="animate-fade">Beautiful Vibe</h1>
+                <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
+                </div>
+            </div>
+
+            <div id="screen5" class="screen">
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Your Beautiful pictures 📸</h1>
+                <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 12px; font-style: italic; color: #fecfef;">Scroll down to see your beautiful pictures...</p>
+                
+                <div class="photo-container animate-fade">
+                    <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                </div>
+                
+                <p class="signature animate-fade">Happy Birthday Meku🎂</p>
+            </div>
+
+        </div>
     </div>
 
     <script>
-        /* NAVIGATION ROUTER ENGINE */
+        /* SCREEN SELECTION CONTROLLER */
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
@@ -254,33 +278,33 @@
             const nextTarget = document.getElementById('screen' + screenNumber);
             if (nextTarget) {
                 nextTarget.classList.add('active');
+                // Auto readjust inner canvas bounding sizes on terminal slide
+                resizeCardCanvas();
             }
         }
 
-        /* RENDER SYSTEM ENGINE CONFIGURATIONS */
-        const canvas = document.getElementById('birthdayCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let elementsArray = [];
-        const totalBalloons = 10;
-        const totalSparkles = 30;
-        const totalGlowGems = 25;
+        // === SCRIPT 1: OUTER BACKGROUND (Balloons & Sparkles & Mouse Trails) ===
+        const bgCanvas = document.getElementById('outerBgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let bgElements = [];
+        const totalBalloons = 12;
+        const totalSparkles = 35;
 
         const mouse = { x: null, y: null };
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function resizeOuterCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        window.addEventListener('resize', resizeOuterCanvas);
+        resizeOuterCanvas();
 
         /* POINTER DECORATION TRACKING SYSTEMS */
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
             for(let i=0; i<2; i++) {
-                elementsArray.push(new Sparkle(mouse.x, mouse.y, true));
+                bgElements.push(new Sparkle(mouse.x, mouse.y, true));
             }
         });
 
@@ -289,133 +313,53 @@
             mouse.x = touch.clientX;
             mouse.y = touch.clientY;
             for(let i=0; i<2; i++) {
-                elementsArray.push(new Sparkle(mouse.x, mouse.y, true));
+                bgElements.push(new Sparkle(mouse.x, mouse.y, true));
             }
         });
 
-        const palette = [
-            { r: 255, g: 64, b: 129, string: 'rgba(255, 64, 129, ' },   
-            { r: 186, g: 85, b: 211, string: 'rgba(186, 85, 211, ' },  
-            { r: 0, g: 229, b: 255, string: 'rgba(0, 229, 255, ' },    
-            { r: 255, g: 210, b: 76, string: 'rgba(255, 210, 76, ' },    
-            { r: 255, g: 140, b: 180, string: 'rgba(255, 140, 180, ' }
+        const themeColors = [
+            {r: 255, g: 82, b: 142}, {r: 206, g: 104, b: 255}, {r: 51, g: 219, b: 255}, {r: 255, g: 210, b: 76}
         ];
 
-        /* GLOWING AMBIENT BALL PARTICLES CLASS */
-        class GlowGem {
-            constructor() {
-                this.type = 'glowgem';
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 80 + 40; 
-                this.speedX = (Math.random() * 0.8) - 0.4;
-                this.speedY = (Math.random() * 0.8) - 0.4;
-                this.color = palette[Math.floor(Math.random() * palette.length)];
-                this.alpha = Math.random() * 0.2 + 0.1;
-                this.fadeSpeed = 0.001 + Math.random() * 0.002;
-                this.fadingIn = Math.random() > 0.5;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-                if (this.fadingIn) {
-                    this.alpha += this.fadeSpeed;
-                    if (this.alpha >= 0.35) this.fadingIn = false;
-                } else {
-                    this.alpha -= this.fadeSpeed;
-                    if (this.alpha <= 0.08) this.fadingIn = true;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.beginPath();
-                let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                gradient.addColorStop(0, this.color.string + this.alpha + ')');
-                gradient.addColorStop(1, this.color.string + '0)'); 
-                ctx.fillStyle = gradient;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        /* FLOATING BALLOONS VECTOR CLASS */
-        class Balloon {
-            constructor() {
-                this.type = 'balloon';
-                this.reset();
-                this.y = Math.random() * (canvas.height + 250); 
-            }
-
+        class OuterBalloon {
+            constructor() { this.reset(); this.y = Math.random() * (bgCanvas.height + 200); }
             reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + 140;
-                this.radius = Math.random() * 14 + 18; 
-                this.heightRatio = 1.3; 
-                this.color = palette[Math.floor(Math.random() * palette.length)];
+                this.x = Math.random() * bgCanvas.width;
+                this.y = bgCanvas.height + 100;
+                this.radius = Math.random() * 14 + 18;
+                this.color = themeColors[Math.floor(Math.random() * themeColors.length)];
                 this.speedY = Math.random() * 0.5 + 0.3;
-                this.swingSpeed = Math.random() * 0.012 + 0.006;
-                this.swingRange = Math.random() * 0.8 + 0.4;
                 this.angle = Math.random() * Math.PI;
-                this.opacity = Math.random() * 0.2 + 0.35;
+                this.swingSpeed = Math.random() * 0.01 + 0.005;
             }
-
             update() {
                 this.y -= this.speedY;
                 this.angle += this.swingSpeed;
-                this.x += Math.sin(this.angle) * this.swingRange;
-
+                this.x += Math.sin(this.angle) * 0.4;
                 if (this.y < -this.radius * 3) this.reset();
             }
-
             draw() {
-                const rgbaBase = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
-                ctx.save();
+                bgCtx.save();
                 
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y + (this.radius * this.heightRatio));
-                ctx.quadraticCurveTo(
-                    this.x + Math.sin(this.angle) * 10, 
-                    this.y + (this.radius * this.heightRatio) + 20,
-                    this.x, 
-                    this.y + (this.radius * this.heightRatio) + 45
-                );
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.lineWidth = 1;
-                ctx.stroke();
+                // Draw dangling balloon string
+                bgCtx.beginPath();
+                bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
+                bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);
+                bgCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                bgCtx.lineWidth = 1;
+                bgCtx.stroke();
 
-                ctx.beginPath();
-                ctx.translate(this.x, this.y);
-                ctx.scale(1, this.heightRatio);
-                
-                let gradient = ctx.createRadialGradient(
-                    -this.radius * 0.3, -this.radius * 0.3, this.radius * 0.08, 
-                    0, 0, this.radius
-                );
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.75)');
-                gradient.addColorStop(0.3, rgbaBase);
-                gradient.addColorStop(1, `rgba(${this.color.r * 0.3}, ${this.color.g * 0.3}, ${this.color.b * 0.3}, ${this.opacity})`);
-                
-                ctx.fillStyle = gradient;
-                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.beginPath();
-                ctx.moveTo(-4, this.radius - 1);
-                ctx.lineTo(4, this.radius - 1);
-                ctx.lineTo(5, this.radius + 3);
-                ctx.lineTo(-4, this.radius + 3);
-                ctx.closePath();
-                ctx.fillStyle = rgbaBase;
-                ctx.fill();
-
-                ctx.restore();
+                bgCtx.beginPath();
+                bgCtx.translate(this.x, this.y);
+                bgCtx.scale(1, 1.3);
+                let grad = bgCtx.createRadialGradient(-this.radius*0.3, -this.radius*0.3, this.radius*0.1, 0, 0, this.radius);
+                grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
+                grad.addColorStop(0.3, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.35)`);
+                grad.addColorStop(1, `rgba(${this.color.r*0.3}, ${this.color.g*0.3}, ${this.color.b*0.3}, 0.35)`);
+                bgCtx.fillStyle = grad;
+                bgCtx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                bgCtx.fill();
+                bgCtx.restore();
             }
         }
 
@@ -432,78 +376,122 @@
                     this.speedX = Math.random() * 1.6 - 0.8;
                 } else {
                     this.reset();
-                    this.y = Math.random() * canvas.height;
+                    this.y = Math.random() * bgCanvas.height;
                 }
             }
-
             reset() {
-                this.x = Math.random() * canvas.width;
+                this.x = Math.random() * bgCanvas.width;
                 this.y = -20;
-                this.size = Math.random() * 3 + 1;
-                this.speedY = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedY = Math.random() * 0.4 + 0.2;
                 this.speedX = Math.sin(Math.random() * 2) * 0.15;
             }
-
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX;
-
-                if (this.isMouseTrail) {
-                    this.size -= 0.05; 
-                } else if (this.y > canvas.height) {
-                    this.reset();
-                }
+                if (this.isMouseTrail) { this.size -= 0.05; } 
+                else if (this.y > bgCanvas.height) { this.reset(); }
             }
-
             draw() {
                 if (this.size <= 0) return;
-                const picked = palette[Math.floor(Math.random() * palette.length)];
-                
-                ctx.save();
-                ctx.globalAlpha = this.isMouseTrail ? Math.max(0, this.size) : 0.6;
-                ctx.shadowBlur = this.size * 3;
-                ctx.shadowColor = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
-                ctx.fillStyle = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
-                
-                ctx.beginPath();
-                ctx.translate(this.x, this.y);
+                const picked = themeColors[Math.floor(Math.random() * themeColors.length)];
+                bgCtx.save();
+                bgCtx.globalAlpha = this.isMouseTrail ? Math.max(0, this.size) : 0.5;
+                bgCtx.shadowBlur = this.size * 3;
+                bgCtx.shadowColor = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
+                bgCtx.fillStyle = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
+                bgCtx.beginPath();
+                bgCtx.translate(this.x, this.y);
                 for (let i = 0; i < 4; i++) {
-                    ctx.lineTo(0, this.size * 2.5);
-                    ctx.lineTo(this.size * 0.5, this.size * 0.5);
-                    ctx.rotate(Math.PI / 2);
+                    bgCtx.lineTo(0, this.size * 2.5);
+                    bgCtx.lineTo(this.size * 0.5, this.size * 0.5);
+                    bgCtx.rotate(Math.PI / 2);
                 }
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
+                bgCtx.closePath();
+                bgCtx.fill();
+                bgCtx.restore();
             }
         }
 
-        /* INITIALIZATION & ANIMATION ENGINE LIFECYCLE */
-        function init() {
-            elementsArray = [];
-            for (let i = 0; i < totalGlowGems; i++) elementsArray.push(new GlowGem());
-            for (let i = 0; i < totalBalloons; i++) elementsArray.push(new Balloon());
-            for (let i = 0; i < totalSparkles; i++) elementsArray.push(new Sparkle());
+        // === SCRIPT 2: INNER CARD ANIMATION (Glowing Liquid Waves) ===
+        const cardCanvas = document.getElementById('cardBgCanvas');
+        const cardCtx = cardCanvas.getContext('2d');
+        let cardParticles = [];
+        const totalBlobs = 12;
+
+        function resizeCardCanvas() {
+            const rect = cardCanvas.parentElement.getBoundingClientRect();
+            cardCanvas.width = rect.width;
+            cardCanvas.height = rect.height;
+        }
+        window.addEventListener('resize', resizeCardCanvas);
+        setTimeout(resizeCardCanvas, 150);
+
+        class CardLiquidBlob {
+            constructor() {
+                this.x = Math.random() * 300;
+                this.y = Math.random() * 400;
+                this.radius = Math.random() * 50 + 50;
+                this.speedX = (Math.random() * 0.6) - 0.3;
+                this.speedY = (Math.random() * 0.6) - 0.3;
+                this.color = ['rgba(255, 64, 129, ', 'rgba(0, 229, 255, ', 'rgba(156, 39, 176, '][Math.floor(Math.random() * 3)];
+                this.alpha = Math.random() * 0.12 + 0.08;
+                this.grow = Math.random() > 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
+                
+                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
+                else { this.radius -= 0.08; if(this.radius < 50) this.grow = true; }
+            }
+            draw() {
+                cardCtx.beginPath();
+                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                gradient.addColorStop(0, this.color + this.alpha + ')');
+                gradient.addColorStop(1, this.color + '0)');
+                cardCtx.fillStyle = gradient;
+                cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                cardCtx.fill();
+            }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        /* ENGINE CONTROLLER SEED AND LOOPS */
+        function init() {
+            bgElements = [];
+            cardParticles = [];
+            
+            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
+            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
+            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
+        }
 
-            for (let i = 0; i < elementsArray.length; i++) {
-                elementsArray[i].update();
-                elementsArray[i].draw();
-                
-                // GC optimization array cleaning setup
-                if (elementsArray[i].type === 'sparkle' && elementsArray[i].isMouseTrail && elementsArray[i].size <= 0) {
-                    elementsArray.splice(i, 1);
+        function runEngine() {
+            // Clear outer scene
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            for (let i = 0; i < bgElements.length; i++) {
+                bgElements[i].update();
+                bgElements[i].draw();
+                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) {
+                    bgElements.splice(i, 1);
                     i--;
                 }
             }
-            requestAnimationFrame(animate);
+
+            // Clear inner glass scene
+            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
+            for (let i = 0; i < cardParticles.length; i++) {
+                cardParticles[i].update();
+                cardParticles[i].draw();
+            }
+
+            requestAnimationFrame(runEngine);
         }
 
         init();
-        animate();
+        runEngine();
     </script>
 </body>
 </html>

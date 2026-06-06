@@ -1,46 +1,30 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday! 🎂</title>
     <style>
+        /* A beautiful shifting background gradient that works on ALL mobile browsers */
         body {
-            margin: 0; padding: 0; background-color: #0d0d0d; color: white;
+            margin: 0; padding: 0; 
+            color: white;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; height: 100vh; text-align: center;
             overflow: hidden; position: relative;
+            
+            /* Gradient Styling */
+            background: linear-gradient(-45deg, #0d0d0d, #1a0505, #2d0b11, #0d0d0d);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
         }
 
-        /* ACTIVE CSS FLOATING BACKGROUND SYSTEM */
-        .bg-animations {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1; overflow: hidden;
-        }
-
-        /* Making the orbs brightly colored and visible against black */
-        .floating-orb {
-            position: absolute; 
-            bottom: -100px;
-            background: radial-gradient(circle, rgba(255, 65, 108, 0.4) 0%, rgba(255, 75, 43, 0.05) 70%);
-            border-radius: 50%; 
-            filter: blur(8px);
-            animation: floatUpways infinite linear;
-        }
-
-        /* Varied sizing, starting layout points, and custom speeds */
-        .orb1 { left: 8%; width: 90px; height: 90px; animation-name: floatUpways; animation-duration: 14s; animation-delay: 0s; }
-        .orb2 { left: 35%; width: 130px; height: 130px; animation-name: floatUpways; animation-duration: 20s; animation-delay: 3s; }
-        .orb3 { left: 55%; width: 70px; height: 70px; animation-name: floatUpways; animation-duration: 12s; animation-delay: 1s; }
-        .orb4 { left: 78%; width: 150px; height: 150px; animation-name: floatUpways; animation-duration: 24s; animation-delay: 6s; }
-        .orb5 { left: 20%; width: 110px; height: 110px; animation-name: floatUpways; animation-duration: 16s; animation-delay: 9s; }
-        
-        @keyframes floatUpways {
-            0% { transform: translateY(0) scale(0.8); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-125vh) scale(1.2); opacity: 0; }
+        /* Smooth background shift movement */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Smooth Screen Transitions */
@@ -119,14 +103,6 @@
     </style>
 </head>
 <body>
-
-    <div class="bg-animations">
-        <div class="floating-orb orb1"></div>
-        <div class="floating-orb orb2"></div>
-        <div class="floating-orb orb3"></div>
-        <div class="floating-orb orb4"></div>
-        <div class="floating-orb orb5"></div>
-    </div>
 
     <div id="screen1" class="screen active">
         <h1>መልካም ልደት</h1>

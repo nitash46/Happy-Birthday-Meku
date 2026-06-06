@@ -3,269 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🌸🎂</title>
+    <title>A Gift For You ✨</title>
     <style>
-        /* NEW FEMININE SOFT ROSE BACKGROUND PALETTE */
+        /* AESTHETIC VINTAGE CREAM THEME */
         body {
-            margin: 0; padding: 0; 
-            color: white;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center; height: 100vh; text-align: center;
-            overflow: hidden; position: relative;
-            /* Shifting background gradient: Deepest Magenta, Rose, Soft Blush */
-            background: linear-gradient(135deg, #2d0b1d 0%, #a21c5b 45%, #ffdde1 100%);
-            background-size: 400% 400%;
-            animation: softBGShift 10s ease infinite;
+            margin: 0; padding: 0;
+            background-color: #f7f4eb; /* Warm cozy cream background */
+            font-family: 'Georgia', serif; /* Classic, vintage storytelling font */
+            color: #4a1525; /* Elegant dark cherry text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
 
-        @keyframes softBGShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* VINTAGE SIDE FLORAL ACCENTS */
+        .floral-accent {
+            position: absolute;
+            bottom: 10%;
+            width: 140px;
+            height: auto;
+            opacity: 0.85;
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+        .left-flower { left: 5%; }
+        .right-flower { right: 5%; }
+
+        /* Hide flowers slightly on very small screens so text stays clean */
+        @media (max-width: 500px) {
+            .floral-accent { width: 90px; bottom: 5%; }
         }
 
-        /* Ambient background glow behind everything */
-        body::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255,105,180,0.2) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: 0;
-        }
-
-        /* DYNAMIC ENCHANTING STAR AND HEART EXPLOSION */
-        .warp-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; pointer-events: none; overflow: hidden;
-        }
-
-        .streak {
-            position: absolute; top: 50%; left: 50%;
-            opacity: 0; transform-origin: left center;
-        }
-
-        /* Redesigning particles to be elegant soft stars and rose hearts */
-        .streak::after {
-            content: '✨'; /* Alternates between ✨ and 💖 via JS init below */
-            font-size: 14px; position: absolute; left: 0; top: 0;
-            color: #ffdde1; /* Soft blush color */
-            text-shadow: 0 0 10px #ff1493, 0 0 20px #ffffff;
-            animation: rotateFloat 6s infinite ease-in-out;
-        }
-
-        @keyframes rotateFloat {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.3) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
-
-        @keyframes explodeOutSoft {
-            0% { transform: rotate(inherit) translateX(0) scale(0.5); opacity: 0; }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% { transform: rotate(inherit) translateX(70vw) scale(1.8); opacity: 0; }
-        }
-
-        /* Assigning distinct flights, rotations, and speeds */
-        .st1  { transform: rotate(15deg);  animation: explodeOutSoft 4.1s infinite linear 0.0s; }
-        .st2  { transform: rotate(65deg);  animation: explodeOutSoft 5.2s infinite linear 1.2s; }
-        .st3  { transform: rotate(120deg); animation: explodeOutSoft 3.8s infinite linear 0.6s; }
-        .st4  { transform: rotate(175deg); animation: explodeOutSoft 5.8s infinite linear 2.5s; }
-        .st5  { transform: rotate(220deg); animation: explodeOutSoft 4.5s infinite linear 1.8s; }
-        .st6  { transform: rotate(280deg); animation: explodeOutSoft 4.9s infinite linear 0.4s; }
-        .st7  { transform: rotate(330deg); animation: explodeOutSoft 3.6s infinite linear 3.0s; }
-        .st8  { transform: rotate(45deg);  animation: explodeOutSoft 5.5s infinite linear 2.1s; }
-        .st9  { transform: rotate(195deg); animation: explodeOutSoft 4.3s infinite linear 1.0s; }
-        .st10 { transform: rotate(95deg);  animation: explodeOutSoft 6.0s infinite linear 2.8s; }
-        .st11 { transform: rotate(250deg); animation: explodeOutSoft 4.7s infinite linear 2.0s; }
-        .st12 { transform: rotate(310deg); animation: explodeOutSoft 4.8s infinite linear 0.8s; }
-
-        /* THE TEXT CONTAINER */
-        .screen {
-            position: absolute; 
-            display: none; 
+        /* MAIN CONTENT LAYOUT */
+        .card-container {
+            width: 90%;
+            max-width: 440px;
+            padding: 30px 20px;
+            display: flex;
             flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            width: 90%; 
-            max-width: 400px;
+            align-items: center;
+            justify-content: center;
             z-index: 2;
+            text-align: center;
         }
 
-        .screen.active { display: flex; }
-
-        /* NEW SOFT CINEMATIC INTRO: Line expansion with a rosy glow */
-        .screen.active h1 {
-            animation: lineExpandHorizontalPink 1.4s cubic-bezier(0.7, 0, 0.3, 1) forwards;
-            animation-delay: 2.5s; /* Longer background solo focus for drama */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
 
-        .screen.active p, .screen.active .btn {
-            animation: contentFlowUpPink 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 3.3s; /* Delay so line opens completely first */
+        .screen.active {
+            display: flex;
         }
 
-        @keyframes lineExpandHorizontalPink {
-            from { letter-spacing: -0.5em; opacity: 0; transform: scaleX(0); filter: blur(5px); }
-            50% { opacity: 0.8; transform: scaleX(1.3); }
-            to { letter-spacing: 0.05em; opacity: 1; transform: scaleX(1); filter: blur(0); }
+        /* ADORABLE ANIMATION DELAYS (Pinterest Style) */
+        .screen.active .animate-fade {
+            animation: softReveal 1.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
         }
-
-        @keyframes contentFlowUpPink {
-            from { opacity: 0; transform: translateY(35px); filter: blur(4px); }
+        
+        @keyframes softReveal {
+            from { opacity: 0; transform: translateY(15px); filter: blur(3px); }
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        /* TEXT STYLING: UPDATED PINK GLOW AND SHADOWS */
-        h1 { font-size: 2.5rem; margin-bottom: 20px; color: #ffffff; font-weight: 900; opacity: 0; text-shadow: 0 0 25px rgba(255, 20, 147, 1), 0 0 50px rgba(255,105,180,0.8); }
-        p { font-size: 1.18rem; color: #ffdde1; margin-bottom: 40px; line-height: 1.8; padding: 0 15px; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
+        /* FLOATING CUTIE ICON */
+        .cute-sticker {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
 
-        /* NEW PREMIUM SHIMMER BUTTON (BLUSH/MAGENTA) */
+        @keyframes gentleFloat {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin: 10px 0 20px 0;
+            color: #360f1a;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #5a2b39;
+            margin-bottom: 35px;
+            padding: 0 10px;
+        }
+
+        /* VINTAGE INTERACTIVE BUTTONS */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
         .btn {
-            background: linear-gradient(135deg, #ff1493, #c71585); /* Deepest Pink to Magenta */
-            color: white; border: none; padding: 18px 50px; font-size: 1.2rem;
-            font-weight: 900; border-radius: 30px; cursor: pointer; opacity: 0;
-            position: relative; overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 4px 25px rgba(255, 20, 147, 0.5);
+            background-color: #e6dfd1; /* Soft muted sand tone */
+            color: #360f1a;
+            border: 2px solid #5a2b39;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 130px;
         }
 
-        /* Subtle glow pulsing animation on button */
-        .screen.active .btn {
-            animation: contentFlowUpPink 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, buttonGlowPink 3s infinite ease-in-out;
-            animation-delay: 3.3s, 4.5s; 
+        /* The Primary highlight button choice */
+        .btn-primary {
+            background-color: #4a1525;
+            color: #f7f4eb;
         }
 
-        @keyframes buttonGlowPink {
-            0% { box-shadow: 0 4px 25px rgba(255, 20, 147, 0.5); }
-            50% { box-shadow: 0 4px 35px rgba(255, 105, 180, 0.9); }
-            100% { box-shadow: 0 4px 25px rgba(255, 20, 147, 0.5); }
+        .btn:active {
+            transform: scale(0.96);
+            opacity: 0.9;
         }
 
-        .btn:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(255, 20, 147, 0.7); }
-
-        /* Button Light Shimmer (Pink) */
-        .btn::after {
-            content: ''; position: absolute; top: 0; left: -50%; width: 40%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,221,225,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg); animation: shimmerPink 3.8s infinite;
-        }
-
-        @keyframes shimmerPink {
-            0% { left: -50%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        /* PHOTO GALLERY LAYOUT: UPDATED ROSE SCROLLBAR */
+        /* SCROLLABLE PHOTO GALLERY */
         .photo-container {
-            width: 100%; height: 55vh; overflow-y: scroll;
-            display: flex; flex-direction: column; gap: 20px; padding-right: 5px;
+            width: 100%;
+            height: 50vh;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding-right: 5px;
             box-sizing: border-box;
+            margin-top: 10px;
         }
-        .photo-container::-webkit-scrollbar { width: 5px; }
-        .photo-container::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ff1493, #ffdde1); border-radius: 10px; }
+        
+        .photo-container::-webkit-scrollbar { width: 4px; }
+        .photo-container::-webkit-scrollbar-thumb { background: #4a1525; border-radius: 10px; }
 
-        /* Soft photo fade reveal */
         .birthday-photo {
-            width: 100%; border-radius: 15px; 
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 10px rgba(255,20,147,0.3);
-            object-fit: cover; animation: slideInUpSoft 1s ease-out forwards;
+            width: 100%;
+            border-radius: 10px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            object-fit: cover;
         }
-        @keyframes slideInUpSoft {
-            from { opacity: 0; transform: translateY(35px); filter: blur(3px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+        .signature {
+            color: #4a1525;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="warp-container" id="warpField">
-        <div class="streak st1"></div>
-        <div class="streak st2"></div>
-        <div class="streak st3"></div>
-        <div class="streak st4"></div>
-        <div class="streak st5"></div>
-        <div class="streak st6"></div>
-        <div class="streak st7"></div>
-        <div class="streak st8"></div>
-        <div class="streak st9"></div>
-        <div class="streak st10"></div>
-        <div class="streak st11"></div>
-        <div class="streak st12"></div>
-    </div>
+    <img class="floral-accent left-flower" src="https://i.postimg.cc/mD8zVv3Y/left-rose.png" alt="vintage flower" onerror="this.src='https://openclipart.org/image/400px/333917'">
+    <img class="floral-accent right-flower" src="https://i.postimg.cc/WbKz71Zt/right-rose.png" alt="vintage flower" onerror="this.src='https://openclipart.org/image/400px/311682'">
 
-    <div id="screen1" class="screen active">
-        <h1>Happy Birthday Meku</h1>
-        <div style="height: 25px;"></div> 
-        <button class="btn" onclick="nextScreen(2)">Start the Journey 💖</button>
-    </div>
+    <div class="card-container">
 
-    <div id="screen2" class="screen">
-        <h1>💖 Favorite Fan</h1>
-        <p>Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.</p>
-        <button class="btn" onclick="nextScreen(3)">Next Thought ✨</button>
-    </div>
-
-    <div id="screen3" class="screen">
-        <h1>✨ Special Day</h1>
-        <p>I hope you have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do.</p>
-        <button class="btn" onclick="nextScreen(4)">One More Thing 👑</button>
-    </div>
-
-    <div id="screen4" class="screen">
-        <h1>👑 Beautiful Vibe</h1>
-        <p>You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑</p>
-        <button class="btn" onclick="nextScreen(5)">See Your Surprise 📸</button>
-    </div>
-
-    <div id="screen5" class="screen">
-        <h1>📸 Beautiful Memories</h1>
-        <p style="margin-bottom: 12px; font-size: 1rem; color: #ffdde1; opacity: 1 !important; animation: none !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Scroll down to see your pictures...</p>
-        <div class="photo-container">
-            <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
-            <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+        <div id="screen1" class="screen active">
+            <span class="cute-sticker">🐱✨</span>
+            <h1 class="animate-fade">Hello there _!</h1>
+            <p class="animate-fade">do you want to see your gift?</p>
+            <div class="button-group animate-fade">
+                <button class="btn btn-primary" onclick="nextScreen(2)">Yes Please</button>
+                <button class="btn" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
+            </div>
         </div>
-        <p style="color: #ffdde1; font-weight: bold; margin-top: 10px; opacity: 1 !important; animation: none !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Happy June 8! 🎂💖</p>
+
+        <div id="screen2" class="screen">
+            <span class="cute-sticker">🔴⚽</span>
+            <h1 class="animate-fade">Favorite Fan</h1>
+            <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations.</p>
+            <div class="button-group animate-fade">
+                <button class="btn btn-primary" onclick="nextScreen(3)">Next Thought ✨</button>
+            </div>
+        </div>
+
+        <div id="screen3" class="screen">
+            <span class="cute-sticker">✨🎂</span>
+            <h1 class="animate-fade">Special Day</h1>
+            <p class="animate-fade">I hope you have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do.</p>
+            <div class="button-group animate-fade">
+                <button class="btn btn-primary" onclick="nextScreen(4)">Continue... 👑</button>
+            </div>
+        </div>
+
+        <div id="screen4" class="screen">
+            <span class="cute-sticker">🌸👑</span>
+            <h1 class="animate-fade">Beautiful Vibe</h1>
+            <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑</p>
+            <div class="button-group animate-fade">
+                <button class="btn btn-primary" onclick="nextScreen(5)">See Your Surprise 📸</button>
+            </div>
+        </div>
+
+        <div id="screen5" class="screen">
+            <h1 class="animate-fade" style="font-size: 2rem; margin-bottom: 5px;">Our Memories 📸</h1>
+            <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 10px; font-style: italic;">Scroll down to see your beautiful pictures...</p>
+            
+            <div class="photo-container animate-fade">
+                <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
+                <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+            </div>
+            
+            <p class="signature animate-fade">Happy June 8! 🎂💖</p>
+        </div>
+
     </div>
 
     <script>
-        // Init: Randomize background streaks to be ✨ or 💖
-        const streaks = document.querySelectorAll('.streak');
-        const particleIcons = ['✨', '💖', '🌸', '✨', '💖']; // Varied feminine icons
-        streaks.forEach(streak => {
-            const randomIcon = particleIcons[Math.floor(Math.random() * particleIcons.length)];
-            streak.style.setProperty('--particle-icon', `"${randomIcon}"`);
-            // Update the CSS content to reflect randomization
-            const style = document.createElement('style');
-            style.innerHTML = `.streak::after { content: var(--particle-icon) !important; }`;
-            document.head.appendChild(style);
-        });
-
         function nextScreen(screenNumber) {
+            // Find the current open screen and take it down
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
                 currentScreen.classList.remove('active');
             }
             
-            setTimeout(() => {
-                const nextTarget = document.getElementById('screen' + screenNumber);
-                
-                // Clear initial welcome delay parameters for quick story progression
-                const header = nextTarget.querySelector('h1');
-                const paragraph = nextTarget.querySelector('p');
-                const button = nextTarget.querySelector('.btn');
-                
-                if(header) { header.style.animationDelay = '0s'; header.style.animationDuration = '0.5s'; }
-                if(paragraph) { paragraph.style.animationDelay = '0.2s'; paragraph.style.animationDuration = '0.5s'; }
-                if(button) { button.style.animationDelay = '0.4s'; button.style.animationDuration = '0.5s'; }
-                
+            // Activate the new screen card seamlessly
+            const nextTarget = document.getElementById('screen' + screenNumber);
+            if (nextTarget) {
                 nextTarget.classList.add('active');
-            }, 50); 
+            }
         }
     </script>
 </body>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <style>
+        body {
+            margin: 0; padding: 0; background-color: #121212; color: white;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; height: 100vh; text-align: center;
+            overflow: hidden;
+        }
+
+        /* Smooth Screen Fade Transitions */
+        .screen {
+            position: absolute; 
+            display: none; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            width: 90%; 
+            max-width: 400px;
+            opacity: 0; 
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: translateY(20px);
+        }
+
+        .active { 
+            display: flex; 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 20px; color: #e0e0e0; }
+        p { font-size: 1.1rem; color: #b3b3b3; margin-bottom: 30px; line-height: 1.6; padding: 0 10px; }
+
+        /* The Interactive Button */
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white; border: none; padding: 15px 40px; font-size: 1.2rem;
+            font-weight: bold; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* Photo Gallery Scrolling Setup */
+        .photo-container {
+            width: 100%; height: 55vh; overflow-y: scroll;
+            display: flex; flex-direction: column; gap: 20px; padding-right: 5px;
+            box-sizing: border-box;
+        }
+        .photo-container::-webkit-scrollbar { width: 4px; }
+        .photo-container::-webkit-scrollbar-thumb { background: #ff6b6b; border-radius: 10px; }
+
+        /* Fade-in Animation for individual photos as they load */
+        .birthday-photo {
+            width: 100%; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            object-fit: cover; animation: slideInUp 0.8s ease-out forwards;
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screen1" class="screen active">
+        <h1>መልካም ልደት</h1>
+        <div style="height: 20px;"></div> 
+        <button class="btn" onclick="nextScreen(2)">Start the Journey</button>
+    </div>
+
+    <div id="screen2" class="screen">
+        <h1>✨ My Wishes ✨</h1>
+        <p>Happy Birthday to my favorite Arsenal fan 🔴 Anchin yawekubetn menged sasebew yasikegnal, ena dmo silawekush I'm really happy. I hope you have the absolute best time celebrating with your friends today. Sending you my best wishes for a year full of happiness, health, and success. Have an amazing birthday, beautiful 🎂🥮🍔✨ Honestly, I'm really glad to know you.</p>
+        <button class="btn" onclick="nextScreen(3)">A Surprise For You</button>
+    </div>
+
+    <div id="screen3" class="screen">
+        <h1>📸 Beautiful Memories</h1>
+        <p style="margin-bottom: 10px; font-size: 1rem;">Scroll down to see your pictures...</p>
+        <div class="photo-container">
+            <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
+            <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+        </div>
+        <p style="color: #ff6b6b; font-weight: bold; margin-top: 5px;">Happy June 8! 🎂</p>
+    </div>
+
+    <script>
+        function nextScreen(screenNumber) {
+            const currentScreen = document.querySelector('.screen.active');
+            currentScreen.classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('screen' + screenNumber).classList.add('active');
+            }, 100); 
+        }
+    </script>
+</body>
+</html>

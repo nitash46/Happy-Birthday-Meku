@@ -6,14 +6,31 @@
     <title>Happy Birthday! 🎂</title>
     <style>
         body {
-            margin: 0; padding: 0; background-color: #121212; color: white;
+            margin: 0; padding: 0; background-color: #0d0d0d; color: white;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; height: 100vh; text-align: center;
-            overflow: hidden;
+            overflow: hidden; position: relative;
         }
 
-        /* Smooth Screen Fade Transitions */
+        /* Ambient Animated Floating Background Elements */
+        .bg-animations {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .particle {
+            position: absolute; bottom: -20px; background: linear-gradient(135deg, rgba(255, 65, 108, 0.2), rgba(255, 75, 43, 0.15));
+            border-radius: 50%; filter: blur(4px);
+            animation: floatUp 12s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-110vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Smooth Screen Transitions */
         .screen {
             position: absolute; 
             display: none; 
@@ -22,7 +39,7 @@
             justify-content: center; 
             width: 90%; 
             max-width: 400px;
-            opacity: 0; 
+            opacity: 0; z-index: 2;
             transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
             transform: scale(0.95) translateY(10px);
         }
@@ -33,10 +50,10 @@
             transform: scale(1) translateY(0); 
         }
 
-        h1 { font-size: 2.3rem; margin-bottom: 20px; color: #e0e0e0; font-weight: 700; }
-        p { font-size: 1.15rem; color: #e0e0e0; margin-bottom: 35px; line-height: 1.7; padding: 0 15px; }
+        h1 { font-size: 2.3rem; margin-bottom: 20px; color: #f5f5f5; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        p { font-size: 1.15rem; color: #e0e0e0; margin-bottom: 35px; line-height: 1.7; padding: 0 15px; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
 
-        /* Beautiful Upgraded Animated Button */
+        /* Premium Reactive Shimmer Button */
         .btn {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: white; border: none; padding: 16px 45px; font-size: 1.15rem;
@@ -44,24 +61,22 @@
             box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4);
             position: relative; overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
-            animation: pulseGlow 2s infinite;
+            animation: pulseGlow 2.5s infinite;
         }
 
-        /* Subtle idle pulsing animation */
         @keyframes pulseGlow {
             0% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
             50% { box-shadow: 0 4px 30px rgba(255, 75, 43, 0.7); transform: scale(1.02); }
             100% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
         }
 
-        /* Button tap shrink effect */
         .btn:active { transform: scale(0.95); animation: none; }
 
-        /* Shimmer reflection swipe across the button */
+        /* Button Light Shimmer Swipe */
         .btn::after {
             content: ''; position: absolute; top: 0; left: -50%; width: 30%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg); animation: shimmer 3s infinite;
+            transform: skewX(-25deg); animation: shimmer 3.5s infinite;
         }
 
         @keyframes shimmer {
@@ -70,7 +85,7 @@
             100% { left: 150%; }
         }
 
-        /* Photo Gallery Scrolling Setup */
+        /* Photo Gallery Layout */
         .photo-container {
             width: 100%; height: 55vh; overflow-y: scroll;
             display: flex; flex-direction: column; gap: 20px; padding-right: 5px;
@@ -79,9 +94,9 @@
         .photo-container::-webkit-scrollbar { width: 4px; }
         .photo-container::-webkit-scrollbar-thumb { background: #ff416c; border-radius: 10px; }
 
-        /* Fade-in Animation for individual photos */
+        /* Smooth Photo Reveal */
         .birthday-photo {
-            width: 100%; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            width: 100%; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.6);
             object-fit: cover; animation: slideInUp 0.8s ease-out forwards;
         }
         @keyframes slideInUp {
@@ -91,6 +106,8 @@
     </style>
 </head>
 <body>
+
+    <div class="bg-animations" id="bgContainer"></div>
 
     <div id="screen1" class="screen active">
         <h1>መልካም ልደት</h1>
@@ -132,6 +149,28 @@
     </div>
 
     <script>
+        // Engine to dynamically build floating background background particles
+        function createParticles() {
+            const container = document.getElementById('bgContainer');
+            const particleCount = 12; // Keeps layout fluid and clean on mobile
+            
+            for(let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Randomize scaling, layouts, and speed
+                const size = Math.random() * 60 + 20; 
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = Math.random() * 6 + 10 + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             currentScreen.classList.remove('active');

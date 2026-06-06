@@ -23,28 +23,52 @@
             width: 90%; 
             max-width: 400px;
             opacity: 0; 
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-            transform: translateY(20px);
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: scale(0.95) translateY(10px);
         }
 
         .active { 
             display: flex; 
             opacity: 1; 
-            transform: translateY(0); 
+            transform: scale(1) translateY(0); 
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 20px; color: #e0e0e0; }
-        p { font-size: 1.1rem; color: #b3b3b3; margin-bottom: 30px; line-height: 1.6; padding: 0 10px; }
+        h1 { font-size: 2.3rem; margin-bottom: 20px; color: #e0e0e0; font-weight: 700; }
+        p { font-size: 1.15rem; color: #e0e0e0; margin-bottom: 35px; line-height: 1.7; padding: 0 15px; }
 
-        /* The Interactive Button */
+        /* Beautiful Upgraded Animated Button */
         .btn {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white; border: none; padding: 15px 40px; font-size: 1.2rem;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white; border: none; padding: 16px 45px; font-size: 1.15rem;
             font-weight: bold; border-radius: 30px; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4);
+            position: relative; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulseGlow 2s infinite;
         }
-        .btn:active { transform: scale(0.95); }
+
+        /* Subtle idle pulsing animation */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(255, 75, 43, 0.7); transform: scale(1.02); }
+            100% { box-shadow: 0 4px 20px rgba(255, 75, 43, 0.4); }
+        }
+
+        /* Button tap shrink effect */
+        .btn:active { transform: scale(0.95); animation: none; }
+
+        /* Shimmer reflection swipe across the button */
+        .btn::after {
+            content: ''; position: absolute; top: 0; left: -50%; width: 30%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -50%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
+        }
 
         /* Photo Gallery Scrolling Setup */
         .photo-container {
@@ -53,9 +77,9 @@
             box-sizing: border-box;
         }
         .photo-container::-webkit-scrollbar { width: 4px; }
-        .photo-container::-webkit-scrollbar-thumb { background: #ff6b6b; border-radius: 10px; }
+        .photo-container::-webkit-scrollbar-thumb { background: #ff416c; border-radius: 10px; }
 
-        /* Fade-in Animation for individual photos as they load */
+        /* Fade-in Animation for individual photos */
         .birthday-photo {
             width: 100%; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.5);
             object-fit: cover; animation: slideInUp 0.8s ease-out forwards;
@@ -71,18 +95,30 @@
     <div id="screen1" class="screen active">
         <h1>መልካም ልደት</h1>
         <div style="height: 20px;"></div> 
-        <button class="btn" onclick="nextScreen(2)">Start the Journey</button>
+        <button class="btn" onclick="nextScreen(2)">Start the Journey ✨</button>
     </div>
 
     <div id="screen2" class="screen">
-        <h1>✨ My Wishes ✨</h1>
-        <p>Happy Birthday to my favorite Arsenal fan 🔴 Anchin yawekubetn menged sasebew yasikegnal, ena dmo silawekush I'm really happy. I hope you have the absolute best time celebrating with your friends today. Sending you my best wishes for a year full of happiness, health, and success. Have an amazing birthday, beautiful 🎂🥮🍔✨ Honestly, I'm really glad to know you.</p>
-        <button class="btn" onclick="nextScreen(3)">A Surprise For You</button>
+        <h1>🔴 Favorite Fan</h1>
+        <p>Happy Birthday to my favorite Arsenal fan! 🔴 Anchin yawekubetn menged sasebew yasikegnal, ena dmo silawekush I'm really happy.</p>
+        <button class="btn" onclick="nextScreen(3)">Next Thought ✨</button>
     </div>
 
     <div id="screen3" class="screen">
+        <h1>✨ Your Special Day</h1>
+        <p>I hope you have the absolute best time celebrating with your friends today. Sending you my best wishes for a year full of happiness, health, and success.</p>
+        <button class="btn" onclick="nextScreen(4)">One More Thing ✨</button>
+    </div>
+
+    <div id="screen4" class="screen">
+        <h1>🎂 Beautiful</h1>
+        <p>Have an amazing birthday, beautiful 🎂🥮🍔✨ Honestly, I'm really glad to know you.</p>
+        <button class="btn" onclick="nextScreen(5)">See Your Surprise 📸</button>
+    </div>
+
+    <div id="screen5" class="screen">
         <h1>📸 Beautiful Memories</h1>
-        <p style="margin-bottom: 10px; font-size: 1rem;">Scroll down to see your pictures...</p>
+        <p style="margin-bottom: 10px; font-size: 1rem; color: #b3b3b3;">Scroll down to see your pictures...</p>
         <div class="photo-container">
             <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
             <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
@@ -92,7 +128,7 @@
             <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
             <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
         </div>
-        <p style="color: #ff6b6b; font-weight: bold; margin-top: 5px;">Happy June 8! 🎂</p>
+        <p style="color: #ff416c; font-weight: bold; margin-top: 8px;">Happy June 8! 🎂</p>
     </div>
 
     <script>
@@ -101,7 +137,7 @@
             currentScreen.classList.remove('active');
             setTimeout(() => {
                 document.getElementById('screen' + screenNumber).classList.add('active');
-            }, 100); 
+            }, 50); 
         }
     </script>
 </body>

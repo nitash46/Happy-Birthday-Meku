@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Birthday Gift ✨</title>
+    <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
         * {
@@ -206,7 +206,7 @@
                     <span>🎂</span>
                     <span>✨</span>
                 </div>
-                <h1>Happy Birthday Meku</h1>
+                <h1>Happy Birthday Meku🥰</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -255,7 +255,7 @@
                     <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                 </div>
                 
-                <p class="signature animate-fade">Happy Birthday beautiful 🎂💖</p>
+                <p class="signature animate-fade">Happy Birthday beautiful 🎂</p>
             </div>
 
         </div>
@@ -275,7 +275,7 @@
             }
         }
 
-        // === SCRIPT 1: OUTER BACKGROUND (Balloons & Sparkles & Mouse Trails) ===
+        // === SCRIPT 1: OUTER BACKGROUND (Balloons & Sparkles) ===
         const bgCanvas = document.getElementById('outerBgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
         let bgElements = [];
@@ -291,7 +291,7 @@
         window.addEventListener('resize', resizeOuterCanvas);
         resizeOuterCanvas();
 
-        /* POINTER DECORATION TRACKING SYSTEMS */
+        /* POINTER TRAIL TRACKERS */
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -314,7 +314,11 @@
         ];
 
         class OuterBalloon {
-            constructor() { this.reset(); this.y = Math.random() * (bgCanvas.height + 200); }
+            constructor() { 
+                this.type = 'balloon';
+                this.reset(); 
+                this.y = Math.random() * (bgCanvas.height + 200); 
+            }
             reset() {
                 this.x = Math.random() * bgCanvas.width;
                 this.y = bgCanvas.height + 100;
@@ -403,7 +407,7 @@
             }
         }
 
-        // === SCRIPT 2: INNER CARD ANIMATION (Glowing Liquid Waves) ===
+        // === SCRIPT 2: INNER CARD ANIMATION ===
         const cardCanvas = document.getElementById('cardBgCanvas');
         const cardCtx = cardCanvas.getContext('2d');
         let cardParticles = [];
@@ -439,4 +443,46 @@
             }
             draw() {
                 cardCtx.beginPath();
-                let gradient = cardCtx.createRadialGradient(this
+                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                gradient.addColorStop(0, this.color + this.alpha + ')');
+                gradient.addColorStop(1, this.color + '0)');
+                cardCtx.fillStyle = gradient;
+                cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                cardCtx.fill();
+            }
+        }
+
+        function init() {
+            bgElements = [];
+            cardParticles = [];
+            
+            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
+            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
+            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
+        }
+
+        function runEngine() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            for (let i = 0; i < bgElements.length; i++) {
+                bgElements[i].update();
+                bgElements[i].draw();
+                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) {
+                    bgElements.splice(i, 1);
+                    i--;
+                }
+            }
+
+            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
+            for (let i = 0; i < cardParticles.length; i++) {
+                cardParticles[i].update();
+                cardParticles[i].draw();
+            }
+
+            requestAnimationFrame(runEngine);
+        }
+
+        init();
+        runEngine();
+    </script>
+</body>
+</html>

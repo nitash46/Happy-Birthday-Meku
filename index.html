@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift For You ✨</title>
     <style>
-        /* THE EXACT FESTIVE BACKGROUND IMAGE IMAGE */
         body {
             margin: 0; padding: 0;
             background-image: url('https://img.freepik.com/premium-vector/happy-birthday-party-celebration-banner-with-cake-balloons_dny-illustration_1253026-64.jpg');
@@ -21,7 +20,6 @@
             position: relative;
         }
 
-        /* Dark tint layer to make sure the background matches the blue vibe and texts stay readable */
         body::before {
             content: '';
             position: absolute;
@@ -31,12 +29,11 @@
             pointer-events: none;
         }
 
-        /* GREETING CARD DISPLAY PLATFORM */
         .card-container {
             width: 90%;
             max-width: 420px;
             padding: 35px 25px;
-            background: rgba(255, 255, 255, 0.95); /* Bright aesthetic container */
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.35);
             color: #2f3640;
@@ -73,7 +70,6 @@
         h1 { font-size: 2.3rem; font-weight: normal; margin: 5px 0 15px 0; color: #2f3640; }
         p { font-size: 1.1rem; line-height: 1.6; color: #57606f; margin-bottom: 30px; }
 
-        /* BUTTON LAYOUT SELECTION */
         .button-group { display: flex; gap: 15px; justify-content: center; width: 100%; }
         .btn {
             background-color: #f1f2f6; color: #2f3640; border: 2px solid #ced6e0;
@@ -85,7 +81,6 @@
         .btn-primary { background-color: #ff4757; color: white; border-color: #ff4757; }
         .btn:active { transform: scale(0.96); }
 
-        /* PHOTO GALLERY SCROLL WHEEL */
         .photo-container {
             width: 100%; height: 42vh; overflow-y: scroll;
             display: flex; flex-direction: column; gap: 15px; padding-right: 3px;
@@ -102,8 +97,8 @@
     <div class="card-container">
 
         <div id="screen1" class="screen active">
-            <span class="cute-sticker">🐱✨</span>
-            <h1 class="animate-fade">Hello there _!</h1>
+            <span class="cute-sticker">🎂✨</span>
+            <h1 class="animate-fade">Happy Birthday Meku</h1>
             <p class="animate-fade">do you want to see your gift?</p>
             <div class="button-group animate-fade">
                 <button class="btn btn-primary" onclick="nextScreen(2)">Yes Please</button>
@@ -139,7 +134,7 @@
         </div>
 
         <div id="screen5" class="screen">
-            <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Your Beautiful pictures 📸</h1>
+            <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Beautiful pictures 📸</h1>
             <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 10px; font-style: italic;">Scroll down to see your beautiful pictures...</p>
             
             <div class="photo-container animate-fade">
@@ -152,7 +147,7 @@
                 <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
             </div>
             
-            <p class="signature animate-fade">Happy June 8! 🎂💖</p>
+            <p class="signature animate-fade">Happy Birthday Mekuye🎂</p>
         </div>
 
     </div>

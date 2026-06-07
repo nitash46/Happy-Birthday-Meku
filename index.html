@@ -17,7 +17,7 @@
             overflow: hidden;
             background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            perspective: 1200px; /* Essential for the 3D text effects */
+            perspective: 1500px; /* Enhanced 3D depth perspective */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,13 +35,13 @@
             transition: opacity 1.2s ease-out;
         }
 
-        /* Frosted Glass Initial Choice Prompt Card */
+        /* Frosted Glass Initial Card Prompt */
         .card-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10;
+            z-index: 20;
             width: 90%;
             max-width: 380px;
             border-radius: 32px;
@@ -70,62 +70,109 @@
         h1 { font-size: 2.3rem; color: #fff; margin-bottom: 12px; font-weight: 800; }
         p { font-size: 1.15rem; color: #fecfef; margin-bottom: 35px; font-weight: 300; }
 
-        /* Buttons */
+        /* Choice Buttons */
         .btn-group { display: flex; gap: 15px; }
         .btn { flex: 1; padding: 16px 20px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; outline: none; }
         .btn-yes { background: linear-gradient(45deg, #ff4081, #ff758c); color: white; box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4); }
         .btn-yes:hover { transform: translateY(-3px); }
         .btn-no { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
 
-        /* --- Premium Birthday Photo Framer --- */
-        .photo-stage {
+        /* --- THE 3D PHOTO STACK STAGE --- */
+        .photo-carousel-stage {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            z-index: 5;
+            left: 150%; /* Slides in from the far right side */
+            transform: translate(-50%, -50%);
+            z-index: 10;
             width: 85%;
-            max-width: 450px;
+            max-width: 400px;
             aspect-ratio: 4/5;
-            border-radius: 24px;
-            padding: 12px;
-            background: linear-gradient(45deg, #ff4081, #00e5ff, #bca3ff);
-            background-size: 300% 300%;
-            animation: borderGlow 6s ease infinite;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.8);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: left 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            transform-style: preserve-3d;
         }
-        .photo-stage.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
+        .photo-carousel-stage.show {
+            left: 50%;
         }
-        .photo-stage.fade-out {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8) rotateY(90deg);
-        }
-        .photo-frame {
+
+        /* Photo Frame Structure */
+        .single-photo-card {
+            position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 14px;
+            border-radius: 24px;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff4081, #00e5ff, #bca3ff);
+            background-size: 200% 200%;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transform-origin: center center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1), opacity 0.8s ease;
+        }
+        .photo-inner-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
             overflow: hidden;
             background: #110022;
+            position: relative;
         }
-        .photo-frame img {
+        .photo-inner-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
         }
 
-        /* --- Premium 3D Grand Finale Text --- */
+        /* Customized Card Caption Overlays */
+        .card-caption-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(15, 0, 34, 0.95) 45%);
+            padding: 30px 20px 20px 20px;
+            color: #fff;
+            text-align: center;
+            z-index: 5;
+        }
+        .card-caption-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        .card-caption-desc {
+            font-size: 0.95rem;
+            color: #fecfef;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        /* Floating Touch Indicator Hint */
+        .tap-hint-overlay {
+            position: absolute;
+            bottom: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            pointer-events: none;
+            animation: pulseHint 1.2s infinite alternate;
+        }
+
+        /* --- PREMIUM 3D GRAND FINALE TEXT --- */
         .grand-finale {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotateX(-90deg) scale(0.3);
-            z-index: 15;
+            z-index: 30;
             text-align: center;
             width: 95%;
             opacity: 0;
@@ -147,18 +194,17 @@
             text-shadow: 0 1px 0 #ccc, 0 2px 0 #c5c5c5, 0 3px 0 #bbb, 0 4px 0 #b0b0b0, 0 5px 0 #a5a5a5,
                          0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3),
                          0 3px 5px rgba(0,0,0,.2), 0 7px 10px rgba(0,0,0,.25), 0 15px 25px rgba(255, 64, 129, 0.5);
-            animation: simplePulse 2s infinite ease-in-out;
+            animation: textPulse 2.5s infinite ease-in-out;
         }
 
-        /* Keyframe Animations */
-        @keyframes borderGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes simplePulse {
+        /* Keyframe Engines */
+        @keyframes textPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes pulseHint {
+            0% { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
         }
     </style>
 </head>
@@ -169,19 +215,78 @@
     <div class="card-container" id="mainCard">
         <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
         <div class="card-content">
-            <h1>Happy Birthday Meku🎂🎉</h1>
+            <h1>Hello there Meku!</h1>
             <p>Do you want to see your gift?</p>
             <div class="btn-group">
-                <button class="btn btn-yes" onclick="startSurprise()">Yes Please</button>
+                <button class="btn btn-yes" onclick="showPhotoCarousel()">Yes Please</button>
                 <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
             </div>
         </div>
     </div>
 
-    <div class="photo-stage" id="photoStage">
-        <div class="photo-frame">
-            <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg" alt="Meku's Birthday Display">
+    <div class="photo-carousel-stage" id="photoStage">
+        
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg" alt="Photo 1">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Happy June 8! 💖</div>
+                    <div class="card-caption-desc">Wishing you endless happiness and success!</div>
+                </div>
+            </div>
         </div>
+
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Photo 2">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Amazing Vibe 👑</div>
+                    <div class="card-caption-desc">Even though we don't hang out a lot, I'm really glad to know you.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg" alt="Photo 3">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Endless Memories ✨</div>
+                    <div class="card-caption-desc">Have an incredible time celebrating your special day today.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg" alt="Photo 4">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Special Day 🎂</div>
+                    <div class="card-caption-desc">Wishing you good health, love, and light in everything you do.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg" alt="Photo 5">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Favorite Fan 🔴⚽</div>
+                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan!</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="single-photo-card" onclick="cardClicked(this)">
+            <div class="photo-inner-frame">
+                <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg" alt="Photo 6">
+                <div class="card-caption-panel">
+                    <div class="card-caption-title">Valued Conversations 💬</div>
+                    <div class="card-caption-desc">You're genuinely such a cool person to chat with.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tap-hint-overlay" id="hintBadge">Tap Photo to Next ➜</div>
     </div>
 
     <div class="grand-finale" id="finaleStage">
@@ -189,38 +294,74 @@
     </div>
 
     <script>
-        // --- PROMPT ENGINE MANAGEMENT ---
-        function startSurprise() {
-            const mainCard = document.getElementById('mainCard');
-            const outerCanvas = document.getElementById('outerBgCanvas');
-            const photoStage = document.getElementById('photoStage');
-            const finaleStage = document.getElementById('finaleStage');
+        const mainCard = document.getElementById('mainCard');
+        const outerCanvas = document.getElementById('outerBgCanvas');
+        const photoStage = document.getElementById('photoStage');
+        const finaleStage = document.getElementById('finaleStage');
+        const hintBadge = document.getElementById('hintBadge');
 
-            // Step 1: Disappear initial card window
+        let cards = [];
+        let totalFlipped = 0;
+
+        // Step 1: Slides the carousel stack in from the right edge
+        function showPhotoCarousel() {
             mainCard.style.opacity = '0';
             mainCard.style.transform = 'translate(-50%, -100%) scale(0.5)';
+            outerCanvas.style.opacity = '0.4'; /* Keep background elements visible at perfect clarity balance */
             
             setTimeout(() => {
                 mainCard.style.display = 'none';
-                
-                // Step 2: Bring forward the gorgeous, glowing birthday photo frame
                 photoStage.classList.add('show');
-                
-                // Step 3: Wait for the photo viewing time frame, then drop out
+                arrangeStack();
+            }, 800);
+        }
+
+        // Logic to layer the 6 photos cleanly into a deck cards stack layout
+        function arrangeStack() {
+            cards = Array.from(document.querySelectorAll('.single-photo-card'));
+            cards.forEach((card, index) => {
+                card.style.zIndex = index;
+                // Layer spacing offsets to create depth deck positioning
+                const depthOffset = (cards.length - 1 - index) * 12;
+                const scaleOffset = 1 - ((cards.length - 1 - index) * 0.04);
+                card.style.transform = `translate3d(0, ${depthOffset}px, -${depthOffset}px) scale(${scaleOffset})`;
+            });
+        }
+
+        // Click handler to swipe away the top card and reveal the next one underneath
+        function cardClicked(clickedCard) {
+            const currentTopIndex = cards.length - 1 - totalFlipped;
+            
+            // Only allow clicking the top card
+            if (cards.indexOf(clickedCard) !== currentTopIndex) return;
+
+            // Swipe card off to the left dynamically with a rotation twist
+            clickedCard.style.transform = 'translate3d(-150%, -20px, 50px) rotate(-25deg)';
+            clickedCard.style.opacity = '0';
+            
+            totalFlipped++;
+
+            // If there are cards remaining, shift the stack forward to create responsive movement
+            if (totalFlipped < cards.length) {
                 setTimeout(() => {
-                    photoStage.classList.add('fade-out');
-                    
-                    // Step 4: Launch the stunning 3D Happy Birthday text pop-up
-                    setTimeout(() => {
-                        photoStage.style.display = 'none';
-                        // Keep outer engine active for final effect, fade canvas back in softly if desired
-                        outerCanvas.style.opacity = '1';
-                        finaleStage.classList.add('reveal');
-                    }, 1200);
-
-                }, 4500); // 4.5 Seconds photo viewing duration
-
-            }, 1000);
+                    cards.forEach((card, index) => {
+                        if (index <= currentTopIndex - 1) {
+                            const activeRemainingPosition = (currentTopIndex - 1) - index;
+                            const depthOffset = activeRemainingPosition * 12;
+                            const scaleOffset = 1 - (activeRemainingPosition * 0.04);
+                            card.style.transform = `translate3d(0, ${depthOffset}px, -${depthOffset}px) scale(${scaleOffset})`;
+                        }
+                    });
+                }, 150);
+            } else {
+                // If all cards are swiped away, display the grand finale
+                hintBadge.style.display = 'none';
+                setTimeout(() => {
+                    photoStage.style.display = 'none';
+                    outerCanvas.style.opacity = '1'; // Bring floating background brightness back up completely
+                    finaleStage.classList.add('reveal');
+                }, 600);
+            }
         }
 
         // --- BACKGROUND GRAPHICS ENGINE ---

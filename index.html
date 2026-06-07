@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Magical Surprise for Meku</title>
+    <title>Birthday Gift ✨</title>
     <style>
-        /* Core System Reset */
+        /* Core Reset & Screen Lock */
         * {
             margin: 0;
             padding: 0;
@@ -15,16 +15,16 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            /* Luxurious dark purple cosmic backdrop gradient */
             background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            perspective: 1500px; /* Enhanced 3D depth perspective */
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
         }
         
-        /* Master Background Canvas */
+        /* Background Layer for Stars & Balloons */
         .bg-canvas {
             position: absolute;
             top: 0;
@@ -32,24 +32,26 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            transition: opacity 1.2s ease-out;
         }
 
-        /* Frosted Glass Initial Card Prompt */
+        /* Beautiful Frosted Glass Container */
         .card-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            width: 90%;
-            max-width: 380px;
+            position: relative;
+            z-index: 2;
+            width: 92%;
+            max-width: 390px;
+            height: auto;
             border-radius: 32px;
-            overflow: hidden;
+            overflow: hidden; /* Clips the internal animation to the card shape */
+            
+            /* High-end glassmorphism border and shadow */
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-            transition: all 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 
+                        0 0 30px rgba(255, 126, 179, 0.15);
+            animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
         }
+
+        /* The Animated Moving Color Layer inside the popup box */
         .card-bg-canvas {
             position: absolute;
             top: 0;
@@ -57,156 +59,137 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            /* Frosted blur filter effect */
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
         }
+
+        /* The Content Layer over the internal card animation */
         .card-content {
             position: relative;
             z-index: 2;
-            padding: 45px 30px;
+            padding: 40px 24px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.04);
-        }
-        h1 { font-size: 2.3rem; color: #fff; margin-bottom: 12px; font-weight: 800; }
-        p { font-size: 1.15rem; color: #fecfef; margin-bottom: 35px; font-weight: 300; }
-
-        /* Choice Buttons */
-        .btn-group { display: flex; gap: 15px; }
-        .btn { flex: 1; padding: 16px 20px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; outline: none; }
-        .btn-yes { background: linear-gradient(45deg, #ff4081, #ff758c); color: white; box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4); }
-        .btn-yes:hover { transform: translateY(-3px); }
-        .btn-no { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
-
-        /* --- THE 3D PHOTO STACK STAGE --- */
-        .photo-carousel-stage {
-            position: absolute;
-            top: 50%;
-            left: 150%; /* Slides in from the far right side */
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            width: 85%;
-            max-width: 400px;
-            aspect-ratio: 4/5;
-            transition: left 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-            transform-style: preserve-3d;
-        }
-        .photo-carousel-stage.show {
-            left: 50%;
+            background: rgba(255, 255, 255, 0.04); /* Soft premium tint */
         }
 
-        /* Photo Frame Structure */
-        .single-photo-card {
-            position: absolute;
+        /* Card Screen Display Architecture */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            padding: 10px;
-            background: linear-gradient(45deg, #ff4081, #00e5ff, #bca3ff);
-            background-size: 200% 200%;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
-            cursor: pointer;
-            transform-origin: center center;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1), opacity 0.8s ease;
         }
-        .photo-inner-frame {
-            width: 100%;
-            height: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #110022;
-            position: relative;
-        }
-        .photo-inner-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
+        .screen.active { display: flex; }
+
+        .screen.active .animate-fade {
+            animation: softReveal 0.8s ease-out forwards;
         }
 
-        /* Caption Panel Layout */
-        .card-caption-panel {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(10, 0, 25, 0.98) 0%, rgba(10, 0, 25, 0.85) 75%, transparent 100%);
-            padding: 45px 15px 25px 15px;
-            color: #fff;
-            text-align: center;
-            z-index: 5;
+        /* Decoration Layout */
+        .emoji-row {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
         }
-        .card-caption-title {
-            font-size: 1.35rem;
-            font-weight: 800;
-            margin-bottom: 8px;
+        .cute-sticker {
+            font-size: 3rem; 
+            margin-bottom: 12px; 
+            display: inline-block;
+            animation: floatSticker 4s ease-in-out infinite;
+        }
+
+        /* Elegant Glowing Typography */
+        h1 {
+            font-size: 2.2rem;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.7);
-        }
-        .card-caption-desc {
-            font-size: 0.92rem;
-            color: #fecfef;
-            line-height: 1.45;
-            font-weight: 400;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-        }
-
-        /* Floating Touch Indicator Hint */
-        .tap-hint-overlay {
-            position: absolute;
-            bottom: -55px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.65);
-            color: #fff;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            margin-bottom: 12px;
+            font-weight: 800;
             letter-spacing: 1px;
-            backdrop-filter: blur(5px);
-            z-index: 100;
-            pointer-events: none;
-            animation: pulseHint 1.2s infinite alternate;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
-
-        /* --- PREMIUM 3D GRAND FINALE TEXT --- */
-        .grand-finale {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotateX(-90deg) scale(0.3);
-            z-index: 30;
+        p {
+            font-size: 0.98rem; /* Slightly balanced text scale to display long paragraphs beautifully */
+            color: #fecfef;
+            opacity: 0.95;
+            margin-bottom: 28px;
+            font-weight: 400;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            line-height: 1.55;
             text-align: center;
-            width: 95%;
-            opacity: 0;
-            visibility: hidden;
-            transform-style: preserve-3d;
-            transition: all 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .grand-finale.reveal {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) rotateX(0deg) scale(1);
-        }
-        .hbd-text {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 2px;
-            line-height: 1.2;
-            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c5c5c5, 0 3px 0 #bbb, 0 4px 0 #b0b0b0, 0 5px 0 #a5a5a5,
-                         0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3),
-                         0 3px 5px rgba(0,0,0,.2), 0 7px 10px rgba(0,0,0,.25), 0 15px 25px rgba(255, 64, 129, 0.5);
-            animation: textPulse 2.5s infinite ease-in-out;
         }
 
-        /* Keyframe Engines */
-        @keyframes textPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        /* Interactive UI Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
         }
-        @keyframes pulseHint {
-            0% { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        .btn {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            outline: none;
+        }
+        .btn-yes {
+            background: linear-gradient(45deg, #ff4081, #ff758c);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+        }
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6);
+        }
+        .btn-no {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        .btn-no:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Memories Scrollable Photo Album Viewport */
+        .photo-container {
+            width: 100%; 
+            height: 38vh; 
+            overflow-y: scroll;
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            padding-right: 5px;
+            box-sizing: border-box; 
+            margin-top: 5px;
+        }
+        .photo-container::-webkit-scrollbar { width: 4px; }
+        .photo-container::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 10px; }
+        .birthday-photo { width: 100%; border-radius: 16px; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+
+        /* Animation Keyframe Pools */
+        @keyframes cardPopUp {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes softReveal {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes floatSticker {
+            0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
     </style>
 </head>
@@ -214,172 +197,102 @@
 
     <canvas id="outerBgCanvas" class="bg-canvas"></canvas>
 
-    <div class="card-container" id="mainCard">
+    <div class="card-container">
         <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
+        
         <div class="card-content">
-            <h1>Hello there Meku!</h1>
-            <p>Do you want to see your gift?</p>
-            <div class="btn-group">
-                <button class="btn btn-yes" onclick="showPhotoCarousel()">Yes Please</button>
-                <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="photo-carousel-stage" id="photoStage">
-        
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg" alt="Photo 1">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Happy June 8! 💖</div>
-                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success in everything you do!</div>
+            
+            <div id="screen1" class="screen active">
+                <div class="emoji-row">
+                    <span>🎉</span>
+                    <span>✨</span>
+                </div>
+                <h1>Happy Birthday Meku🎂</h1>
+                <p>do you want to see your gift?</p>
+                <div class="btn-group">
+                    <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
+                    <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
                 </div>
             </div>
-        </div>
 
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Photo 2">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Amazing Vibe 👑</div>
-                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you.</div>
+            <div id="screen2" class="screen">
+                <span class="cute-sticker">🔴⚽</span>
+                <h1 class="animate-fade">Favourite fan</h1>
+                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(3)">Next Thought ✨</button>
                 </div>
             </div>
-        </div>
 
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg" alt="Photo 3">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Endless Memories ✨</div>
-                    <div class="card-caption-desc">Have an incredible time celebrating your special day today.</div>
-                </div>.</div>
+            <div id="screen3" class="screen">
+                <span class="cute-sticker">✨🎂</span>
+                <h1 class="animate-fade">Special day</h1>
+                <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(4)">Continue... 👑</button>
                 </div>
             </div>
-        </div>
 
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg" alt="Photo 4">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Special Day 🎂</div>
-                    <div class="card-caption-desc">Have an incredible time celebrating your special day today. You are a truly special and beautiful girl, and anyone who gets to celebrate with you today is incredibly lucky. I hope your day is filled with endless laughter, love, and plenty of cake.</div>
+            <div id="screen4" class="screen">
+                <span class="cute-sticker">🌸👑</span>
+                <h1 class="animate-fade">Beautiful vibes</h1>
+                <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too! ⚽🔴</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
                 </div>
             </div>
-        </div>
 
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg" alt="Photo 5">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Favorite Fan 🔴⚽</div>
-                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan 🔴 Anchin yawekubetn menged sasebew yasikegnal, ena dmo silawekush I'm really happy. I hope you have the absolute best time celebrating with your friends today. Sending you my best wishes for a year full of happiness, health, and success. Have an amazing birthday, beautiful 🎂🍩🍔✨ Honestly, I'm really glad to knowyou.</div>
+            <div id="screen5" class="screen">
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Your Beautiful pictures 📸</h1>
+                <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 12px; font-style: italic; color: #fecfef;">Scroll down to see your beautiful pictures...</p>
+                
+                <div class="photo-container animate-fade">
+                    <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
+                    <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                 </div>
+                
+                <p class="signature animate-fade">Happy June 8! 🎂💖</p>
             </div>
-        </div>
-        
-        <div class="single-photo-card" onclick="cardClicked(this)">
-            <div class="photo-inner-frame">
-                <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg" alt="Photo 6">
-                <div class="card-caption-panel">
-                    <div class="card-caption-title">Valued Conversations 💬</div>
-                    <div class="card-caption-desc">I always value our conversations and love talking with you.</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tap-hint-overlay" id="hintBadge">Tap Photo to Next ➜</div>
-    </div>
 
-    <div class="grand-finale" id="finaleStage">
-        <div class="hbd-text">Happy Birthday<br>Meku 🎂 🥳 🎉</div>
+        </div>
     </div>
 
     <script>
-        const mainCard = document.getElementById('mainCard');
-        const outerCanvas = document.getElementById('outerBgCanvas');
-        const photoStage = document.getElementById('photoStage');
-        const finaleStage = document.getElementById('finaleStage');
-        const hintBadge = document.getElementById('hintBadge');
-
-        let cards = [];
-        let totalFlipped = 0;
-
-        function showPhotoCarousel() {
-            mainCard.style.opacity = '0';
-            mainCard.style.transform = 'translate(-50%, -100%) scale(0.5)';
-            outerCanvas.style.opacity = '0.4'; 
-            
-            setTimeout(() => {
-                mainCard.style.display = 'none';
-                photoStage.classList.add('show');
-                arrangeStack();
-            }, 800);
-        }
-
-        function arrangeStack() {
-            cards = Array.from(document.querySelectorAll('.single-photo-card'));
-            cards.forEach((card, index) => {
-                card.style.zIndex = index;
-                const activeRemainingPosition = (cards.length - 1 - index);
-                const depthOffset = activeRemainingPosition * 12;
-                const scaleOffset = 1 - (activeRemainingPosition * 0.04);
-                card.style.transform = `translate3d(0, ${depthOffset}px, -${depthOffset}px) scale(${scaleOffset})`;
-            });
-        }
-
-        function cardClicked(clickedCard) {
-            const currentTopIndex = cards.length - 1 - totalFlipped;
-            if (cards.indexOf(clickedCard) !== currentTopIndex) return;
-
-            clickedCard.style.transform = 'translate3d(-150%, -20px, 50px) rotate(-25deg)';
-            clickedCard.style.opacity = '0';
-            
-            totalFlipped++;
-
-            if (totalFlipped < cards.length) {
-                setTimeout(() => {
-                    cards.forEach((card, index) => {
-                        if (index <= currentTopIndex - 1) {
-                            const activeRemainingPosition = (currentTopIndex - 1) - index;
-                            const depthOffset = activeRemainingPosition * 12;
-                            const scaleOffset = 1 - (activeRemainingPosition * 0.04);
-                            card.style.transform = `translate3d(0, ${depthOffset}px, -${depthOffset}px) scale(${scaleOffset})`;
-                        }
-                    });
-                }, 150);
-            } else {
-                hintBadge.style.display = 'none';
-                setTimeout(() => {
-                    photoStage.style.display = 'none';
-                    outerCanvas.style.opacity = '1'; 
-                    finaleStage.classList.add('reveal');
-                }, 600);
+        /* SCREEN SELECTION CONTROLLER */
+        function nextScreen(screenNumber) {
+            const currentScreen = document.querySelector('.screen.active');
+            if (currentScreen) {
+                currentScreen.classList.remove('active');
+            }
+            const nextTarget = document.getElementById('screen' + screenNumber);
+            if (nextTarget) {
+                nextTarget.classList.add('active');
+                resizeCardCanvas();
             }
         }
 
-        // --- BACKGROUND GRAPHICS ENGINE ---
+        // === SCRIPT 1: OUTER BACKGROUND (Balloons & Sparkles) ===
         const bgCanvas = document.getElementById('outerBgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
-        const cardCanvas = document.getElementById('cardBgCanvas');
-        const cardCtx = cardCanvas.getContext('2d');
-        let bgElements = [], cardParticles = [];
+        let bgElements = [];
         const totalBalloons = 12;
         const totalSparkles = 35;
-        const totalBlobs = 12;
 
         const mouse = { x: null, y: null };
 
-        function initSizes() {
+        function resizeOuterCanvas() {
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
-            const rect = cardCanvas.parentElement.getBoundingClientRect();
-            cardCanvas.width = rect.width;
-            cardCanvas.height = rect.height;
         }
-        window.addEventListener('resize', initSizes);
-        
+        window.addEventListener('resize', resizeOuterCanvas);
+        resizeOuterCanvas();
+
+        /* POINTER TRAIL TRACKERS */
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -397,7 +310,9 @@
             }
         });
 
-        const themeColors = [{r:255,g:82,b:142}, {r:206,g:104,b:255}, {r:51,g:219,b:255}, {r:255,g:210,b:76}];
+        const themeColors = [
+            {r: 255, g: 82, b: 142}, {r: 206, g: 104, b: 255}, {r: 51, g: 219, b: 255}, {r: 255, g: 210, b: 76}
+        ];
 
         class OuterBalloon {
             constructor() { 
@@ -406,22 +321,23 @@
                 this.y = Math.random() * (bgCanvas.height + 200); 
             }
             reset() {
-                this.x = Math.random() * bgCanvas.width; 
+                this.x = Math.random() * bgCanvas.width;
                 this.y = bgCanvas.height + 100;
-                this.radius = Math.random() * 14 + 18; 
+                this.radius = Math.random() * 14 + 18;
                 this.color = themeColors[Math.floor(Math.random() * themeColors.length)];
-                this.speedY = Math.random() * 0.5 + 0.3; 
+                this.speedY = Math.random() * 0.5 + 0.3;
                 this.angle = Math.random() * Math.PI;
                 this.swingSpeed = Math.random() * 0.01 + 0.005;
             }
-            update() { 
-                this.y -= this.speedY; 
-                this.angle += this.swingSpeed; 
-                this.x += Math.sin(this.angle) * 0.4; 
-                if (this.y < -this.radius * 3) this.reset(); 
+            update() {
+                this.y -= this.speedY;
+                this.angle += this.swingSpeed;
+                this.x += Math.sin(this.angle) * 0.4;
+                if (this.y < -this.radius * 3) this.reset();
             }
             draw() {
-                bgCtx.save(); 
+                bgCtx.save();
+                
                 bgCtx.beginPath();
                 bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
                 bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);
@@ -429,8 +345,8 @@
                 bgCtx.lineWidth = 1;
                 bgCtx.stroke();
 
-                bgCtx.beginPath(); 
-                bgCtx.translate(this.x, this.y); 
+                bgCtx.beginPath();
+                bgCtx.translate(this.x, this.y);
                 bgCtx.scale(1, 1.3);
                 let grad = bgCtx.createRadialGradient(-this.radius*0.3, -this.radius*0.3, this.radius*0.1, 0, 0, this.radius);
                 grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
@@ -492,6 +408,20 @@
             }
         }
 
+        // === SCRIPT 2: INNER CARD ANIMATION ===
+        const cardCanvas = document.getElementById('cardBgCanvas');
+        const cardCtx = cardCanvas.getContext('2d');
+        let cardParticles = [];
+        const totalBlobs = 12;
+
+        function resizeCardCanvas() {
+            const rect = cardCanvas.parentElement.getBoundingClientRect();
+            cardCanvas.width = rect.width;
+            cardCanvas.height = rect.height;
+        }
+        window.addEventListener('resize', resizeCardCanvas);
+        setTimeout(resizeCardCanvas, 150);
+
         class CardLiquidBlob {
             constructor() {
                 this.x = Math.random() * 300;
@@ -515,3 +445,45 @@
             draw() {
                 cardCtx.beginPath();
                 let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                gradient.addColorStop(0, this.color + this.alpha + ')');
+                gradient.addColorStop(1, this.color + '0)');
+                cardCtx.fillStyle = gradient;
+                cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                cardCtx.fill();
+            }
+        }
+
+        function init() {
+            bgElements = [];
+            cardParticles = [];
+            
+            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
+            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
+            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
+        }
+
+        function runEngine() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            for (let i = 0; i < bgElements.length; i++) {
+                bgElements[i].update();
+                bgElements[i].draw();
+                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) {
+                    bgElements.splice(i, 1);
+                    i--;
+                }
+            }
+
+            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
+            for (let i = 0; i < cardParticles.length; i++) {
+                cardParticles[i].update();
+                cardParticles[i].draw();
+            }
+
+            requestAnimationFrame(runEngine);
+        }
+
+        init();
+        runEngine();
+    </script>
+</body>
+</html>

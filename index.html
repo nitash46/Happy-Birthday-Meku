@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Gift ✨</title>
+    <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
         * {
@@ -175,6 +175,7 @@
             background: linear-gradient(45deg, #00e5ff, #bca3ff);
             color: #110022;
             box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
+            width: 100%;
         }
         .btn-finale:hover {
             transform: translateY(-3px);
@@ -272,7 +273,7 @@
                     <span>🎂</span>
                     <span>✨</span>
                 </div>
-                <h1>Happy Birthday Meku🎉🎈</h1>
+                <h1>Happy Birthday Meku🎂🎈</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -283,7 +284,7 @@
             <div id="screen2" class="screen">
                 <span class="cute-sticker">🔴⚽</span>
                 <h1 class="animate-fade">Favourite fan</h1>
-                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴. You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you🥰. I hope your day is absolutely stunning, just like you.🤭</p>
+                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with ☺️, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude😇, and even though we don't get to hang out a lot, I’m really glad to know you🫡. I hope your day is absolutely beautiful, just like you🥰.</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
                 </div>
@@ -292,7 +293,7 @@
             <div id="screen3" class="screen">
                 <span class="cute-sticker">✨🎂</span>
                 <h1 class="animate-fade">Special day</h1>
-                <p class="animate-fade">Have an incredible time celebrating your special day today👌. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe😇. I’m truly grateful for our chats.🙏</p>
+                <p class="animate-fade">Have an incredible time celebrating your special day today🥳. Wishing you endless happiness, good health, and success in everything you do✌️. It’s so rare to meet someone with such a naturally beautiful attitude and vibe🤝. I’m truly grateful for our chats😇🫠.</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
                 </div>
@@ -301,7 +302,7 @@
             <div id="screen4" class="screen">
                 <span class="cute-sticker">🌸👑</span>
                 <h1 class="animate-fade">Beautiful vibes</h1>
-                <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories❄️.Here’s to a beautiful year of success, happiness, and non-stop Arsenal victories 🔴🏆😁</p>
+                <p class="animate-fade">You have such a beautiful vibe and attitude😇, and even though we don't hang out a lot🙄, I’m really glad to know you🤗. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat good food🍔🌮, and make some unforgettable memories📸. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too😁⚽😁</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
                 </div>
@@ -321,7 +322,20 @@
                     <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                 </div>
                 
-                <p class="signature animate-fade">Happy Day 🎂</p>
+                <div class="btn-group animate-fade" style="margin-top: 15px;">
+                    <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📭</button>
+                </div>
+            </div>
+
+            <div id="screen6" class="screen">
+                <span class="cute-sticker">🎵✨</span>
+                <h1 class="animate-fade" style="font-size: 1.9rem;">To the BirthdayGirl✨️🥰</h1>
+                <p class="animate-fade" style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+                    ​I hope you have an absolutely amazing birthday today🥳<br><br>
+                    Honestly, from the moment I first saw you🫩, your style left a huge impression you looked absolutely beautiful🥰, and I'd never really seen anyone style like that in real life before😇. Finding out you’re a Christian and that you sing just made your vibe even cooler💫🙃. I don't mean it in any other way 🙂‍↕️except that you are genuinely a great person who is so easy to like😇🥰😇. 
+                Our timing might be short 🕖, but the story of how I got to know you still makes me smile😇😉. I've never gone this far out of my way for someone before🤗, but I'm truly happy that we got to connect and that I met you at the end of the year🙏🥰.</p>
+                
+                <p class="signature animate-fade">Happy Birthday Mekuye 🎂🎉</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
                 </div>
@@ -332,8 +346,8 @@
 
     <div class="custom-popup-overlay" id="surprisePopup">
         <div class="popup-modal-content">
-            <h2>Happy Birthday Again Beautiful ✨🎂</h2>
-            <button class="btn btn-yes" onclick="closePopup()"> Thank You! 🥰</button>
+            <h2>Happy Birthday Again Beautiful ✨🎂💖</h2>
+            <button class="btn btn-yes" onclick="closePopup()">Aww, Thank You! 🥰</button>
         </div>
     </div>
 

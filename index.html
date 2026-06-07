@@ -217,7 +217,7 @@
     <div class="card-container" id="mainCard">
         <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
         <div class="card-content">
-            <h1>Happy Birthday Meku🎈</h1>
+            <h1>Hello there Meku!</h1>
             <p>Do you want to see your gift?</p>
             <div class="btn-group">
                 <button class="btn btn-yes" onclick="showPhotoCarousel()">Yes Please</button>
@@ -232,8 +232,8 @@
             <div class="photo-inner-frame">
                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg" alt="Photo 1">
                 <div class="card-caption-panel">
-                    <div class="card-caption-title">Happy Birthday 💖</div>
-                    <div class="card-caption-desc"> Wishing you endless happiness, good health, and success in everything you do! Make sure you take a break from everything today to just enjoy being celebrated. Eat way too much cake, make some unforgettable memories with your friends, and start this new chapter with the biggest smile. Cheers to an amazing year ahead</div>
+                    <div class="card-caption-title">Happy June 8! 💖</div>
+                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success in everything you do!</div>
                 </div>
             </div>
         </div>
@@ -243,7 +243,7 @@
                 <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Photo 2">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Amazing Vibe 👑</div>
-                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you. It’s rare to find people who are genuinely as cool and easygoing as you are. May this special day bring you endless laughter, love, and happiness. You deserve the absolute best</div>
+                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you.</div>
                 </div>
             </div>
         </div>
@@ -253,7 +253,8 @@
                 <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg" alt="Photo 3">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Endless Memories ✨</div>
-                    <div class="card-caption-desc">Have an incredible time celebrating your special day today. You are a truly special and beautiful girl, and anyone who gets to celebrate with you today is incredibly lucky. I hope your day is filled with endless laughter, love, and plenty of cake</div>
+                    <div class="card-caption-desc">Have an incredible time celebrating your special day today.</div>
+                </div>.</div>
                 </div>
             </div>
         </div>
@@ -263,7 +264,7 @@
                 <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg" alt="Photo 4">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Special Day 🎂</div>
-                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success.</div>
+                    <div class="card-caption-desc">Have an incredible time celebrating your special day today. You are a truly special and beautiful girl, and anyone who gets to celebrate with you today is incredibly lucky. I hope your day is filled with endless laughter, love, and plenty of cake.</div>
                 </div>
             </div>
         </div>
@@ -499,4 +500,18 @@
                 this.speedX = (Math.random() * 0.6) - 0.3;
                 this.speedY = (Math.random() * 0.6) - 0.3;
                 this.color = ['rgba(255, 64, 129, ', 'rgba(0, 229, 255, ', 'rgba(156, 39, 176, '][Math.floor(Math.random() * 3)];
-                this.alpha = Math.random() * 0.12
+                this.alpha = Math.random() * 0.12 + 0.08;
+                this.grow = Math.random() > 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
+                
+                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
+                else { this.radius -= 0.08; if(this.radius < 50) this.grow = true; }
+            }
+            draw() {
+                cardCtx.beginPath();
+                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);

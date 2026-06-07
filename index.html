@@ -123,29 +123,31 @@
             pointer-events: none;
         }
 
-        /* Customized Card Caption Overlays */
+        /* FIX: Expanded Caption Panel Layout to fit text fully */
         .card-caption-panel {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(transparent, rgba(15, 0, 34, 0.95) 45%);
-            padding: 30px 20px 20px 20px;
+            background: linear-gradient(to top, rgba(10, 0, 25, 0.95) 0%, rgba(10, 0, 25, 0.8) 70%, transparent 100%);
+            padding: 40px 20px 25px 20px;
             color: #fff;
             text-align: center;
             z-index: 5;
         }
         .card-caption-title {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            margin-bottom: 6px;
-            color: #fff;
+            margin-bottom: 8px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
         .card-caption-desc {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #fecfef;
-            line-height: 1.4;
-            font-weight: 300;
+            line-height: 1.5;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
         /* Floating Touch Indicator Hint */
@@ -230,8 +232,8 @@
             <div class="photo-inner-frame">
                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg" alt="Photo 1">
                 <div class="card-caption-panel">
-                    <div class="card-caption-title">Happy June 8! 💖</div>
-                    <div class="card-caption-desc">Wishing you endless happiness and success!</div>
+                    <div class="card-caption-title">Happy Birthday</div>
+                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success in everything you do</div>
                 </div>
             </div>
         </div>
@@ -241,7 +243,7 @@
                 <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Photo 2">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Amazing Vibe 👑</div>
-                    <div class="card-caption-desc">Even though we don't hang out a lot, I'm really glad to know you.</div>
+                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you.</div>
                 </div>
             </div>
         </div>
@@ -261,7 +263,7 @@
                 <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg" alt="Photo 4">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Special Day 🎂</div>
-                    <div class="card-caption-desc">Wishing you good health, love, and light in everything you do.</div>
+                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success.</div>
                 </div>
             </div>
         </div>
@@ -271,7 +273,7 @@
                 <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg" alt="Photo 5">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Favorite Fan 🔴⚽</div>
-                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan!</div>
+                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan! You are genuinely such a cool person to chat with.</div>
                 </div>
             </div>
         </div>
@@ -281,7 +283,7 @@
                 <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg" alt="Photo 6">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Valued Conversations 💬</div>
-                    <div class="card-caption-desc">You're genuinely such a cool person to chat with.</div>
+                    <div class="card-caption-desc">I always value our conversations and love talking with you.</div>
                 </div>
             </div>
         </div>
@@ -290,7 +292,7 @@
     </div>
 
     <div class="grand-finale" id="finaleStage">
-        <div class="hbd-text">Happy Birthday<br>Meku 🎂 🥳 🎉</div>
+        <div class="hbd-text">Happy Birthday<br>Meku 🎂</div>
     </div>
 
     <script>
@@ -303,11 +305,10 @@
         let cards = [];
         let totalFlipped = 0;
 
-        // Step 1: Slides the carousel stack in from the right edge
         function showPhotoCarousel() {
             mainCard.style.opacity = '0';
             mainCard.style.transform = 'translate(-50%, -100%) scale(0.5)';
-            outerCanvas.style.opacity = '0.4'; /* Keep background elements visible at perfect clarity balance */
+            outerCanvas.style.opacity = '0.4'; 
             
             setTimeout(() => {
                 mainCard.style.display = 'none';
@@ -316,32 +317,26 @@
             }, 800);
         }
 
-        // Logic to layer the 6 photos cleanly into a deck cards stack layout
         function arrangeStack() {
             cards = Array.from(document.querySelectorAll('.single-photo-card'));
             cards.forEach((card, index) => {
                 card.style.zIndex = index;
-                // Layer spacing offsets to create depth deck positioning
-                const depthOffset = (cards.length - 1 - index) * 12;
-                const scaleOffset = 1 - ((cards.length - 1 - index) * 0.04);
+                const activeRemainingPosition = (cards.length - 1 - index);
+                const depthOffset = activeRemainingPosition * 12;
+                const scaleOffset = 1 - (activeRemainingPosition * 0.04);
                 card.style.transform = `translate3d(0, ${depthOffset}px, -${depthOffset}px) scale(${scaleOffset})`;
             });
         }
 
-        // Click handler to swipe away the top card and reveal the next one underneath
         function cardClicked(clickedCard) {
             const currentTopIndex = cards.length - 1 - totalFlipped;
-            
-            // Only allow clicking the top card
             if (cards.indexOf(clickedCard) !== currentTopIndex) return;
 
-            // Swipe card off to the left dynamically with a rotation twist
             clickedCard.style.transform = 'translate3d(-150%, -20px, 50px) rotate(-25deg)';
             clickedCard.style.opacity = '0';
             
             totalFlipped++;
 
-            // If there are cards remaining, shift the stack forward to create responsive movement
             if (totalFlipped < cards.length) {
                 setTimeout(() => {
                     cards.forEach((card, index) => {
@@ -354,11 +349,10 @@
                     });
                 }, 150);
             } else {
-                // If all cards are swiped away, display the grand finale
                 hintBadge.style.display = 'none';
                 setTimeout(() => {
                     photoStage.style.display = 'none';
-                    outerCanvas.style.opacity = '1'; // Bring floating background brightness back up completely
+                    outerCanvas.style.opacity = '1'; 
                     finaleStage.classList.add('reveal');
                 }, 600);
             }
@@ -385,7 +379,6 @@
         }
         window.addEventListener('resize', initSizes);
         
-        /* POINTER TRAIL TRACKERS */
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
@@ -428,7 +421,6 @@
             }
             draw() {
                 bgCtx.save(); 
-                
                 bgCtx.beginPath();
                 bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
                 bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);

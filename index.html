@@ -123,14 +123,14 @@
             pointer-events: none;
         }
 
-        /* FIX: Expanded Caption Panel Layout to fit text fully */
+        /* Caption Panel Layout */
         .card-caption-panel {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(to top, rgba(10, 0, 25, 0.95) 0%, rgba(10, 0, 25, 0.8) 70%, transparent 100%);
-            padding: 40px 20px 25px 20px;
+            background: linear-gradient(to top, rgba(10, 0, 25, 0.98) 0%, rgba(10, 0, 25, 0.85) 75%, transparent 100%);
+            padding: 45px 15px 25px 15px;
             color: #fff;
             text-align: center;
             z-index: 5;
@@ -140,14 +140,14 @@
             font-weight: 800;
             margin-bottom: 8px;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.7);
         }
         .card-caption-desc {
-            font-size: 1rem;
+            font-size: 0.92rem;
             color: #fecfef;
-            line-height: 1.5;
+            line-height: 1.45;
             font-weight: 400;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
         }
 
         /* Floating Touch Indicator Hint */
@@ -217,7 +217,7 @@
     <div class="card-container" id="mainCard">
         <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
         <div class="card-content">
-            <h1>Hello there Meku!</h1>
+            <h1>Happy Birthday Meku🎈</h1>
             <p>Do you want to see your gift?</p>
             <div class="btn-group">
                 <button class="btn btn-yes" onclick="showPhotoCarousel()">Yes Please</button>
@@ -232,8 +232,8 @@
             <div class="photo-inner-frame">
                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg" alt="Photo 1">
                 <div class="card-caption-panel">
-                    <div class="card-caption-title">Happy Birthday</div>
-                    <div class="card-caption-desc">Wishing you endless happiness, good health, and success in everything you do</div>
+                    <div class="card-caption-title">Happy Birthday 💖</div>
+                    <div class="card-caption-desc"> Wishing you endless happiness, good health, and success in everything you do! Make sure you take a break from everything today to just enjoy being celebrated. Eat way too much cake, make some unforgettable memories with your friends, and start this new chapter with the biggest smile. Cheers to an amazing year ahead</div>
                 </div>
             </div>
         </div>
@@ -243,7 +243,7 @@
                 <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Photo 2">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Amazing Vibe 👑</div>
-                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you.</div>
+                    <div class="card-caption-desc">You have such a beautiful vibe and attitude, and I'm really glad to know you. It’s rare to find people who are genuinely as cool and easygoing as you are. May this special day bring you endless laughter, love, and happiness. You deserve the absolute best</div>
                 </div>
             </div>
         </div>
@@ -253,7 +253,7 @@
                 <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg" alt="Photo 3">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Endless Memories ✨</div>
-                    <div class="card-caption-desc">Have an incredible time celebrating your special day today.</div>
+                    <div class="card-caption-desc">Have an incredible time celebrating your special day today. You are a truly special and beautiful girl, and anyone who gets to celebrate with you today is incredibly lucky. I hope your day is filled with endless laughter, love, and plenty of cake</div>
                 </div>
             </div>
         </div>
@@ -273,7 +273,7 @@
                 <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg" alt="Photo 5">
                 <div class="card-caption-panel">
                     <div class="card-caption-title">Favorite Fan 🔴⚽</div>
-                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan! You are genuinely such a cool person to chat with.</div>
+                    <div class="card-caption-desc">Happy Birthday to my favorite Arsenal fan 🔴 Anchin yawekubetn menged sasebew yasikegnal, ena dmo silawekush I'm really happy. I hope you have the absolute best time celebrating with your friends today. Sending you my best wishes for a year full of happiness, health, and success. Have an amazing birthday, beautiful 🎂🍩🍔✨ Honestly, I'm really glad to knowyou.</div>
                 </div>
             </div>
         </div>
@@ -292,7 +292,7 @@
     </div>
 
     <div class="grand-finale" id="finaleStage">
-        <div class="hbd-text">Happy Birthday<br>Meku 🎂</div>
+        <div class="hbd-text">Happy Birthday<br>Meku 🎂 🥳 🎉</div>
     </div>
 
     <script>
@@ -499,62 +499,4 @@
                 this.speedX = (Math.random() * 0.6) - 0.3;
                 this.speedY = (Math.random() * 0.6) - 0.3;
                 this.color = ['rgba(255, 64, 129, ', 'rgba(0, 229, 255, ', 'rgba(156, 39, 176, '][Math.floor(Math.random() * 3)];
-                this.alpha = Math.random() * 0.12 + 0.08;
-                this.grow = Math.random() > 0.5;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
-                
-                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
-                else { this.radius -= 0.08; if(this.radius < 50) this.grow = true; }
-            }
-            draw() {
-                cardCtx.beginPath();
-                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-                gradient.addColorStop(0, this.color + this.alpha + ')');
-                gradient.addColorStop(1, this.color + '0)');
-                cardCtx.fillStyle = gradient;
-                cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                cardCtx.fill();
-            }
-        }
-
-        function init() {
-            initSizes();
-            bgElements = [];
-            cardParticles = [];
-            
-            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
-            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
-            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
-        }
-
-        function runEngine() {
-            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-            for (let i = 0; i < bgElements.length; i++) {
-                bgElements[i].update();
-                bgElements[i].draw();
-                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) {
-                    bgElements.splice(i, 1);
-                    i--;
-                }
-            }
-
-            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
-            for (let i = 0; i < cardParticles.length; i++) {
-                cardParticles[i].update();
-                cardParticles[i].draw();
-            }
-
-            requestAnimationFrame(runEngine);
-        }
-
-        init();
-        setTimeout(initSizes, 150);
-        runEngine();
-    </script>
-</body>
-</html>
+                this.alpha = Math.random() * 0.12

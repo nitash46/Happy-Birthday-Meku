@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Gift ✨</title>
+    <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
         * {
@@ -161,6 +161,16 @@
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
+        .btn-finale {
+            margin-top: 15px;
+            background: linear-gradient(45deg, #00e5ff, #bca3ff);
+            color: #110022;
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
+        }
+        .btn-finale:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
+        }
 
         /* Memories Scrollable Photo Album Viewport */
         .photo-container {
@@ -177,7 +187,53 @@
         .photo-container::-webkit-scrollbar { width: 4px; }
         .photo-container::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 10px; }
         .birthday-photo { width: 100%; border-radius: 16px; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 5px; }
+
+        /* Premium Custom Pop-up Modal Box Overlay */
+        .custom-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 0, 25, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .custom-popup-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-modal-content {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 30px;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.7);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .custom-popup-overlay.open .popup-modal-content {
+            transform: scale(1);
+        }
+        .popup-modal-content h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            font-weight: 800;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 64, 129, 0.6);
+        }
 
         /* Animation Keyframe Pools */
         @keyframes cardPopUp {
@@ -204,7 +260,7 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>🎉</span>
+                    <span>🐱</span>
                     <span>✨</span>
                 </div>
                 <h1>Happy Birthday Meku🎂</h1>
@@ -220,7 +276,7 @@
                 <h1 class="animate-fade">Favourite fan</h1>
                 <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
                 <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(3)">Next Thought ✨</button>
+                    <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
                 </div>
             </div>
 
@@ -229,7 +285,7 @@
                 <h1 class="animate-fade">Special day</h1>
                 <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
                 <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(4)">Continue... 👑</button>
+                    <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
                 </div>
             </div>
 
@@ -243,7 +299,7 @@
             </div>
 
             <div id="screen5" class="screen">
-                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Your Beautiful pictures 📸</h1>
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Our Memories 📸</h1>
                 <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 12px; font-style: italic; color: #fecfef;">Scroll down to see your beautiful pictures...</p>
                 
                 <div class="photo-container animate-fade">
@@ -256,9 +312,19 @@
                     <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                 </div>
                 
-                <p class="signature animate-fade">Happy June 8! 🎂💖</p>
+                <p class="signature animate-fade">Happy June  🎂🎉</p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
+                </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="custom-popup-overlay" id="surprisePopup">
+        <div class="popup-modal-content">
+            <h2>Happy Birthday Again Beautiful ✨🎂</h2>
+            <button class="btn btn-yes" onclick="closePopup()">Aww, Thank You! 🥰</button>
         </div>
     </div>
 
@@ -274,6 +340,14 @@
                 nextTarget.classList.add('active');
                 resizeCardCanvas();
             }
+        }
+
+        /* SURPRISE POPUP CONTROLLERS */
+        function openPopup() {
+            document.getElementById('surprisePopup').classList.add('open');
+        }
+        function closePopup() {
+            document.getElementById('surprisePopup').classList.remove('open');
         }
 
         // === SCRIPT 1: OUTER BACKGROUND (Balloons & Sparkles) ===

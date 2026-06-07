@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Gift ✨</title>
+    <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
         * {
@@ -42,7 +42,7 @@
             max-width: 390px;
             height: auto;
             border-radius: 32px;
-            overflow: hidden; /* Clips the internal animation to the card shape */
+            overflow: hidden; /* Clips internal transitions cleanly */
             
             /* High-end glassmorphism border and shadow */
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -73,17 +73,26 @@
             background: rgba(255, 255, 255, 0.04); /* Soft premium tint */
         }
 
-        /* Card Screen Display Architecture */
+        /* Cinematic Cast Screen Display Architecture */
         .screen {
             display: none;
             flex-direction: column;
             align-items: center;
             width: 100%;
+            opacity: 0;
+            transform: translateY(25px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.33, 1, 0.68, 1); /* Theatre Cast entrance feel */
         }
-        .screen.active { display: flex; }
+        
+        .screen.active { 
+            display: flex; 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
 
+        /* Internal staggered cast effects */
         .screen.active .animate-fade {
-            animation: softReveal 0.8s ease-out forwards;
+            animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
         }
 
         /* Decoration Layout */
@@ -112,7 +121,7 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
         p {
-            font-size: 0.98rem; /* Slightly balanced text scale to display long paragraphs beautifully */
+            font-size: 0.98rem; /* Balanced text scale */
             color: #fecfef;
             opacity: 0.95;
             margin-bottom: 28px;
@@ -240,9 +249,9 @@
             0% { transform: scale(0.85); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        @keyframes softReveal {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes castReveal {
+            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
@@ -260,10 +269,10 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>🎂</span>
+                    <span>😝</span>
                     <span>✨</span>
                 </div>
-                <h1>Happy Birthday Meku🎂</h1>
+                <h1>Hello there Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -312,7 +321,7 @@
                     <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                 </div>
                 
-                <p class="signature animate-fade">Happy Day Pretty 🥰🎉</p>
+                <p class="signature animate-fade">Happy June 8! 🎂💖</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
                 </div>
@@ -323,22 +332,38 @@
 
     <div class="custom-popup-overlay" id="surprisePopup">
         <div class="popup-modal-content">
-            <h2>Happy Birthday Again Beautiful ✨🎂</h2>
-            <button class="btn btn-yes" onclick="closePopup()">Thank You 🥰</button>
+            <h2>Happy Birthday Again Beautiful ✨🎂💖</h2>
+            <button class="btn btn-yes" onclick="closePopup()">Aww, Thank You! 🥰</button>
         </div>
     </div>
 
     <script>
-        /* SCREEN SELECTION CONTROLLER */
+        /* SCREEN SELECTION CONTROLLER WITH CINEMATIC TIMING */
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
+            
             if (currentScreen) {
-                currentScreen.classList.remove('active');
-            }
-            const nextTarget = document.getElementById('screen' + screenNumber);
-            if (nextTarget) {
-                nextTarget.classList.add('active');
-                resizeCardCanvas();
+                // Instantly start fade out sequence
+                currentScreen.style.opacity = '0';
+                currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
+                currentScreen.style.filter = 'blur(4px)';
+                
+                setTimeout(() => {
+                    currentScreen.classList.remove('active');
+                    currentScreen.style.filter = ''; // clear out style
+                    
+                    const nextTarget = document.getElementById('screen' + screenNumber);
+                    if (nextTarget) {
+                        nextTarget.classList.add('active');
+                        resizeCardCanvas();
+                        
+                        // Force layout update before cinematic entry triggers
+                        setTimeout(() => {
+                            nextTarget.style.opacity = '1';
+                            nextTarget.style.transform = 'translateY(0) scale(1)';
+                        }, 50);
+                    }
+                }, 400); // Perfect crossover gap duration
             }
         }
 
@@ -411,7 +436,6 @@
             }
             draw() {
                 bgCtx.save();
-                
                 bgCtx.beginPath();
                 bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
                 bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);

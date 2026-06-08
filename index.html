@@ -11,28 +11,25 @@
             padding: 0;
             box-sizing: border-box;
         }
-        /* Add this to your <style> section */
+/* --- Visual Spacing Fixes --- */
 
-/* Gap between Title and Photo Carousel */
-#screen5 h1 {
-    margin-bottom: 30px; 
+/* 1. Gap below the 'Our Memories' Title */
+#screen5 h1, h1 {
+    margin-top: 10px;
+    margin-bottom: 35px; /* Pushes the carousel down */
 }
 
-/* Gap between Photo Carousel and Buttons/Text below */
-.mobile-stage {
-    margin-top: 20px;
-    margin-bottom: 25px;
+/* 2. Spacing around the Image Carousel */
+.mobile-stage, .showcase-wrapper {
+    margin-top: 20px;    /* Extra safety gap below title */
+    margin-bottom: 40px; /* Pushes the 'Swipe' text and buttons down */
 }
 
-/* Gap between Image and Text in Screen 7 */
-.showcase-wrapper {
-    margin-top: 25px;
-    margin-bottom: 25px;
-}/* Push the title up and create space below it */
-h1 {
-    margin-top: -20px; 
-    margin-bottom: 30px; 
+/* 3. Gap above the bottom button */
+button, .btn, [class*="button"] {
+    margin-top: 20px;    /* Ensures button doesn't hug the text */
 }
+
 
 /* Force the carousel to have space below it */
 .mobile-stage {
@@ -124,11 +121,15 @@ h1 {
         }
 
 
-        .screen.active { 
-            display: flex; 
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        .screen.active {
+    display: flex;
+    flex-direction: column; /* Ensures layout flows top-to-bottom */
+    justify-content: space-between; /* Spreads elements out to utilize the whole height */
+    gap: 30px; /* Forcefully injects a 30px gap between every element inside */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 
         .screen.active .animate-fade {
             animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
@@ -497,7 +498,7 @@ h1 {
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>😜</span><span>✨</span></div>
+                <div class="emoji-row"><span>😜 mat</span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️ </h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">

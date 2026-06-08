@@ -1,4 +1,11 @@
-Here is the exact code block you requested, fully compiled with all custom updates seamlessly built right in:
+Ah, I see what went wrong! It looks like you accidentally pasted my introductory chat message ("*Here is the exact code block you requested...*") directly into your file or code area instead of copying **just** the actual code inside the box.
+Because of that, the browser is literally printing my text right onto the background, and it broke the hidden styling rules, causing the entire container card to shift off-center and squeeze to the right side of the screen.
+Let's fix this up right now!
+### How to Fix It:
+ 1. **Go back to your GitHub repository** to edit your index.html file.
+ 2. **Clear out everything** currently in that file.
+ 3. Make sure you **only copy what is inside the code box below** (click the "Copy" button on the code block to be completely safe, ensuring no chat text gets bundled in).
+Here is the clean, corrected code for your file:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -290,7 +297,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
             cursor: pointer;
             user-select: none;
             transform-origin: center center;
-            /* Slower, smooth transition mechanics applied here */
             transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease;
         }
 
@@ -474,8 +480,8 @@ Here is the exact code block you requested, fully compiled with all custom updat
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>😇🥰😍</span><span>✨</span></div>
-                <h1>Hello there Meku!</h1>
+                <div class="emoji-row"><span>💔❣️</span><span>✨</span></div>
+                <h1>He Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -620,7 +626,7 @@ Here is the exact code block you requested, fully compiled with all custom updat
                             <div class="photo-frame">
                                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                             </div>
-                            <div class="caption text-standard">💌 Tap to reveal our love story...</div>
+                            <div class="caption text-standard">💌 Tap to reveal...</div>
                         </div>
                     </div>
 
@@ -653,7 +659,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
     </div>
 
     <script>
-        // Polaroid Stack Logic Variables (Deck 1 - Page 5)
         let currentTopIndex = 5;
         const stackCards = document.querySelectorAll('#cardStack .memory-card');
 
@@ -681,7 +686,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
             btn.innerHTML = "Next Card →";
         }
 
-        // Polaroid Stack Logic Variables (Deck 2 - Page 7)
         let loveTopIndex = 5;
         const loveCards = document.querySelectorAll('#loveStoryStack .memory-card');
 
@@ -709,7 +713,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
             btn.innerHTML = "Next Memory →";
         }
 
-        // Global Swipe Handler Navigation Setup
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -725,14 +728,13 @@ Here is the exact code block you requested, fully compiled with all custom updat
         function handleSwipeGesture() {
             const swipeDistance = touchEndX - touchStartX;
             if (document.getElementById('screen5').classList.contains('active')) {
-                if (swipeDistance < -60) nextCard(); // Left swipe
+                if (swipeDistance < -60) nextCard();
             }
             if (document.getElementById('screen7').classList.contains('active')) {
-                if (swipeDistance > 60) nextLoveCard(); // Right swipe
+                if (swipeDistance > 60) nextLoveCard();
             }
         }
 
-        // Screen transition coordinator
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
@@ -749,7 +751,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
                         nextTarget.classList.add('active');
                         resizeCardCanvas();
                         
-                        // Handle canvas switching conditions
                         const heartLayer = document.getElementById('heartCanvas');
                         if(screenNumber === 7) {
                             heartLayer.classList.add('active');
@@ -807,7 +808,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
             setTimeout(() => orb.remove(), 1200);
         }
 
-        // Background Engine Layout Configurations
         const bgCanvas = document.getElementById('outerBgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
         let bgElements = [];
@@ -907,7 +907,6 @@ Here is the exact code block you requested, fully compiled with all custom updat
             }
         }
 
-        // --- Dynamic Canvas Romantic Heart Background Engine ---
         const heartCanvas = document.getElementById('heartCanvas');
         const heartCtx = heartCanvas.getContext('2d');
         let heartParticlesArray = [];
@@ -933,7 +932,7 @@ Here is the exact code block you requested, fully compiled with all custom updat
                 const topCurveHeight = this.size * 0.3; heartCtx.moveTo(this.x, this.y + topCurveHeight);
                 heartCtx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
                 heartCtx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
-                heartCtx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                heartCtx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, topCurveHeight);
                 heartCtx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
                 heartCtx.closePath(); heartCtx.fill(); heartCtx.restore();
             }

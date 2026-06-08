@@ -6,234 +6,85 @@
   <title>Magical Birthday Gift ✨</title>
   <style>
     /* Core Reset & Screen Lock */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      width: 100%; height: 100%; overflow: hidden;
       background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      display: flex; justify-content: center; align-items: center; position: relative;
     }
     
-    .bg-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    #heartCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      display: none;
-    }
-    #heartCanvas.active {
-      display: block;
-    }
+    .bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    #heartCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; display: none; }
+    #heartCanvas.active { display: block; }
 
     .card-container {
-      position: relative;
-      z-index: 2;
-      width: 92%;
-      max-width: 390px;
-      height: auto;
-      border-radius: 32px;
-      overflow: hidden;
+      position: relative; z-index: 2;
+      width: 92%; max-width: 390px; height: auto;
+      border-radius: 32px; overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
       animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
       transition: all 0.5s ease;
     }
 
-    .card-bg-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-    }
+    .card-bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
 
-    .card-content {
-      position: relative;
-      z-index: 2;
-      padding: 35px 24px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.04);
-    }
+    .card-content { position: relative; z-index: 2; padding: 35px 24px; text-align: center; background: rgba(255, 255, 255, 0.04); }
 
     .screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      opacity: 0;
+      display: none; flex-direction: column; align-items: center;
+      width: 100%; opacity: 0;
       transform: translateY(25px) scale(0.95);
       transition: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
     }
     
-    .screen.active { 
-      display: flex; 
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+    .screen.active { display: flex; opacity: 1; transform: translateY(0) scale(1); }
+    .screen.active .animate-fade { animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards; }
 
-    .screen.active .animate-fade {
-      animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
-    }
+    .emoji-row { font-size: 2.8rem; margin-bottom: 20px; display: flex; justify-content: center; gap: 15px; align-items: center; }
+    .cute-sticker { font-size: 3rem; margin-bottom: 12px; display: inline-block; animation: floatSticker 4s ease-in-out infinite; }
 
-    .emoji-row {
-      font-size: 2.8rem;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      align-items: center;
-    }
-    .cute-sticker {
-      font-size: 3rem; 
-      margin-bottom: 12px; 
-      display: inline-block;
-      animation: floatSticker 4s ease-in-out infinite;
-    }
+    h1 { font-size: 2.2rem; color: #ffffff; margin-bottom: 12px; font-weight: 800; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
+    p { font-size: 0.98rem; color: #fecfef; opacity: 0.95; margin-bottom: 25px; font-weight: 400; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); line-height: 1.55; text-align: center; }
 
-    h1 {
-      font-size: 2.2rem;
-      color: #ffffff;
-      margin-bottom: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    }
-    p {
-      font-size: 0.98rem;
-      color: #fecfef;
-      opacity: 0.95;
-      margin-bottom: 25px;
-      font-weight: 400;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-      line-height: 1.55;
-      text-align: center;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      justify-content: center;
-      z-index: 60;
-      margin-top: 10px;
-    }
-    .screen:not(#screen5) .btn-group {
-      flex-direction: row;
-    }
+    .btn-group { display: flex; flex-direction: column; gap: 12px; width: 100%; justify-content: center; z-index: 60; margin-top: 10px; }
+    .screen:not(#screen5) .btn-group { flex-direction: row; }
     .btn {
-      flex: 1;
-      padding: 16px 20px;
-      border-radius: 50px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      outline: none;
+      flex: 1; padding: 16px 20px; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 700; border: none;
+      cursor: pointer; transition: all 0.3s ease;
+      text-transform: uppercase; letter-spacing: 0.5px; outline: none;
     }
-    .btn-yes {
-      background: linear-gradient(45deg, #ff4081, #ff758c);
-      color: white;
-      box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
-    }
-    .btn-yes:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6);
-    }
-    .btn-no {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(5px);
-    }
-    .btn-no:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
+    .btn-yes { background: linear-gradient(45deg, #ff4081, #ff758c); color: white; box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4); }
+    .btn-yes:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6); }
+    .btn-no { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px); }
+    .btn-no:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
 
     /* --- 7-CARD DECK STACK INTEGRATION (SCREEN 5) --- */
-    .stack-container {
-      width: 82vw;
-      height: 42vh;
-      max-width: 280px;
-      max-height: 380px;
-      position: relative;
-      perspective: 1200px;
-      margin: 15px auto 25px auto;
-    }
+    .stack-container { width: 82vw; height: 42vh; max-width: 280px; max-height: 380px; position: relative; perspective: 1200px; margin: 15px auto 25px auto; }
 
     .memory-card {
-      position: absolute;
-      width: 100%; height: 100%;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 10px 10px 48px 10px;
-      box-sizing: border-box;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      user-select: none;
+      position: absolute; width: 100%; height: 100%;
+      background: #ffffff; border-radius: 20px;
+      padding: 10px 10px 48px 10px; box-sizing: border-box;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5); cursor: pointer; user-select: none;
       border: 1px solid rgba(255, 255, 255, 0.8);
       transform-origin: center bottom;
       transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease, filter 0.6s ease;
     }
 
-    .memory-card .photo-frame {
-      width: 100%; height: 100%;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-      background-color: #150e1f;
-    }
+    .memory-card .photo-frame { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; position: relative; background-color: #150e1f; }
+    .memory-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-    .memory-card img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-
-    .caption {
-      position: absolute;
-      bottom: 14px; left: 0;
-      width: 100%;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.3px;
-    }
+    .caption { position: absolute; bottom: 14px; left: 0; width: 100%; text-align: center; font-weight: 700; font-size: 1rem; letter-spacing: 0.3px; }
     .text-rose { color: #db2777; }
     .text-gold { color: #d97706; }
     .text-magic {
       background: linear-gradient(to right, #ec4899, #8b5cf6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      color: #ec4899;
+      color: transparent;
     }
 
     /* 7-Card Layering Depths */
@@ -247,128 +98,54 @@
 
     .memory-card.dismissed {
       transform: translateY(-100px) translateZ(120px) rotateX(55deg) scale(0.8) !important;
-      opacity: 0 !important;
-      filter: blur(12px) !important;
-      pointer-events: none;
+      opacity: 0 !important; filter: blur(12px) !important; pointer-events: none;
     }
 
     /* Interactive 3D Frame Setup for final image */
-    .card-0 {
-      transform-style: preserve-3d;
-      border: 2px solid #ec4899;
-      box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
-      transition: transform 0.1s ease, opacity 0.6s ease;
-    }
+    .card-0 { transform-style: preserve-3d; border: 2px solid #ec4899; box-shadow: 0 0 30px rgba(236, 72, 153, 0.4); transition: transform 0.1s ease, opacity 0.6s ease; }
 
-    /* --- THE 3D CAKE OVERLAY REVEAL --- */
+    /* --- THE 3D HAPPY BIRTHDAY REVEAL --- */
     .birthday-overlay {
-      width: 100%;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transform: scale(0.8);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: none; flex-direction: column; justify-content: center; align-items: center;
+      opacity: 0; transform: scale(0.8);
       transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-align: center;
-      padding: 10px;
-      box-sizing: border-box;
-      margin-bottom: 15px;
+      text-align: center; padding: 20px; box-sizing: border-box; z-index: 5;
     }
     
-    .birthday-overlay.show {
-      display: flex;
-      opacity: 1;
-      transform: scale(1);
-    }
+    .birthday-overlay.show { display: flex; opacity: 1; transform: scale(1); pointer-events: auto; }
 
     .bday-title {
-      font-size: 2.1rem;
-      font-weight: 900;
-      margin: 0;
-      text-transform: uppercase;
+      font-size: 2.1rem; font-weight: 900; margin: 0; text-transform: uppercase;
       background: linear-gradient(135deg, #ff007f, #ff7700, #ffec00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       text-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
       animation: titleFloat 3s ease-in-out infinite alternate;
     }
 
-    .bday-sub {
-      color: #e2e8f0;
-      font-size: 1rem;
-      margin-top: 8px;
-      font-weight: 500;
-      opacity: 0.9;
-    }
+    .bday-sub { color: #e2e8f0; font-size: 1rem; margin-top: 8px; font-weight: 500; opacity: 0.9; }
 
-    .cake-container {
-      width: 110px; height: 110px;
-      margin-top: 20px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: spinCake 8s linear infinite;
-    }
-    .cake-layer {
-      position: absolute;
-      background: linear-gradient(to bottom, #f43f5e, #ec4899);
-      border-radius: 50%;
-      box-shadow: 0 7px 0 #be123c, inset 0 3px 0 rgba(255,255,255,0.3);
-    }
+    .cake-container { width: 110px; height: 110px; margin-top: 20px; position: relative; transform-style: preserve-3d; animation: spinCake 8s linear infinite; }
+    .cake-layer { position: absolute; background: linear-gradient(to bottom, #f43f5e, #ec4899); border-radius: 50%; box-shadow: 0 7px 0 #be123c, inset 0 3px 0 rgba(255,255,255,0.3); }
     .cake-bottom { width: 90px; height: 36px; bottom: 10px; left: 10px; }
     .cake-top { width: 64px; height: 26px; bottom: 36px; left: 23px; background: linear-gradient(to bottom, #a855f7, #7e22ce); box-shadow: 0 5px 0 #6b21a8; }
-    .candle {
-      position: absolute;
-      width: 5px; height: 22px;
-      background: #fde047;
-      bottom: 58px; left: 52px;
-      border-radius: 2px;
-    }
-    .flame {
-      position: absolute;
-      width: 9px; height: 13px;
-      background: #f97316;
-      border-radius: 50% 50% 20% 20%;
-      bottom: 80px; left: 50px;
-      animation: flicker 0.2s alternate infinite;
-      box-shadow: 0 0 12px #f97316;
-    }
+    .candle { position: absolute; width: 5px; height: 22px; background: #fde047; bottom: 58px; left: 52px; border-radius: 2px; }
+    .flame { position: absolute; width: 9px; height: 13px; background: #f97316; border-radius: 50% 50% 20% 20%; bottom: 80px; left: 50px; animation: flicker 0.2s alternate infinite; box-shadow: 0 0 12px #f97316; }
 
-    .stack-button-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-      margin-bottom: 12px;
-    }
+    .stack-button-group { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; margin-bottom: 12px; }
     .stack-action-btn {
-      padding: 12px 35px;
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      cursor: pointer;
+      padding: 12px 35px; background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white; border: none; border-radius: 30px; font-weight: bold;
+      font-size: 0.95rem; cursor: pointer;
       box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 0.1s ease;
+      -webkit-tap-highlight-color: transparent; transition: transform 0.1s ease;
     }
     .stack-action-btn:active { transform: scale(0.95); }
     .hint { color: #bca3ff; opacity: 0.7; font-size: 0.8rem; letter-spacing: 0.5px; }
 
-    @keyframes cardPopUp {
-      0% { transform: scale(0.85); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes castReveal {
-      from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-      to { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
-    @keyframes floatSticker {
-      0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
-    }
+    @keyframes cardPopUp { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes castReveal { from { opacity: 0; transform: translateY(20px); filter: blur(5px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    @keyframes floatSticker { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
     @keyframes titleFloat { 0% { transform: translateY(0px) rotate(-1deg); } 100% { transform: translateY(-8px) rotate(1deg); } }
     @keyframes spinCake { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
     @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.2); opacity: 1; } }
@@ -386,7 +163,7 @@
         
       <div id="screen1" class="screen active">
         <div class="emoji-row"><span>🐱</span><span>✨</span></div>
-        <h1>Hello there Meku live !</h1>
+        <h1>Hello there Meku lovely!</h1>
         <p>Do you want to see your gift?</p>
         <div class="btn-group">
           <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -396,7 +173,7 @@
 
       <div id="screen2" class="screen">
         <span class="cute-sticker">🔴⚽</span>
-        <h1 class="animate-fade">Favourite Fan</h1>
+        <h1 class="animate-fade">Favourite fan</h1>
         <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
         <div class="btn-group animate-fade">
           <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
@@ -405,7 +182,7 @@
 
       <div id="screen3" class="screen">
         <span class="cute-sticker">✨🎂</span>
-        <h1 class="animate-fade">Special Day</h1>
+        <h1 class="animate-fade">Special day</h1>
         <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
         <div class="btn-group animate-fade">
           <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
@@ -414,7 +191,7 @@
 
       <div id="screen4" class="screen">
         <span class="cute-sticker">🌸👑</span>
-        <h1 class="animate-fade">Beautiful Vibes</h1>
+        <h1 class="animate-fade">Beautiful vibes</h1>
         <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too! 🔴⚽</p>
         <div class="btn-group animate-fade">
           <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
@@ -439,49 +216,49 @@
           
           <div class="memory-card card-0" id="tiltCard" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/g2nSRGX4/IMG-20260525-200732-676.jpg" alt="Meku Photo 5">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Birthday Queen Image">
             </div>
             <div class="caption text-magic">✨ The Birthday Queen 👑</div>
           </div>
 
           <div class="memory-card card-1" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/5tBhrx44/IMG-20260608-084403-774.jpg" alt="Birthday Queen Image">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 6">
             </div>
             <div class="caption text-rose">🌹 Thank You More! ❤️</div>
           </div>
 
           <div class="memory-card card-2" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/vHP2c4Bn/IMG-20260525-200722-687.jpg" alt="Meku Photo 6">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 5">
             </div>
             <div class="caption text-rose">💖 Our Memory</div>
           </div>
 
           <div class="memory-card card-3" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/wj7fJ9y5/IMG-20260525-200742-452.jpg" alt="Meku Photo 4">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 4">
             </div>
             <div class="caption text-gold">👑 Celebrating your special day</div>
           </div>
 
           <div class="memory-card card-4" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/XYpHFnBW/IMG-20260606-210915-548.jpg" alt="Meku Photo 3">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 3">
             </div>
             <div class="caption">💫 Falling more in love everyday</div>
           </div>
 
           <div class="memory-card card-5" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/BnXYDJLK/IMG-20260606-210915-583.jpg" alt="Meku Photo 2">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 2">
             </div>
             <div class="caption">✨ Making wishes come true together</div>
           </div>
 
           <div class="memory-card card-6" onclick="nextCard()">
             <div class="photo-frame">
-              <img src="https://i.postimg.cc/VkdGMz08/IMG-20260606-210915-642.jpg" alt="Meku Photo 1">
+              <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg" alt="Meku High-Res Image 1">
             </div>
             <div class="caption">🎁 Swipe up to unlock surprise...</div>
           </div>
@@ -491,23 +268,6 @@
         <div class="stack-button-group animate-fade">
           <button class="stack-action-btn" id="deckBtn" onclick="nextCard()">Next Card →</button>
           <div class="hint" id="hintText">Swipe cards up or tap the button</div>
-        </div>
-        
-        <div class="btn-group animate-fade">
-          <button class="btn btn-yes" onclick="nextScreen(6)">Open My Final Letter 📜</button>
-        </div>
-      </div>
-
-      <div id="screen6" class="screen">
-        <span class="cute-sticker">💎✨</span>
-        <h1 class="animate-fade" style="font-size: 1.8rem;">To a Lovely Person</h1>
-        <p class="animate-fade" style="font-size: 0.92rem; line-height: 1.5; margin-bottom: 20px;">
-          I hope your birthday today is nothing short of amazing!<br><br>
-          Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is.<br><br>
-          Our timing might be short, but the story of how I got to know you still makes me smile. I am truly grateful that the end of the year brought someone as wonderful as you into my world.
-        </p>
-        <div class="btn-group animate-fade">
-          <button class="btn btn-yes" onclick="nextScreen(1)" style="background: linear-gradient(45deg, #00e5ff, #bca3ff); color: #110022;">Restart Journey 🔄</button>
         </div>
       </div>
 
@@ -629,9 +389,7 @@
     // --- SWIPE GESTURE DETECTION ---
     let touchStartY = 0;
     let touchEndY = 0;
-    document.addEventListener('touchstart', e => {
-      touchStartY = e.changedTouches[0].screenY;
-    }, {passive: true});
+    document.addEventListener('touchstart', e => { touchStartY = e.changedTouches[0].screenY; }, {passive: true});
     
     document.addEventListener('touchend', e => {
       touchEndY = e.changedTouches[0].screenY;

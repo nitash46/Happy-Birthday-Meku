@@ -486,6 +486,89 @@ h1 {
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
+        /* Container Spacing */
+.romantic-cake-container {
+    position: relative;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 40px 0;
+}
+
+/* The Birthday Cake Drawing */
+.cake {
+    position: relative;
+    width: 150px;
+    height: 100px;
+}
+.layer {
+    position: absolute;
+    width: 130px;
+    height: 35px;
+    background: #ff69b4; /* Romantic Pink */
+    border-radius: 10px 10px 0 0;
+    left: 10px;
+}
+.layer-bottom { bottom: 0; background: #ff4d94; }
+.layer-top { bottom: 30px; width: 110px; left: 20px; }
+.plate {
+    position: absolute;
+    bottom: -10px;
+    width: 170px;
+    height: 15px;
+    background: #fff;
+    border-radius: 50%;
+    left: -10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Glowing Candle */
+.candle {
+    position: absolute;
+    top: 15px;
+    left: 70px;
+    width: 10px;
+    height: 30px;
+    background: #fff;
+    background: linear-gradient(to right, #fff, #ffccd5);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.flame {
+    position: absolute;
+    top: -15px;
+    left: -2px;
+    width: 14px;
+    height: 20px;
+    background: #ffaa00;
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 20px #ffaa00, 0 0 40px #ff4500;
+    animation: flicker 0.6s infinite alternate;
+    transition: opacity 0.5s ease-out;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 25px #ffaa00; }
+}
+
+/* Secret Message Formatting */
+.hidden-message {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-in-out;
+    color: #fff;
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+.hidden-message.reveal {
+    opacity: 1;
+    transform: scale(1);
+}
+
     </style>
 </head>
 <body>
@@ -498,7 +581,7 @@ h1 {
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>😜 mt</span><span>✨</span></div>
+                <div class="emoji-row"><spa🌎 🗺</span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️ </h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -603,6 +686,24 @@ h1 {
                 <span class="btn-front" id="btnText">Aww, Thank You! 🥰</span>
             </button>
         </div>
+        <div class="romantic-cake-container">
+    <div class="cake">
+        <div class="plate"></div>
+        <div class="layer layer-bottom"></div>
+        <div class="layer layer-top"></div>
+        <div class="icing"></div>
+        <!-- Interactive Candle -->
+        <div class="candle" id="birthdayCandle" onclick="blowOutCandle()">
+            <div class="flame" id="candleFlame"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Birthday Message that appears after blowing the candle -->
+<div id="surpriseMessage" class="hidden-message">
+    <h2>✨ Happy Birthday Meku! ✨</h2>
+</div>
+
     </div>
 
     <script>
@@ -833,6 +934,20 @@ h1 {
             for (let i = 0; i < cardParticles.length; i++) cardParticles[i].update(); cardParticles[i].draw();
             requestAnimationFrame(runEngine);
         }
+        function blowOutCandle() {
+    const flame = document.getElementById('candleFlame');
+    const message = document.getElementById('surpriseMessage');
+    
+    // 1. Turn off the flame
+    flame.style.opacity = '0';
+    flame.style.animation = 'none'; // Stops flickering
+    
+    // 2. Playfully reveal the romantic text right after
+    setTimeout(() => {
+        message.classList.add('reveal');
+    }, 400);
+}
+
 
         init();
         runEngine();

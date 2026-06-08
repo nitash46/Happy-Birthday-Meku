@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Gift ✨</title>
+    <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
         * {
@@ -68,7 +68,7 @@
         .card-content {
             position: relative;
             z-index: 2;
-            padding: 40px 24px;
+            padding: 35px 24px;
             text-align: center;
             background: rgba(255, 255, 255, 0.04); /* Soft premium tint */
         }
@@ -124,7 +124,7 @@
             font-size: 0.98rem; /* Balanced text scale */
             color: #fecfef;
             opacity: 0.95;
-            margin-bottom: 28px;
+            margin-bottom: 25px;
             font-weight: 400;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
             line-height: 1.55;
@@ -196,7 +196,34 @@
         }
         .photo-container::-webkit-scrollbar { width: 4px; }
         .photo-container::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 10px; }
-        .birthday-photo { width: 100%; border-radius: 16px; border: 3px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        
+        /* Unified media element styling */
+        .birthday-photo, .birthday-video { 
+            width: 100%; 
+            border-radius: 16px; 
+            border: 3px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+        }
+        
+        /* Dedicated Video Player Design Layout */
+        .video-wrapper {
+            width: 100%;
+            max-width: 240px;
+            margin: 0 auto 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: #000;
+        }
+        .birthday-video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: none;
+            border-radius: 0;
+        }
+
         .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 5px; }
 
         /* Premium Custom Pop-up Modal Box Overlay */
@@ -270,10 +297,10 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>🎂</span>
+                    <span>🤪</span>
                     <span>✨</span>
                 </div>
-                <h1>Happy Birthday Meku🎂🎈</h1>
+                <h1>Hello there Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -284,7 +311,7 @@
             <div id="screen2" class="screen">
                 <span class="cute-sticker">🔴⚽</span>
                 <h1 class="animate-fade">Favourite fan</h1>
-                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with ☺️, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude😇, and even though we don't get to hang out a lot, I’m really glad to know you🫡. I hope your day is absolutely beautiful, just like you🥰.</p>
+                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
                 </div>
@@ -293,7 +320,7 @@
             <div id="screen3" class="screen">
                 <span class="cute-sticker">✨🎂</span>
                 <h1 class="animate-fade">Special day</h1>
-                <p class="animate-fade">Have an incredible time celebrating your special day today🥳. Wishing you endless happiness, good health, and success in everything you do✌️. It’s so rare to meet someone with such a naturally beautiful attitude and vibe🤝. I’m truly grateful for our chats😇🫠.</p>
+                <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
                 </div>
@@ -302,14 +329,14 @@
             <div id="screen4" class="screen">
                 <span class="cute-sticker">🌸👑</span>
                 <h1 class="animate-fade">Beautiful vibes</h1>
-                <p class="animate-fade">You have such a beautiful vibe and attitude😇, and even though we don't hang out a lot🙄, I’m really glad to know you🤗. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat good food🍔🌮, and make some unforgettable memories📸. Wishing you an awesome year ahead and the absolute best in everything you do 😁🙌😁</p>
+                <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too! ⚽🔴</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
                 </div>
             </div>
 
             <div id="screen5" class="screen">
-                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Your Beautiful pictures 📸</h1>
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Our Memories 📸</h1>
                 <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 12px; font-style: italic; color: #fecfef;">Scroll down to see your beautiful pictures...</p>
                 
                 <div class="photo-container animate-fade">
@@ -323,19 +350,36 @@
                 </div>
                 
                 <div class="btn-group animate-fade" style="margin-top: 15px;">
-                    <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📭</button>
+                    <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📜</button>
                 </div>
             </div>
 
             <div id="screen6" class="screen">
-                <span class="cute-sticker">🎵✨</span>
-                <h1 class="animate-fade" style="font-size: 1.9rem;">To the Birthday Girl✨️🥰</h1>
-                <p class="animate-fade" style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
-                    ​I hope you have an absolutely amazing birthday today🥳<br><br>
-                    Honestly, from the moment I first saw you🫩, your style left a huge impression you looked absolutely beautiful🥰, and I'd never really seen anyone style like that in real life before😇. Finding out you’re a Christian and that you sing just made your vibe even cooler💫🙃. I don't mean it in any other way 🙂‍↕️except that you are genuinely a great person who is so easy to like😇🥰😇. 
-                Our timing might be short 🕖, but the story of how I got to know you still makes me smile😇😉. I've never gone this far out of my way for someone before🤗, but I'm truly happy that we got to connect and that I met you at the end of the year🙏🥰.</p>
+                <span class="cute-sticker">💎✨</span>
+                <h1 class="animate-fade" style="font-size: 1.9rem;">To  Person</h1>
+                <p class="animate-fade" style="font-size: 0.94rem; line-height: 1.5; margin-bottom: 20px;">
+                    I hope your birthday today is nothing short of amazing!<br><br>
+                    Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is. I don't mean it in any other way except that you are genuinely a lovely person who is so easy to appreciate.<br><br>
+                    Our timing might be short, but the story of how I got to know you still makes me smile. I've never gone this far out of my way for someone before, but I am truly grateful that the end of the year brought someone as wonderful as you into my world.
+                </p>
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(7)">Listen to Something Special 🎵</button>
+                </div>
+            </div>
+
+            <div id="screen7" class="screen">
+                <span class="cute-sticker">🎸🎵</span>
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 6px;">Your Beautiful Voice</h1>
+                <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 15px; color: #fecfef;">"Learning that you're a singer just added to how refreshing your energy is..." ✨</p>
                 
-                <p class="signature animate-fade">Happy Birthday Mekuye 🎂🎉</p>
+                <div class="video-wrapper animate-fade">
+                    <video class="birthday-video" controls playsinline preload="auto">
+                        <source src="VID_20260607_222137.mp4" type="video/mp4">
+                        Your browser does not support HTML5 video loops.
+                    </video>
+                </div>
+                
+                <p class="signature animate-fade" style="margin-top: 5px;">Happy Birthday Mekuye 🎂💖</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
                 </div>
@@ -347,7 +391,7 @@
     <div class="custom-popup-overlay" id="surprisePopup">
         <div class="popup-modal-content">
             <h2>Happy Birthday Again Beautiful ✨🎂💖</h2>
-            <button class="btn btn-yes" onclick="closePopup()"> Thank You🙏🥰</button>
+            <button class="btn btn-yes" onclick="closePopup()">Thank You 🥰</button>
         </div>
     </div>
 
@@ -361,6 +405,10 @@
                 currentScreen.style.opacity = '0';
                 currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
                 currentScreen.style.filter = 'blur(4px)';
+                
+                // Pause video automatically if changing screens away from player
+                const videoEl = currentScreen.querySelector('video');
+                if (videoEl) { videoEl.pause(); }
                 
                 setTimeout(() => {
                     currentScreen.classList.remove('active');
@@ -546,56 +594,4 @@
                 this.grow = Math.random() > 0.5;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
-                
-                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
-                else { this.radius -= 0.08; if(this.radius < 50) this.grow = true; }
-            }
-            draw() {
-                cardCtx.beginPath();
-                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-                gradient.addColorStop(0, this.color + this.alpha + ')');
-                gradient.addColorStop(1, this.color + '0)');
-                cardCtx.fillStyle = gradient;
-                cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                cardCtx.fill();
-            }
-        }
-
-        function init() {
-            bgElements = [];
-            cardParticles = [];
-            
-            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
-            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
-            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
-        }
-
-        function runEngine() {
-            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-            for (let i = 0; i < bgElements.length; i++) {
-                bgElements[i].update();
-                bgElements[i].draw();
-                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) {
-                    bgElements.splice(i, 1);
-                    i--;
-                }
-            }
-
-            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
-            for (let i = 0; i < cardParticles.length; i++) {
-                cardParticles[i].update();
-                cardParticles[i].draw();
-            }
-
-            requestAnimationFrame(runEngine);
-        }
-
-        init();
-        runEngine();
-    </script>
-</body>
-</html>
+                this.x += this.

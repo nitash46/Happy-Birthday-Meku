@@ -1,3 +1,5 @@
+Here is the exact code block you requested, fully compiled with all custom updates seamlessly built right in:
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +32,20 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+        }
+
+        #heartCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            display: none;
+        }
+        #heartCanvas.active {
+            display: block;
         }
 
         .card-container {
@@ -250,12 +266,12 @@
             100% { opacity: 0; transform: var(--translate-target) scale(1.5); }
         }
 
-        /* === SCREEN 5: POLAROID 3D MEMORY DECK STACK INTEGRATION === */
+        /* === POLAROID 3D MEMORY DECK STACK INTEGRATION === */
         .stack-container {
             width: 85vw;
-            height: 42vh;
+            height: 38vh;
             max-width: 260px;
-            max-height: 360px;
+            max-height: 340px;
             position: relative;
             perspective: 1000px;
             margin: 10px auto 20px auto;
@@ -268,13 +284,14 @@
             height: 100%;
             background: #ffffff;
             border-radius: 16px;
-            padding: 10px 10px 42px 10px; /* Polaroid bottom space line */
+            padding: 10px 10px 42px 10px; 
             box-sizing: border-box;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             cursor: pointer;
             user-select: none;
             transform-origin: center center;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+            /* Slower, smooth transition mechanics applied here */
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease;
         }
 
         /* Photo inner framing layout */
@@ -316,20 +333,36 @@
         .card-1 { transform: translateY(24px) scale(0.84) rotate(1deg); z-index: 2; }
         .card-0 { transform: translateY(30px) scale(0.80) rotate(0deg); z-index: 1; }
 
-        /* Animated flight dismissal style state */
+        /* Beautiful, controlled flight dismissal animation */
         .memory-card.dismissed {
-            transform: translate(-150vw, -20vh) rotate(-45deg) !important;
+            transform: translate(-150vw, -15vh) rotate(-55deg) !important;
             opacity: 0;
             pointer-events: none;
         }
+
+        /* Custom love story deck elements for Page 7 */
+        #loveStoryStack .memory-card {
+            background: #fffdfa;
+            border: 1.5px solid #fbcfe8;
+        }
+        #loveStoryStack .caption {
+            font-size: 0.95rem;
+        }
+        #loveStoryStack .memory-card.dismissed {
+            transform: translate(160vw, -15vh) rotate(55deg) !important;
+        }
+
+        .text-standard { color: #4c0519; }
+        .text-memory { color: #db2777; font-weight: bold; }
+        .text-thanks { color: #be123c; font-weight: bold; }
 
         .stack-button-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .stack-action-btn {
             padding: 12px 30px;
@@ -345,44 +378,30 @@
             transition: transform 0.1s ease;
         }
         .stack-action-btn:active { transform: scale(0.95); }
+        
+        .love-action-btn {
+            background: linear-gradient(135deg, #f43f5e, #be123c);
+            box-shadow: 0 6px 16px rgba(244, 63, 94, 0.4);
+        }
+
         .hint { color: #bca3ff; opacity: 0.7; font-size: 0.8rem; letter-spacing: 0.5px; }
+        .hint-love { color: #fecfef; }
 
         /* Screen 7 Layout Items */
-        .scrollable-showcase-container {
+        .showcase-container-fixed {
             width: 100%;
-            height: 42vh;
-            overflow-y: scroll;
-            padding-right: 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            scroll-behavior: smooth;
-        }
-        .scrollable-showcase-container::-webkit-scrollbar { width: 4px; }
-        .scrollable-showcase-container::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 10px; }
-
-        .showcase-wrapper {
-            width: 100%;
-            max-width: 230px;
-            margin: 0 auto 15px auto;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 64, 129, 0.2);
-        }
-        .showcase-photo {
-            display: block;
-            width: 100%;
-            height: auto;
         }
 
-        .signature { color: #ff4081; font-weight: bold; margin-top: 5px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 15px; }
+        .signature { color: #ff4081; font-weight: bold; margin-top: 2px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 10px; }
         .pretty-sub {
             font-size: 1.35rem;
             color: #fff;
             font-weight: 700;
-            margin-top: 5px;
-            margin-bottom: 15px;
+            margin-top: 2px;
+            margin-bottom: 8px;
             letter-spacing: 0.5px;
             text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
         }
@@ -447,6 +466,7 @@
 <body>
 
     <canvas id="outerBgCanvas" class="bg-canvas"></canvas>
+    <canvas id="heartCanvas"></canvas>
 
     <div class="card-container" id="mainCard">
         <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
@@ -454,7 +474,7 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>😇😇</span><span>✨</span></div>
+                <div class="emoji-row"><span>😇🥰😍</span><span>✨</span></div>
                 <h1>Hello there Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -494,42 +514,42 @@
                 <h1 class="animate-fade" style="font-size: 1.6rem; margin-bottom: 2px;">Our Memories 📸</h1>
                 
                 <div class="stack-container animate-fade" id="cardStack">
-                    <div class="memory-card card-0">
+                    <div class="memory-card card-0" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
                         </div>
                         <div class="caption thanks-caption">✨ Thank You More!</div>
                     </div>
 
-                    <div class="memory-card card-1">
+                    <div class="memory-card card-1" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
                         </div>
                         <div class="caption memory-caption">💖 Our Memory</div>
                     </div>
 
-                    <div class="memory-card card-2">
+                    <div class="memory-card card-2" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
                         </div>
                         <div class="caption">🌅 Beautiful Days</div>
                     </div>
 
-                    <div class="memory-card card-3">
+                    <div class="memory-card card-3" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
                         </div>
                         <div class="caption">🍦 Sweetest Moments</div>
                     </div>
 
-                    <div class="memory-card card-4">
+                    <div class="memory-card card-4" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
                         </div>
                         <div class="caption">🎒 Adventures Together</div>
                     </div>
 
-                    <div class="memory-card card-5">
+                    <div class="memory-card card-5" onclick="nextCard()">
                         <div class="photo-frame">
                             <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
                         </div>
@@ -538,8 +558,8 @@
                 </div>
                 
                 <div class="stack-button-group animate-fade">
-                    <button class="stack-action-btn" onclick="nextCard()">Next Card →</button>
-                    <div class="hint">Swipe left or use the action button</div>
+                    <button class="stack-action-btn" id="deck1Btn" onclick="nextCard()">Next Card →</button>
+                    <div class="hint">Tap cards or use the action button</div>
                 </div>
                 
                 <div class="btn-group animate-fade">
@@ -561,12 +581,52 @@
             </div>
 
             <div id="screen7" class="screen">
-                <div id="autoShowcaseContainer" class="scrollable-showcase-container">
+                <div class="showcase-container-fixed">
                     <span class="cute-sticker">🌟✨</span>
-                    <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 15px;">For You Meku</h1>
+                    <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 10px;">For You Meku</h1>
                     
-                    <div class="showcase-wrapper animate-fade">
-                        <img class="showcase-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                    <div class="stack-container animate-fade" id="loveStoryStack">
+                        <div class="memory-card card-0" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-thanks">🌹 Thank You More! ❤️</div>
+                        </div>
+                        <div class="memory-card card-1" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-memory">💖 Our Memory</div>
+                        </div>
+                        <div class="memory-card card-2" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-standard">🔐 My favorite place is next to you</div>
+                        </div>
+                        <div class="memory-card card-3" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-standard">✨ Every moment with you is magic</div>
+                        </div>
+                        <div class="memory-card card-4" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-standard">☀️ You brighten my whole world</div>
+                        </div>
+                        <div class="memory-card card-5" onclick="nextLoveCard()">
+                            <div class="photo-frame">
+                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                            </div>
+                            <div class="caption text-standard">💌 Tap to reveal our love story...</div>
+                        </div>
+                    </div>
+
+                    <div class="stack-button-group animate-fade">
+                        <button class="stack-action-btn love-action-btn" id="deck2Btn" onclick="nextLoveCard()">Next Memory →</button>
+                        <div class="hint hint-love">Tap cards or use the action button</div>
                     </div>
                     
                     <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
@@ -593,22 +653,20 @@
     </div>
 
     <script>
-        // Polaroid Stack Logic Variables
+        // Polaroid Stack Logic Variables (Deck 1 - Page 5)
         let currentTopIndex = 5;
-        const stackCards = document.querySelectorAll('.memory-card');
-        const mainCard = document.getElementById('mainCard');
+        const stackCards = document.querySelectorAll('#cardStack .memory-card');
 
         function nextCard() {
             if (currentTopIndex <= 0) {
                 resetDeck();
                 return;
             }
-
             const cardToDismiss = stackCards[currentTopIndex];
             cardToDismiss.classList.add('dismissed');
             currentTopIndex--;
 
-            const btn = document.querySelector('.stack-action-btn');
+            const btn = document.getElementById('deck1Btn');
             if (currentTopIndex === 0) {
                 btn.innerHTML = "🔄 See Again";
             } else {
@@ -619,11 +677,39 @@
         function resetDeck() {
             stackCards.forEach(card => card.classList.remove('dismissed'));
             currentTopIndex = 5;
-            const btn = document.querySelector('.stack-action-btn');
+            const btn = document.getElementById('deck1Btn');
             btn.innerHTML = "Next Card →";
         }
 
-        // Swipe handler variables for the card stack
+        // Polaroid Stack Logic Variables (Deck 2 - Page 7)
+        let loveTopIndex = 5;
+        const loveCards = document.querySelectorAll('#loveStoryStack .memory-card');
+
+        function nextLoveCard() {
+            if (loveTopIndex <= 0) {
+                resetLoveDeck();
+                return;
+            }
+            const cardToDismiss = loveCards[loveTopIndex];
+            cardToDismiss.classList.add('dismissed');
+            loveTopIndex--;
+
+            const btn = document.getElementById('deck2Btn');
+            if (loveTopIndex === 0) {
+                btn.innerHTML = "🔄 See Our Story Again";
+            } else {
+                btn.innerHTML = "Next Memory →";
+            }
+        }
+
+        function resetLoveDeck() {
+            loveCards.forEach(card => card.classList.remove('dismissed'));
+            loveTopIndex = 5;
+            const btn = document.getElementById('deck2Btn');
+            btn.innerHTML = "Next Memory →";
+        }
+
+        // Global Swipe Handler Navigation Setup
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -633,40 +719,20 @@
 
         document.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
-            if (document.getElementById('screen5').classList.contains('active')) {
-                handleSwipeGesture();
-            }
+            handleSwipeGesture();
         }, {passive: true});
 
         function handleSwipeGesture() {
             const swipeDistance = touchEndX - touchStartX;
-            const swipeThreshold = -60; // Left movement detection threshold
-            if (swipeDistance < swipeThreshold) {
-                nextCard();
+            if (document.getElementById('screen5').classList.contains('active')) {
+                if (swipeDistance < -60) nextCard(); // Left swipe
+            }
+            if (document.getElementById('screen7').classList.contains('active')) {
+                if (swipeDistance > 60) nextLoveCard(); // Right swipe
             }
         }
 
-        // Auto scrolling showcase layout logic
-        let showcaseInterval = null;
-        let showcaseDirection = 1; 
-
-        function startShowcaseScroll() {
-            const container = document.getElementById('autoShowcaseContainer');
-            if(!container) return;
-            if(showcaseInterval) clearInterval(showcaseInterval);
-            container.scrollTop = 0; 
-            
-            showcaseInterval = setInterval(() => {
-                if (container.scrollTop + container.clientHeight >= container.scrollHeight - 2) showcaseDirection = -1;
-                else if (container.scrollTop <= 0) showcaseDirection = 1;
-                container.scrollTop += showcaseDirection * 1; 
-            }, 35); 
-        }
-
-        function stopShowcaseScroll() {
-            if(showcaseInterval) { clearInterval(showcaseInterval); showcaseInterval = null; }
-        }
-
+        // Screen transition coordinator
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             if (currentScreen) {
@@ -682,9 +748,16 @@
                     if (nextTarget) {
                         nextTarget.classList.add('active');
                         resizeCardCanvas();
+                        
+                        // Handle canvas switching conditions
+                        const heartLayer = document.getElementById('heartCanvas');
+                        if(screenNumber === 7) {
+                            heartLayer.classList.add('active');
+                            resetLoveDeck();
+                        } else {
+                            heartLayer.classList.remove('active');
+                        }
                         if(screenNumber === 5) resetDeck();
-                        if(screenNumber === 7) setTimeout(startShowcaseScroll, 400);
-                        else stopShowcaseScroll();
                         
                         setTimeout(() => {
                             nextTarget.style.opacity = '1';
@@ -696,7 +769,7 @@
         }
 
         function openPopup() { document.getElementById('surprisePopup').classList.add('open'); }
-        function closePopup() { document.getElementById('surprisePopup').classList.remove('remove'); document.getElementById('surprisePopup').classList.remove('open'); }
+        function closePopup() { document.getElementById('surprisePopup').classList.remove('open'); }
 
         function transformButton() {
             const btn = document.getElementById('magicButton');
@@ -734,6 +807,7 @@
             setTimeout(() => orb.remove(), 1200);
         }
 
+        // Background Engine Layout Configurations
         const bgCanvas = document.getElementById('outerBgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
         let bgElements = [];
@@ -829,15 +903,48 @@
                 cardCtx.beginPath();
                 let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
                 gradient.addColorStop(0, this.color + this.alpha + ')'); gradient.addColorStop(1, this.color + '0)');
-                cardCtx.fillStyle = gradient; cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); cardCtx.fill();
+                cardCtx.fillStyle = gradient; cardCtx.arc(0, 0, this.radius, 0, Math.PI * 2); cardCtx.fill();
+            }
+        }
+
+        // --- Dynamic Canvas Romantic Heart Background Engine ---
+        const heartCanvas = document.getElementById('heartCanvas');
+        const heartCtx = heartCanvas.getContext('2d');
+        let heartParticlesArray = [];
+        const numberOfHeartParticles = 25;
+
+        function resizeHeartCanvas() { heartCanvas.width = window.innerWidth; heartCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeHeartCanvas);
+        resizeHeartCanvas();
+
+        class HeartParticle {
+            constructor() { this.reset(); this.y = Math.random() * heartCanvas.height; }
+            reset() {
+                this.x = Math.random() * heartCanvas.width; this.y = heartCanvas.height + Math.random() * 20;
+                this.size = Math.random() * 8 + 5; this.speedY = -(Math.random() * 1 + 0.5);
+                this.opacity = Math.random() * 0.5 + 0.2; this.swing = Math.random() * 0.02; this.swingStep = Math.random() * 100;
+            }
+            update() {
+                this.y += this.speedY; this.swingStep += this.swing; this.x += Math.sin(this.swingStep) * 0.3;
+                if (this.y < -20) this.reset();
+            }
+            draw() {
+                heartCtx.save(); heartCtx.globalAlpha = this.opacity; heartCtx.fillStyle = '#f43f5e'; heartCtx.beginPath();
+                const topCurveHeight = this.size * 0.3; heartCtx.moveTo(this.x, this.y + topCurveHeight);
+                heartCtx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+                heartCtx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
+                heartCtx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                heartCtx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+                heartCtx.closePath(); heartCtx.fill(); heartCtx.restore();
             }
         }
 
         function init() {
-            bgElements = []; cardParticles = [];
+            bgElements = []; cardParticles = []; heartParticlesArray = [];
             for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
             for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
             for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
+            for (let i = 0; i < numberOfHeartParticles; i++) heartParticlesArray.push(new HeartParticle());
         }
 
         function runEngine() {
@@ -848,6 +955,11 @@
             }
             cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
             for (let i = 0; i < cardParticles.length; i++) cardParticles[i].update(); cardParticles[i].draw();
+            
+            if (document.getElementById('heartCanvas').classList.contains('active')) {
+                heartCtx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+                for (let i = 0; i < heartParticlesArray.length; i++) { heartParticlesArray[i].update(); heartParticlesArray[i].draw(); }
+            }
             requestAnimationFrame(runEngine);
         }
 
@@ -856,3 +968,5 @@
     </script>
 </body>
 </html>
+
+```

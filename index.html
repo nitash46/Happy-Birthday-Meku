@@ -20,7 +20,7 @@
 
     .card-container {
       position: relative; z-index: 2;
-      width: 92%; max-width: 390px; min-height: 520px; height: auto;
+      width: 92%; max-width: 390px; min-height: 530px; height: auto;
       border-radius: 32px; overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
@@ -29,7 +29,7 @@
     }
 
     .card-container.expanded {
-      min-height: 560px;
+      min-height: 580px;
     }
 
     .card-bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
@@ -65,22 +65,29 @@
     .btn-no { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px); }
     .btn-no:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
 
-    /* --- DECK STACK ARCHITECTURE --- */
-    .stack-container { width: 82vw; height: 42vh; max-width: 280px; max-height: 380px; position: relative; perspective: 1200px; margin: 15px auto 25px auto; }
+    /* --- HIGH QUALITY DECK STACK ARCHITECTURE --- */
+    .stack-container { width: 85vw; height: 44vh; max-width: 290px; max-height: 390px; position: relative; perspective: 1200px; margin: 15px auto 25px auto; }
     .stack-container.hidden-state { display: none !important; }
 
     .memory-card {
       position: absolute; width: 100%; height: 100%;
       background: #ffffff; border-radius: 20px;
-      padding: 10px 10px 48px 10px; box-sizing: border-box;
+      padding: 11px 11px 52px 11px; box-sizing: border-box;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5); cursor: pointer; user-select: none;
       border: 1px solid rgba(255, 255, 255, 0.8);
       transform-origin: center bottom;
       transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease, filter 0.6s ease;
     }
 
+    /* Keeps image pixels razor sharp and non-blurry */
     .memory-card .photo-frame { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; position: relative; background-color: #150e1f; }
-    .memory-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .memory-card img { 
+      width: 100%; height: 100%; 
+      object-fit: cover; 
+      object-position: center;
+      pointer-events: none; 
+      image-rendering: auto;
+    }
 
     .caption { position: absolute; bottom: 14px; left: 0; width: 100%; text-align: center; font-weight: 700; font-size: 1rem; letter-spacing: 0.3px; }
     .text-rose { color: #db2777; }
@@ -119,14 +126,14 @@
       transform: translateY(20px) scale(0.95);
       transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       text-align: center; 
-      padding: 10px 5px; 
+      padding: 15px 5px; 
       box-sizing: border-box;
     }
     
     .birthday-overlay.show { display: flex; opacity: 1; transform: translateY(0) scale(1); }
 
     .bday-title {
-      font-size: 2.5rem; font-weight: 900; margin: 0; text-transform: uppercase;
+      font-size: 2.4rem; font-weight: 900; margin: 0; text-transform: uppercase;
       background: linear-gradient(135deg, #ff007f, #ff7700, #ffec00);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       text-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
@@ -181,7 +188,7 @@
         
       <div id="screen1" class="screen active">
         <div class="emoji-row"><span>🐱</span><span>✨</span></div>
-        <h1>Hello there Meku meku!</h1>
+        <h1>Hello there Meku!lovely</h1>
         <p>Do you want to see your gift?</p>
         <div class="btn-group">
           <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -221,7 +228,7 @@
         
         <div class="birthday-overlay" id="birthdayPage">
           <h1 class="bday-title">Happy Birthday Pretty 👑</h1>
-          <div class="bday-sub">Happy June 8! 🎂💖</div>
+          <div class="bday-sub">To the one who completes my world ✨<br>Make a wish! 🎂</div>
           <div class="cake-container">
             <div class="cake-layer cake-bottom"></div>
             <div class="cake-layer cake-top"></div>
@@ -320,11 +327,11 @@
       }
 
       if (currentTopIndex < 0) {
-        // Entirely erase the card image components from the page layout
+        // Entirely erase the image stack structures instantly
         cardStackContainer.classList.add('hidden-state');
         screen5Title.style.display = 'none';
         
-        // Activate full text reveal style settings
+        // Show clean text and animation overlay properties smoothly
         mainCard.classList.add('expanded');
         birthdayPage.classList.add('show');
         

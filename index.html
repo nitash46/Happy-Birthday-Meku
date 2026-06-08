@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -404,6 +403,81 @@
             text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
         }
 
+        /* --- THE 3D HAPPY BIRTHDAY SURPRISE PAGE OVERLAY FOR SCREEN 7 --- */
+        .birthday-overlay {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        
+        .birthday-overlay.show {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .bday-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ff007f, #ff7700, #ffec00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
+            animation: titleFloat 3s ease-in-out infinite alternate;
+        }
+
+        .bday-sub {
+            color: #e2e8f0;
+            font-size: 1rem;
+            margin-top: 6px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* CSS 3D Animated Cake Graphic */
+        .cake-container {
+            width: 100px; height: 100px;
+            margin-top: 15px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spinCake 8s linear infinite;
+        }
+        .cake-layer {
+            position: absolute;
+            background: linear-gradient(to bottom, #f43f5e, #ec4899);
+            border-radius: 50%;
+            box-shadow: 0 6px 0 #be123c, inset 0 3px 0 rgba(255,255,255,0.3);
+        }
+        .cake-bottom { width: 80px; height: 32px; bottom: 10px; left: 10px; }
+        .cake-top { width: 56px; height: 24px; bottom: 34px; left: 22px; background: linear-gradient(to bottom, #a855f7, #7e22ce); box-shadow: 0 5px 0 #6b21a8; }
+        .candle {
+            position: absolute;
+            width: 5px; height: 20px;
+            background: #fde047;
+            bottom: 53px; left: 47px;
+            border-radius: 2px;
+        }
+        .flame {
+            position: absolute;
+            width: 8px; height: 12px;
+            background: #f97316;
+            border-radius: 50% 50% 20% 20%;
+            bottom: 72px; left: 45px;
+            animation: flicker 0.2s alternate infinite;
+            box-shadow: 0 0 12px #f97316;
+        }
+
         .custom-popup-overlay {
             position: fixed;
             top: 0;
@@ -459,6 +533,9 @@
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
+        @keyframes titleFloat { 0% { transform: translateY(0px) rotate(-1deg); } 100% { transform: translateY(-6px) rotate(1deg); } }
+        @keyframes spinCake { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+        @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.2); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -472,8 +549,8 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>💔❣️</span><span>✨</span></div>
-                <h1>He Meku!</h1>
+                <div class="emoji-row"><span>❤️‍🔥💞</span><span>✨</span></div>
+                <h1>My crush Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -583,6 +660,18 @@
                     <span class="cute-sticker">🌟✨</span>
                     <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 10px;">For You Meku</h1>
                     
+                    <div class="birthday-overlay" id="birthdayPage">
+                        <h1 class="bday-title">Happy Birthday!</h1>
+                        <div class="bday-sub">To the one who completes my world ✨</div>
+                        
+                        <div class="cake-container">
+                            <div class="cake-layer cake-bottom"></div>
+                            <div class="cake-layer cake-top"></div>
+                            <div class="candle"></div>
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+
                     <div class="stack-container animate-fade" id="loveStoryStack">
                         <div class="memory-card card-0" onclick="nextLoveCard()">
                             <div class="photo-frame">
@@ -600,31 +689,31 @@
                             <div class="photo-frame">
                                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                             </div>
-                            <div class="caption text-standard">🔐 My favorite place is next to you</div>
+                            <div class="caption text-standard">👑 Celebrating your special day</div>
                         </div>
                         <div class="memory-card card-3" onclick="nextLoveCard()">
                             <div class="photo-frame">
                                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                             </div>
-                            <div class="caption text-standard">✨ Every moment with you is magic</div>
+                            <div class="caption text-standard">💫 Falling more in love everyday</div>
                         </div>
                         <div class="memory-card card-4" onclick="nextLoveCard()">
                             <div class="photo-frame">
                                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                             </div>
-                            <div class="caption text-standard">☀️ You brighten my whole world</div>
+                            <div class="caption text-standard">✨ Making wishes come true together</div>
                         </div>
                         <div class="memory-card card-5" onclick="nextLoveCard()">
                             <div class="photo-frame">
                                 <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
                             </div>
-                            <div class="caption text-standard">💌 Tap to reveal...</div>
+                            <div class="caption text-standard">🎁 Swipe to unlock your surprise...</div>
                         </div>
                     </div>
 
                     <div class="stack-button-group animate-fade">
                         <button class="stack-action-btn love-action-btn" id="deck2Btn" onclick="nextLoveCard()">Next Memory →</button>
-                        <div class="hint hint-love">Tap cards or use the action button</div>
+                        <div class="hint hint-love" id="hintText">Tap cards or use the action button</div>
                     </div>
                     
                     <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
@@ -633,7 +722,7 @@
                 
                 <div class="btn-group animate-fade" style="width: 100%; margin-top: 5px;">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
-                    <button class="btn btn-loop" onclick="nextScreen(5)">Happy Birthday Again Beautiful ✨</button>
+                    <button class="btn btn-loop" id="loopActionBtn" onclick="loopDeckButtonTrigger()">Happy Birthday Again Beautiful ✨</button>
                 </div>
             </div>
 
@@ -680,50 +769,82 @@
 
         let loveTopIndex = 5;
         const loveCards = document.querySelectorAll('#loveStoryStack .memory-card');
+        const birthdayPage = document.getElementById('birthdayPage');
+        const loveStoryStackContainer = document.getElementById('loveStoryStack');
+        const deck2Btn = document.getElementById('deck2Btn');
+        const hintText = document.getElementById('hintText');
+        const loopActionBtn = document.getElementById('loopActionBtn');
 
         function nextLoveCard() {
-            if (loveTopIndex <= 0) {
+            if (loveTopIndex < 0) {
                 resetLoveDeck();
                 return;
             }
-            const cardToDismiss = loveCards[loveTopIndex];
-            cardToDismiss.classList.add('dismissed');
-            loveTopIndex--;
 
-            const btn = document.getElementById('deck2Btn');
-            if (loveTopIndex === 0) {
-                btn.innerHTML = "🔄 See Our Story Again";
+            if (loveTopIndex >= 0) {
+                const cardToDismiss = loveCards[loveTopIndex];
+                cardToDismiss.classList.add('dismissed');
+                loveTopIndex--;
+            }
+
+            if (loveTopIndex < 0) {
+                loveStoryStackContainer.style.display = 'none';
+                birthdayPage.classList.add('show');
+                deck2Btn.innerHTML = "🔄 See Our Story Again";
+                loopActionBtn.innerHTML = "Happy Birthday Again Beautiful ✨";
+                hintText.innerHTML = "Click the button to loop your memory cards";
             } else {
-                btn.innerHTML = "Next Memory →";
+                deck2Btn.innerHTML = "Next Memory →";
             }
         }
 
         function resetLoveDeck() {
             loveCards.forEach(card => card.classList.remove('dismissed'));
+            birthdayPage.classList.remove('show');
+            loveStoryStackContainer.style.display = 'block';
             loveTopIndex = 5;
-            const btn = document.getElementById('deck2Btn');
-            btn.innerHTML = "Next Memory →";
+            deck2Btn.innerHTML = "Next Memory →";
+            hintText.innerHTML = "Tap cards or use the action button";
+            loopActionBtn.innerHTML = "Happy Birthday Again Beautiful ✨";
+        }
+
+        function loopDeckButtonTrigger() {
+            if (loveTopIndex < 0) {
+                resetLoveDeck();
+            } else {
+                nextLoveCard();
+            }
         }
 
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
 
         document.addEventListener('touchstart', e => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, {passive: true});
 
         document.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipeGesture();
         }, {passive: true});
 
         function handleSwipeGesture() {
-            const swipeDistance = touchEndX - touchStartX;
+            const swipeDistanceX = touchEndX - touchStartX;
+            const swipeDistanceY = touchStartY - touchEndY; // Upward tracking
+            
             if (document.getElementById('screen5').classList.contains('active')) {
-                if (swipeDistance < -60) nextCard();
+                if (swipeDistanceX < -60) nextCard();
             }
             if (document.getElementById('screen7').classList.contains('active')) {
-                if (swipeDistance > 60) nextLoveCard();
+                if (swipeDistanceY > 60 && loveTopIndex >= 0) {
+                    nextLoveCard();
+                } else if (swipeDistanceX > 60 && loveTopIndex >= 0) {
+                    nextLoveCard();
+                }
             }
         }
 
@@ -845,7 +966,8 @@
                 grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
                 grad.addColorStop(0.3, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.35)`);
                 grad.addColorStop(1, `rgba(${this.color.r*0.3}, ${this.color.g*0.3}, ${this.color.b*0.3}, 0.35)`);
-                bgCtx.fillStyle = grad; bgCtx.arc(0, 0, this.radius, 0, Math.PI * 2); bgCtx.fill(); bgCtx.restore();
+                bgCtx.fillStyle = grad; bgCtx.arc(0, 0, this.radius, 0, Math.PI * 2); bgCtx.fill();
+                bgCtx.restore();
             }
         }
 
@@ -895,7 +1017,7 @@
                 cardCtx.beginPath();
                 let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
                 gradient.addColorStop(0, this.color + this.alpha + ')'); gradient.addColorStop(1, this.color + '0)');
-                cardCtx.fillStyle = gradient; cardCtx.arc(0, 0, this.radius, 0, Math.PI * 2); cardCtx.fill();
+                cardCtx.fillStyle = gradient; cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); cardCtx.fill();
             }
         }
 
@@ -959,5 +1081,3 @@
     </script>
 </body>
 </html>
-
-```

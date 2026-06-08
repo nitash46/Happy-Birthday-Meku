@@ -297,7 +297,7 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>🤪</span>
+                    <span>❣️❤️</span>
                     <span>✨</span>
                 </div>
                 <h1>Hello there Meku!</h1>
@@ -356,7 +356,7 @@
 
             <div id="screen6" class="screen">
                 <span class="cute-sticker">💎✨</span>
-                <h1 class="animate-fade" style="font-size: 1.9rem;">To  Person</h1>
+                <h1 class="animate-fade" style="font-size: 1.9rem;">To a Lovely Person</h1>
                 <p class="animate-fade" style="font-size: 0.94rem; line-height: 1.5; margin-bottom: 20px;">
                     I hope your birthday today is nothing short of amazing!<br><br>
                     Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is. I don't mean it in any other way except that you are genuinely a lovely person who is so easy to appreciate.<br><br>
@@ -374,12 +374,12 @@
                 
                 <div class="video-wrapper animate-fade">
                     <video class="birthday-video" controls playsinline preload="auto">
-                        <source src="VID_20260607_222137.mp4" type="video/mp4">
+                        <source src="VID_20260607_222137_266.mp4" type="video/mp4">
                         Your browser does not support HTML5 video loops.
                     </video>
                 </div>
                 
-                <p class="signature animate-fade" style="margin-top: 5px;">Happy Birthday Mekuye 🎂💖</p>
+                <p class="signature animate-fade" style="margin-top: 5px;">Happy June 8! 🎂💖</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
                 </div>
@@ -391,7 +391,7 @@
     <div class="custom-popup-overlay" id="surprisePopup">
         <div class="popup-modal-content">
             <h2>Happy Birthday Again Beautiful ✨🎂💖</h2>
-            <button class="btn btn-yes" onclick="closePopup()">Thank You 🥰</button>
+            <button class="btn btn-yes" onclick="closePopup()">Aww, Thank You! 🥰</button>
         </div>
     </div>
 
@@ -594,4 +594,10 @@
                 this.grow = Math.random() > 0.5;
             }
             update() {
-                this.x += this.
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
+                
+                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
+                else { this.radius -= 0.08;

@@ -32,22 +32,6 @@
             z-index: 1;
         }
 
-        /* Dimming background overlay when ANY photo zooms out on Screen 5 */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 2, 8, 0.9);
-            z-index: 50;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        body.overlay-active::before {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
         .card-container {
             position: relative;
             z-index: 2;
@@ -60,12 +44,6 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
             animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
             transition: all 0.5s ease;
-        }
-
-        /* Expands the container wrapper gracefully to fit the 3D studio box on Screen 5 */
-        .card-container.stage-active {
-            max-width: 410px;
-            width: 96%;
         }
 
         .card-bg-canvas {
@@ -148,6 +126,7 @@
             width: 100%;
             justify-content: center;
             z-index: 60;
+            margin-top: 10px;
         }
         .screen:not(#screen7) .btn-group {
             flex-direction: row;
@@ -271,187 +250,104 @@
             100% { opacity: 0; transform: var(--translate-target) scale(1.5); }
         }
 
-        /* === SCREEN 5: INTEGRATED 3D PHOTO WHEEL HUB === */
-        .mobile-stage {
-            width: 100%;
-            height: 40vh;
-            margin: 15px 0;
-            perspective: 1200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-        .cube-carousel {
-            width: 195px; 
-            height: 265px; 
+        /* === SCREEN 5: POLAROID 3D MEMORY DECK STACK INTEGRATION === */
+        .stack-container {
+            width: 85vw;
+            height: 42vh;
+            max-width: 260px;
+            max-height: 360px;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            perspective: 1000px;
+            margin: 10px auto 20px auto;
         }
-        .slide-face {
+
+        /* Individual Polaroid Card Base */
+        .memory-card {
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
-            backface-visibility: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 10px 10px 42px 10px; /* Polaroid bottom space line */
+            box-sizing: border-box;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             cursor: pointer;
+            user-select: none;
+            transform-origin: center center;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
         }
-        .slide-face img {
+
+        /* Photo inner framing layout */
+        .memory-card .photo-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            background: #e4e4e7;
+        }
+        .memory-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             pointer-events: none;
         }
-        .index-badge {
+
+        /* Polaroid baseline layout text */
+        .caption {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            z-index: 5;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            bottom: 12px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+            color: #3f3f46;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
-        .card-label {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff4081, #9333ea);
+        .memory-caption { color: #db2777; }
+        .thanks-caption { color: #4f46e5; }
+
+        /* Physical piling rotations and shifts */
+        .card-5 { transform: translateY(0px) scale(1) rotate(2deg); z-index: 6; }
+        .card-4 { transform: translateY(6px) scale(0.96) rotate(-1deg); z-index: 5; }
+        .card-3 { transform: translateY(12px) scale(0.92) rotate(3deg); z-index: 4; }
+        .card-2 { transform: translateY(18px) scale(0.88) rotate(-2deg); z-index: 3; }
+        .card-1 { transform: translateY(24px) scale(0.84) rotate(1deg); z-index: 2; }
+        .card-0 { transform: translateY(30px) scale(0.80) rotate(0deg); z-index: 1; }
+
+        /* Animated flight dismissal style state */
+        .memory-card.dismissed {
+            transform: translate(-150vw, -20vh) rotate(-45deg) !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .stack-button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .stack-action-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
             color: white;
-            padding: 10px 24px;
+            border: none;
             border-radius: 30px;
             font-weight: bold;
             font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 6px 16px rgba(255, 64, 129, 0.4);
-            white-space: nowrap;
-            z-index: 5;
-        }
-
-        /* --- 3D Animated Fly-Out / Zoom-Out Formats --- */
-        .slide-face.popped-out {
-            z-index: 100 !important;
-            box-shadow: 0 30px 70px rgba(255, 64, 129, 0.5) !important;
-        }
-        .slide-face.f1.popped-out { transform: rotateY(0deg) translateZ(410px) scale(1.18) !important; }
-        .slide-face.f2.popped-out { transform: rotateY(60deg) translateZ(410px) scale(1.18) !important; }
-        .slide-face.f3.popped-out { transform: rotateY(120deg) translateZ(410px) scale(1.18) !important; }
-        .slide-face.f4.popped-out { transform: rotateY(180deg) translateZ(410px) scale(1.18) !important; }
-        /* Card 5 animated pop-out config with deep glowing purple layer */
-        .slide-face.f5.popped-out { 
-            transform: rotateY(240deg) translateZ(420px) scale(1.18) !important; 
-            box-shadow: 0 30px 70px rgba(147, 51, 234, 0.6) !important; 
-        }
-        .slide-face.f6.popped-out { transform: rotateY(300deg) translateZ(410px) scale(1.18) !important; }
-
-        /* --- Precise 3D Geometry Positions --- */
-        .f1 { transform: rotateY(0deg) translateZ(285px); }
-        .f2 { transform: rotateY(60deg) translateZ(285px); }
-        .f3 { transform: rotateY(120deg) translateZ(285px); }
-        .f4 { transform: rotateY(180deg) translateZ(285px); }
-        /* Card 5 position gap pushed further back from 285px to 345px to build spacing */
-        .f5 { transform: rotateY(240deg) translateZ(345px); } 
-        .f6 { transform: rotateY(300deg) translateZ(285px); }
-
-        .carousel-controls {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            margin-bottom: 15px;
-            z-index: 10;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        body.overlay-active .carousel-controls,
-        body.overlay-active .hint-text,
-        body.overlay-active .screen5-nav {
-            opacity: 0.02;
-            pointer-events: none;
-            transform: scale(0.95);
-        }
-
-        .carousel-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: linear-gradient(135deg, #1e1b4b, #2e1065);
-            color: #c084fc;
-            font-size: 1.3rem;
-            font-weight: bold;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
             -webkit-tap-highlight-color: transparent;
-            transition: background 0.3s, transform 0.1s;
+            transition: transform 0.1s ease;
         }
-        .carousel-btn:active { transform: scale(0.9); background: #5b21b6; }
+        .stack-action-btn:active { transform: scale(0.95); }
+        .hint { color: #bca3ff; opacity: 0.7; font-size: 0.8rem; letter-spacing: 0.5px; }
 
-        .hint-text {
-            color: #8b5cf6;
-            opacity: 0.7;
-            font-size: 0.85rem;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            font-weight: 500;
-            transition: opacity 0.4s ease;
-        }
-
-        /* High-End Redesigned Thank You Card layout */
-        .thank-you-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(15, 4, 32, 0.95) 0%, rgba(24, 10, 48, 0.8) 50%, rgba(0, 0, 0, 0.4) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 2;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-        }
-        .thank-you-icon {
-            font-size: 2.8rem;
-            margin-bottom: 8px;
-            animation: heartBeat 1.5s ease-in-out infinite;
-        }
-        .thank-you-overlay h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0 0 10px 0;
-            background: linear-gradient(45deg, #ff4081, #ff758c, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
-            text-shadow: 0 4px 15px rgba(255, 64, 129, 0.2);
-        }
-        .thank-you-overlay p {
-            font-size: 0.95rem;
-            margin: 0;
-            color: #f3e8ff;
-            line-height: 1.4;
-            font-weight: 400;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        }
-
-        /* Screen 7 Elements */
+        /* Screen 7 Layout Items */
         .scrollable-showcase-container {
             width: 100%;
             height: 42vh;
@@ -467,7 +363,7 @@
 
         .showcase-wrapper {
             width: 100%;
-            max-width: 250px;
+            max-width: 230px;
             margin: 0 auto 15px auto;
             border-radius: 24px;
             overflow: hidden;
@@ -546,9 +442,6 @@
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); }
-        }
     </style>
 </head>
 <body>
@@ -561,8 +454,8 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>🐱</span><span>✨</span></div>
-                <h1>M Meku!</h1>
+                <div class="emoji-row"><span>😇😇</span><span>✨</span></div>
+                <h1>Hello there Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -598,40 +491,58 @@
             </div>
 
             <div id="screen5" class="screen">
-                <h1 class="animate-fade" style="font-size: 1.7rem; margin-bottom: 2px;">Our Memories 📸</h1>
+                <h1 class="animate-fade" style="font-size: 1.6rem; margin-bottom: 2px;">Our Memories 📸</h1>
                 
-                <div class="mobile-stage animate-fade">
-                    <div class="cube-carousel" id="cube">
-                        <div class="slide-face f1" onclick="toggleCardPop(this, event)"><div class="index-badge">1 / 6</div><img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg"></div>
-                        <div class="slide-face f2" onclick="toggleCardPop(this, event)"><div class="index-badge">2 / 6</div><img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg"></div>
-                        <div class="slide-face f3" onclick="toggleCardPop(this, event)"><div class="index-badge">3 / 6</div><img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg"></div>
-                        <div class="slide-face f4" onclick="toggleCardPop(this, event)"><div class="index-badge">4 / 6</div><img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg"></div>
-                        
-                        <div class="slide-face f5" onclick="toggleCardPop(this, event)">
-                            <div class="index-badge">5 / 6</div>
-                            <div class="card-label">💖 Our Memory</div>
+                <div class="stack-container animate-fade" id="cardStack">
+                    <div class="memory-card card-0">
+                        <div class="photo-frame">
+                            <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
+                        </div>
+                        <div class="caption thanks-caption">✨ Thank You More!</div>
+                    </div>
+
+                    <div class="memory-card card-1">
+                        <div class="photo-frame">
                             <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
                         </div>
-                        
-                        <div class="slide-face f6" onclick="toggleCardPop(this, event)">
-                            <div class="index-badge">6 / 6</div>
-                            <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
-                            <div class="thank-you-overlay">
-                                <div class="thank-you-icon">💝</div>
-                                <h2>Thank You More!</h2>
-                                <p>For every beautiful moment shared ✨</p>
-                            </div>
+                        <div class="caption memory-caption">💖 Our Memory</div>
+                    </div>
+
+                    <div class="memory-card card-2">
+                        <div class="photo-frame">
+                            <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
                         </div>
+                        <div class="caption">🌅 Beautiful Days</div>
+                    </div>
+
+                    <div class="memory-card card-3">
+                        <div class="photo-frame">
+                            <img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
+                        </div>
+                        <div class="caption">🍦 Sweetest Moments</div>
+                    </div>
+
+                    <div class="memory-card card-4">
+                        <div class="photo-frame">
+                            <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
+                        </div>
+                        <div class="caption">🎒 Adventures Together</div>
+                    </div>
+
+                    <div class="memory-card card-5">
+                        <div class="photo-frame">
+                            <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
+                        </div>
+                        <div class="caption">📸 Tap to Begin</div>
                     </div>
                 </div>
                 
-                <div class="carousel-controls animate-fade">
-                    <button class="carousel-btn" onclick="turnCube(1)">←</button>
-                    <div class="hint-text">Swipe or click cards to zoom</div>
-                    <button class="carousel-btn" onclick="turnCube(-1)">→</button>
+                <div class="stack-button-group animate-fade">
+                    <button class="stack-action-btn" onclick="nextCard()">Next Card →</button>
+                    <div class="hint">Swipe left or use the action button</div>
                 </div>
                 
-                <div class="btn-group animate-fade screen5-nav">
+                <div class="btn-group animate-fade">
                     <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📜</button>
                 </div>
             </div>
@@ -682,63 +593,60 @@
     </div>
 
     <script>
-        let carouselAngle = 0;
-        let currentlyPoppedCard = null;
-        const cube = document.getElementById('cube');
-        const body = document.body;
+        // Polaroid Stack Logic Variables
+        let currentTopIndex = 5;
+        const stackCards = document.querySelectorAll('.memory-card');
         const mainCard = document.getElementById('mainCard');
 
-        function turnCube(direction) {
-            if (currentlyPoppedCard) {
-                closeActiveCard();
-            }
-            carouselAngle += direction * 60;
-            cube.style.transform = `rotateY(${carouselAngle}deg)`;
-        }
-
-        function toggleCardPop(cardElement, event) {
-            if(event) event.stopPropagation();
-            
-            if (currentlyPoppedCard === cardElement) {
-                closeActiveCard();
+        function nextCard() {
+            if (currentTopIndex <= 0) {
+                resetDeck();
                 return;
             }
-            if (currentlyPoppedCard) {
-                closeActiveCard();
-            }
 
-            cardElement.classList.add('popped-out');
-            currentlyPoppedCard = cardElement;
-            body.classList.add('overlay-active');
-        }
+            const cardToDismiss = stackCards[currentTopIndex];
+            cardToDismiss.classList.add('dismissed');
+            currentTopIndex--;
 
-        function closeActiveCard() {
-            if (currentlyPoppedCard) {
-                currentlyPoppedCard.classList.remove('popped-out');
-                currentlyPoppedCard = null;
-                body.classList.remove('overlay-active');
+            const btn = document.querySelector('.stack-action-btn');
+            if (currentTopIndex === 0) {
+                btn.innerHTML = "🔄 See Again";
+            } else {
+                btn.innerHTML = "Next Card →";
             }
         }
 
-        // Close any zoomed photo item if background mask space is clicked
-        body.addEventListener('click', (e) => {
-            if (!mainCard.contains(e.target) || e.target.id === "screen5") {
-                closeActiveCard();
-            }
-        });
+        function resetDeck() {
+            stackCards.forEach(card => card.classList.remove('dismissed'));
+            currentTopIndex = 5;
+            const btn = document.querySelector('.stack-action-btn');
+            btn.innerHTML = "Next Card →";
+        }
 
+        // Swipe handler variables for the card stack
         let touchStartX = 0;
         let touchEndX = 0;
-        document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
         document.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
-            if (!currentlyPoppedCard && document.getElementById('screen5').classList.contains('active')) {
-                const swipeDistance = touchEndX - touchStartX;
-                if (swipeDistance > 45) turnCube(1);
-                else if (swipeDistance < -45) turnCube(-1);
+            if (document.getElementById('screen5').classList.contains('active')) {
+                handleSwipeGesture();
             }
         }, {passive: true});
 
+        function handleSwipeGesture() {
+            const swipeDistance = touchEndX - touchStartX;
+            const swipeThreshold = -60; // Left movement detection threshold
+            if (swipeDistance < swipeThreshold) {
+                nextCard();
+            }
+        }
+
+        // Auto scrolling showcase layout logic
         let showcaseInterval = null;
         let showcaseDirection = 1; 
 
@@ -765,22 +673,16 @@
                 currentScreen.style.opacity = '0';
                 currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
                 currentScreen.style.filter = 'blur(4px)';
-                closeActiveCard();
                 
                 setTimeout(() => {
                     currentScreen.classList.remove('active');
                     currentScreen.style.filter = '';
                     
-                    if (screenNumber === 5) {
-                        mainCard.classList.add('stage-active');
-                    } else {
-                        mainCard.classList.remove('stage-active');
-                    }
-
                     const nextTarget = document.getElementById('screen' + screenNumber);
                     if (nextTarget) {
                         nextTarget.classList.add('active');
                         resizeCardCanvas();
+                        if(screenNumber === 5) resetDeck();
                         if(screenNumber === 7) setTimeout(startShowcaseScroll, 400);
                         else stopShowcaseScroll();
                         
@@ -794,7 +696,7 @@
         }
 
         function openPopup() { document.getElementById('surprisePopup').classList.add('open'); }
-        function closePopup() { document.getElementById('surprisePopup').classList.remove('open'); }
+        function closePopup() { document.getElementById('surprisePopup').classList.remove('remove'); document.getElementById('surprisePopup').classList.remove('open'); }
 
         function transformButton() {
             const btn = document.getElementById('magicButton');

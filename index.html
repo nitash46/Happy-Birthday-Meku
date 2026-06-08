@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,9 +135,13 @@
         /* Interactive UI Buttons */
         .btn-group {
             display: flex;
-            gap: 15px;
+            flex-direction: column; /* Stack buttons neatly on the final page */
+            gap: 12px;
             width: 100%;
             justify-content: center;
+        }
+        .screen:not(#screen7) .btn-group {
+            flex-direction: row; /* Keep text screens horizontal */
         }
         .btn {
             flex: 1;
@@ -171,7 +176,6 @@
             transform: translateY(-2px);
         }
         .btn-finale {
-            margin-top: 15px;
             background: linear-gradient(45deg, #00e5ff, #bca3ff);
             color: #110022;
             box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
@@ -180,6 +184,16 @@
         .btn-finale:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
+        }
+        .btn-loop {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            width: 100%;
+        }
+        .btn-loop:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
         }
 
         /* Memories Scrollable Photo Album Viewport */
@@ -209,7 +223,7 @@
         .showcase-wrapper {
             width: 100%;
             max-width: 250px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto;
             border-radius: 24px;
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.3);
@@ -223,13 +237,13 @@
             transform: scale(1.02);
         }
 
-        .signature { color: #ff4081; font-weight: bold; margin-top: 15px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 5px; }
+        .signature { color: #ff4081; font-weight: bold; margin-top: 5px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 15px; }
         .pretty-sub {
             font-size: 1.35rem;
             color: #fff;
             font-weight: 700;
-            margin-top: 10px;
-            margin-bottom: 25px;
+            margin-top: 5px;
+            margin-bottom: 15px;
             letter-spacing: 0.5px;
             text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
         }
@@ -311,10 +325,10 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>❤️❤️</span>
+                    <span>🐱</span>
                     <span>✨</span>
                 </div>
-                <h1>Hello there Meku!</h1>
+                <h1>Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -391,9 +405,10 @@
                 
                 <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
                 
-                <p class="signature animate-fade" style="margin-top: 5px;">Happy June 8! 🎂💖</p>
+                <p class="signature animate-fade">Happy June 8! 🎂💖</p>
                 <div class="btn-group animate-fade">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
+                    <button class="btn btn-loop" onclick="nextScreen(5)">Happy Birthday Again Beautiful ✨</button>
                 </div>
             </div>
 
@@ -655,3 +670,5 @@
     </script>
 </body>
 </html>
+
+```

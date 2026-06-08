@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Magical Birthday Gift ✨</title>
     <style>
         /* Core Reset & Screen Lock */
@@ -279,29 +279,110 @@
             100% { opacity: 0; transform: var(--translate-target) scale(1.5); }
         }
 
-        /* Memories Scrollable Photo Album Viewport */
-        .photo-container {
-            width: 100%; 
-            height: 38vh; 
+        /* === SCREEN 5: NEW 3D GRAPHICS ENGINES === */
+        .mobile-stage {
+            width: 100%;
+            height: 34vh;
+            margin: 15px 0 10px 0;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cube-carousel {
+            width: 180px;
+            height: 240px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slide-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backface-visibility: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+        .slide-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .index-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .carousel-controls {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .carousel-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff4081, #ff758c);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .carousel-btn:active {
+            transform: scale(0.9);
+        }
+        .hint-text {
+            color: #fecfef;
+            opacity: 0.6;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 3D Geometry Placements for a 7-Sided Carousel Wheel
+           Angle Step = 360 / 7 ≈ 51.43deg
+           Radius Offset = (Width / 2) / tan(180 / 7) = 90 / tan(25.71deg) ≈ 187px
+        */
+        .f1 { transform: rotateY(0deg) translateZ(187px); }
+        .f2 { transform: rotateY(51.43deg) translateZ(187px); }
+        .f3 { transform: rotateY(102.86deg) translateZ(187px); }
+        .f4 { transform: rotateY(154.29deg) translateZ(187px); }
+        .f5 { transform: rotateY(205.71deg) translateZ(187px); }
+        .f6 { transform: rotateY(257.14deg) translateZ(187px); }
+        .f7 { transform: rotateY(308.57deg) translateZ(187px); }
+
+        /* Screen 7 Auto Scroll Viewport Layout Area */
+        .scrollable-showcase-container {
+            width: 100%;
+            height: 42vh;
             overflow-y: scroll;
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            padding-right: 5px;
-            box-sizing: border-box; 
-            margin-top: 5px;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             scroll-behavior: smooth;
         }
-        .photo-container::-webkit-scrollbar { width: 4px; }
-        .photo-container::-webkit-scrollbar-thumb { background: #ff4081; border-radius: 10px; }
-        
-        /* Unified photo element styling */
-        .birthday-photo { 
-            width: 100%; 
-            border-radius: 16px; 
-            border: 3px solid rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-        }
+        .scrollable-showcase-container::-webkit-scrollbar { width: 4px; }
+        .scrollable-showcase-container::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 10px; }
 
         /* Dynamic Special Showcase Image Styling */
         .showcase-wrapper {
@@ -312,13 +393,11 @@
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 64, 129, 0.2);
-            animation: slowPanZoom 12s ease-in-out infinite alternate;
         }
         .showcase-photo {
             display: block;
             width: 100%;
             height: auto;
-            transform: scale(1.02);
         }
 
         .signature { color: #ff4081; font-weight: bold; margin-top: 5px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 15px; }
@@ -393,12 +472,6 @@
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
-        /* Slow cinematic motion animation */
-        @keyframes slowPanZoom {
-            0% { transform: scale(1.02) translateY(0); }
-            50% { transform: scale(1.08) translateY(-4px); }
-            100% { transform: scale(1.02) translateY(0); }
-        }
     </style>
 </head>
 <body>
@@ -412,10 +485,10 @@
             
             <div id="screen1" class="screen active">
                 <div class="emoji-row">
-                    <span>❣️❤️‍🔥</span>
+                    <span>❤️‍🔥❣️</span>
                     <span>✨</span>
                 </div>
-                <h1>Hello there Meku!</h1>
+                <h1> there Meku!</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
@@ -451,21 +524,28 @@
             </div>
 
             <div id="screen5" class="screen">
-                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 5px;">Our Memories 📸</h1>
-                <p class="animate-fade" style="font-size: 0.95rem; margin-bottom: 12px; font-style: italic; color: #fecfef;">Enjoying the beautiful views layout...</p>
+                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 2px;">Our Memories 📸</h1>
                 
-                <div id="autoPhotoContainer" class="photo-container animate-fade">
-                    <img class="birthday-photo" src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
-                    <img class="birthday-photo" src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
+                <div class="mobile-stage animate-fade">
+                    <div class="cube-carousel" id="cube">
+                        <div class="slide-face f1"><div class="index-badge">1 / 7</div><img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg"></div>
+                        <div class="slide-face f2"><div class="index-badge">2 / 7</div><img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg"></div>
+                        <div class="slide-face f3"><div class="index-badge">3 / 7</div><img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg"></div>
+                        <div class="slide-face f4"><div class="index-badge">4 / 7</div><img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg"></div>
+                        <div class="slide-face f5"><div class="index-badge">5 / 7</div><img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg"></div>
+                        <div class="slide-face f6"><div class="index-badge">6 / 7</div><img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg"></div>
+                        <div class="slide-face f7"><div class="index-badge">7 / 7</div><img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg"></div>
+                    </div>
                 </div>
                 
-                <div class="btn-group animate-fade" style="margin-top: 15px;">
-                    <button class="btn btn-yes" onclick="stopGalleryScroll(); nextScreen(6)">Open My Last Letter 📜</button>
+                <div class="carousel-controls animate-fade">
+                    <button class="carousel-btn" onclick="turnCube(1)">←</button>
+                    <div class="hint-text" style="margin: 0;">Swipe or tap arrows</div>
+                    <button class="carousel-btn" onclick="turnCube(-1)">→</button>
+                </div>
+                
+                <div class="btn-group animate-fade">
+                    <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📜</button>
                 </div>
             </div>
 
@@ -483,17 +563,20 @@
             </div>
 
             <div id="screen7" class="screen">
-                <span class="cute-sticker">🌟✨</span>
-                <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 15px;">For You Meku</h1>
-                
-                <div class="showcase-wrapper animate-fade">
-                    <img class="showcase-photo" src="https://i.postimg.cc/jSXmB6Bh/IMG-20260608-084403-774.jpg">
+                <div id="autoShowcaseContainer" class="scrollable-showcase-container">
+                    <span class="cute-sticker">🌟✨</span>
+                    <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 15px;">For You Meku</h1>
+                    
+                    <div class="showcase-wrapper animate-fade">
+                        <img class="showcase-photo" src="https://i.postimg.cc/jSXmB6Bh/IMG-20260608-084403-774.jpg">
+                    </div>
+                    
+                    <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
+                    
+                    <p class="signature animate-fade">Happy June 8! 🎂💖</p>
                 </div>
                 
-                <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
-                
-                <p class="signature animate-fade">Happy June 8! 🎂💖</p>
-                <div class="btn-group animate-fade">
+                <div class="btn-group animate-fade" style="width: 100%; margin-top: 5px;">
                     <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
                     <button class="btn btn-loop" onclick="nextScreen(5)">Happy Birthday Again Beautiful ✨</button>
                 </div>
@@ -514,70 +597,98 @@
     </div>
 
     <script>
-        /* GALLERY AUTOMATIC SCROLL SYSTEM ENGINE */
-        let scrollInterval = null;
-        let scrollDirection = 1; // 1 = down, -1 = up
+        /* SCREEN 5: 3D CAROUSEL WHEEL SYSTEM ENGINE */
+        let carouselAngle = 0;
+        const cube = document.getElementById('cube');
 
-        function startGalleryScroll() {
-            const container = document.getElementById('autoPhotoContainer');
+        function turnCube(direction) {
+            // 360 degrees divided by 7 images = 51.43 degrees per step
+            carouselAngle += direction * 51.43;
+            cube.style.transform = `rotateY(${carouselAngle}deg)`;
+        }
+
+        // Isolated Smart Swipe Detection for Screen 5
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('cube').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        document.getElementById('cube').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const swipeDistance = touchEndX - touchStartX;
+            const swipeThreshold = 40;
+
+            if (swipeDistance > swipeThreshold) {
+                turnCube(1);  // Swipe Right -> Slide Previous
+            } else if (swipeDistance < -swipeThreshold) {
+                turnCube(-1); // Swipe Left -> Slide Next
+            }
+        }, {passive: true});
+
+
+        /* SCREEN 7: AUTOMATIC SCROLL SYSTEM ENGINE */
+        let showcaseInterval = null;
+        let showcaseDirection = 1; 
+
+        function startShowcaseScroll() {
+            const container = document.getElementById('autoShowcaseContainer');
             if(!container) return;
             
-            // Clear if any old loop is present
-            if(scrollInterval) clearInterval(scrollInterval);
+            if(showcaseInterval) clearInterval(showcaseInterval);
+            container.scrollTop = 0; 
             
-            scrollInterval = setInterval(() => {
-                // If it reaches the bottom, change direction to scroll up
+            showcaseInterval = setInterval(() => {
                 if (container.scrollTop + container.clientHeight >= container.scrollHeight - 2) {
-                    scrollDirection = -1;
+                    showcaseDirection = -1;
                 } 
-                // If it reaches the top, change direction to scroll down
                 else if (container.scrollTop <= 0) {
-                    scrollDirection = 1;
+                    showcaseDirection = 1;
                 }
-                container.scrollTop += scrollDirection * 1; // Smooth stepping factor
-            }, 30); // High fluid refresh cycle rate
+                container.scrollTop += showcaseDirection * 1; 
+            }, 35); 
         }
 
-        function stopGalleryScroll() {
-            if(scrollInterval) {
-                clearInterval(scrollInterval);
-                scrollInterval = null;
+        function stopShowcaseScroll() {
+            if(showcaseInterval) {
+                clearInterval(showcaseInterval);
+                showcaseInterval = null;
             }
         }
+
 
         /* SCREEN SELECTION CONTROLLER WITH CINEMATIC TIMING */
         function nextScreen(screenNumber) {
             const currentScreen = document.querySelector('.screen.active');
             
             if (currentScreen) {
-                // Instantly start fade out sequence
                 currentScreen.style.opacity = '0';
                 currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
                 currentScreen.style.filter = 'blur(4px)';
                 
                 setTimeout(() => {
                     currentScreen.classList.remove('active');
-                    currentScreen.style.filter = ''; // clear out style
+                    currentScreen.style.filter = '';
                     
                     const nextTarget = document.getElementById('screen' + screenNumber);
                     if (nextTarget) {
                         nextTarget.classList.add('active');
                         resizeCardCanvas();
                         
-                        // Fire gallery autoscroll engine whenever screen 5 gets loaded
-                        if(screenNumber === 5) {
-                            setTimeout(startGalleryScroll, 400);
+                        // Handle showcase autoscroll triggers on screen 7
+                        if(screenNumber === 7) {
+                            setTimeout(startShowcaseScroll, 400);
                         } else {
-                            stopGalleryScroll();
+                            stopShowcaseScroll();
                         }
                         
-                        // Force layout update before cinematic entry triggers
                         setTimeout(() => {
                             nextTarget.style.opacity = '1';
                             nextTarget.style.transform = 'translateY(0) scale(1)';
                         }, 50);
                     }
-                }, 400); // Perfect crossover gap duration
+                }, 400);
             }
         }
 
@@ -595,16 +706,13 @@
             const text = document.getElementById('btnText');
             const modal = document.querySelector('.popup-modal-content');
             
-            // Toggle the aesthetic transformation classes
             btn.classList.add('transformed');
             text.innerHTML = "🔮 Activated! 🔮";
 
-            // Dynamically spawn 3D-looking floating particle spheres around the modal panel
             for (let i = 0; i < 15; i++) {
                 createOrb(modal);
             }
 
-            // Close modal after 1.5 seconds and reset look cleanly
             setTimeout(() => {
                 closePopup();
                 setTimeout(() => {
@@ -618,16 +726,13 @@
             const orb = document.createElement('div');
             orb.classList.add('magic-orb');
 
-            // Randomize sizing for visual variety
             const size = Math.random() * 20 + 10; 
             orb.style.width = `${size}px`;
             orb.style.height = `${size}px`;
 
-            // Position orb right around the center click area inside the modal container
             orb.style.left = `50%`;
             orb.style.top = `75%`;
 
-            // Set random directional paths for the bubble burst
             const angle = Math.random() * Math.PI * 2;
             const distance = Math.random() * 120 + 60;
             const x = Math.cos(angle) * distance;
@@ -636,8 +741,6 @@
             orb.style.setProperty('--translate-target', `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`);
 
             parent.appendChild(orb);
-
-            // Clean up DOM node after animation completes
             setTimeout(() => orb.remove(), 1200);
         }
 
@@ -657,7 +760,6 @@
         window.addEventListener('resize', resizeOuterCanvas);
         resizeOuterCanvas();
 
-        /* POINTER TRAIL TRACKERS */
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;

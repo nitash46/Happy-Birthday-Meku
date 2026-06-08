@@ -1,1083 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Magical Birthday Gift ✨</title>
-    <style>
-        /* Core Reset & Screen Lock */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .bg-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Magical Birthday Gift ✨</title>
+  <style>
+    /* Core Reset & Screen Lock */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f0022 0%, #29003b 50%, #44003c 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
 
-        #heartCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            display: none;
-        }
-        #heartCanvas.active {
-            display: block;
-        }
+    #heartCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      display: none;
+    }
+    #heartCanvas.active {
+      display: block;
+    }
 
-        .card-container {
-            position: relative;
-            z-index: 2;
-            width: 92%;
-            max-width: 390px;
-            height: auto;
-            border-radius: 32px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
-            animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-            transition: all 0.5s ease;
-        }
+    .card-container {
+      position: relative;
+      z-index: 2;
+      width: 92%;
+      max-width: 390px;
+      height: auto;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
+      animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      transition: all 0.5s ease;
+    }
 
-        .card-bg-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-        }
+    .card-bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }
 
-        .card-content {
-            position: relative;
-            z-index: 2;
-            padding: 35px 24px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.04);
-        }
+    .card-content {
+      position: relative;
+      z-index: 2;
+      padding: 35px 24px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.04);
+    }
 
-        .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            opacity: 0;
-            transform: translateY(25px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
-        }
-        
-        .screen.active { 
-            display: flex; 
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(25px) scale(0.95);
+      transition: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    
+    .screen.active { 
+      display: flex; 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
 
-        .screen.active .animate-fade {
-            animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
-        }
+    .screen.active .animate-fade {
+      animation: castReveal 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+    }
 
-        .emoji-row {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            align-items: center;
-        }
-        .cute-sticker {
-            font-size: 3rem; 
-            margin-bottom: 12px; 
-            display: inline-block;
-            animation: floatSticker 4s ease-in-out infinite;
-        }
+    .emoji-row {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      align-items: center;
+    }
+    .cute-sticker {
+      font-size: 3rem; 
+      margin-bottom: 12px; 
+      display: inline-block;
+      animation: floatSticker 4s ease-in-out infinite;
+    }
 
-        h1 {
-            font-size: 2.2rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-        p {
-            font-size: 0.98rem;
-            color: #fecfef;
-            opacity: 0.95;
-            margin-bottom: 25px;
-            font-weight: 400;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            line-height: 1.55;
-            text-align: center;
-        }
+    h1 {
+      font-size: 2.2rem;
+      color: #ffffff;
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    p {
+      font-size: 0.98rem;
+      color: #fecfef;
+      opacity: 0.95;
+      margin-bottom: 25px;
+      font-weight: 400;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      line-height: 1.55;
+      text-align: center;
+    }
 
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            justify-content: center;
-            z-index: 60;
-            margin-top: 10px;
-        }
-        .screen:not(#screen7) .btn-group {
-            flex-direction: row;
-        }
-        .btn {
-            flex: 1;
-            padding: 16px 20px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            outline: none;
-        }
-        .btn-yes {
-            background: linear-gradient(45deg, #ff4081, #ff758c);
-            color: white;
-            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
-        }
-        .btn-yes:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6);
-        }
-        .btn-no {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-        }
-        .btn-no:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        .btn-finale {
-            background: linear-gradient(45deg, #00e5ff, #bca3ff);
-            color: #110022;
-            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
-            width: 100%;
-        }
-        .btn-finale:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
-        }
-        .btn-loop {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            width: 100%;
-        }
-        .btn-loop:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-        }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      justify-content: center;
+      z-index: 60;
+      margin-top: 10px;
+    }
+    .screen:not(#screen5) .btn-group {
+      flex-direction: row;
+    }
+    .btn {
+      flex: 1;
+      padding: 16px 20px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      outline: none;
+    }
+    .btn-yes {
+      background: linear-gradient(45deg, #ff4081, #ff758c);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+    }
+    .btn-yes:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 30px rgba(255, 64, 129, 0.6);
+    }
+    .btn-no {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+    }
+    .btn-no:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
 
-        .pushable-btn {
-            position: relative;
-            background: #7c2d12;
-            border-radius: 20px;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            outline: none;
-            transition: filter 250ms;
-            width: 100%;
-            max-width: 260px;
-            margin-top: 15px;
-        }
-        .btn-edge {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            background: linear-gradient(to left, #7c2d12 0%, #c2410c 8%, #c2410c 92%, #7c2d12 100%);
-        }
-        .btn-front {
-            display: block;
-            position: relative;
-            padding: 16px 24px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(135deg, #f97316, #ea580c);
-            transform: translateY(-6px);
-            will-change: transform;
-            transition: transform 250ms cubic-bezier(.3, .7, .4, 1), background 300ms;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .pushable-btn:hover { filter: brightness(110%); }
-        .pushable-btn:hover .btn-front { transform: translateY(-8px); transition: transform 34ms; }
-        .pushable-btn:active .btn-front { transform: translateY(-2px); transition: transform 34ms; }
-        
-        .pushable-btn.transformed .btn-front {
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            transform: translateY(0px) scale(1.05);
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
-        }
-        .pushable-btn.transformed .btn-edge { background: #1d4ed8; }
+    /* --- 7-CARD DECK STACK INTEGRATION (SCREEN 5) --- */
+    .stack-container {
+      width: 82vw;
+      height: 42vh;
+      max-width: 280px;
+      max-height: 380px;
+      position: relative;
+      perspective: 1200px;
+      margin: 15px auto 25px auto;
+    }
 
-        .magic-orb {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.8), rgba(147, 51, 234, 0.8));
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(0);
-            animation: explosion 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-            z-index: 200;
-        }
-        @keyframes explosion {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
-            50% { opacity: 0.9; }
-            100% { opacity: 0; transform: var(--translate-target) scale(1.5); }
-        }
+    .memory-card {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 10px 10px 48px 10px;
+      box-sizing: border-box;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transform-origin: center bottom;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease, filter 0.6s ease;
+    }
 
-        /* === POLAROID 3D MEMORY DECK STACK INTEGRATION === */
-        .stack-container {
-            width: 85vw;
-            height: 38vh;
-            max-width: 260px;
-            max-height: 340px;
-            position: relative;
-            perspective: 1000px;
-            margin: 10px auto 20px auto;
-        }
+    .memory-card .photo-frame {
+      width: 100%; height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background-color: #150e1f;
+    }
 
-        /* Individual Polaroid Card Base */
-        .memory-card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 10px 10px 42px 10px; 
-            box-sizing: border-box;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            user-select: none;
-            transform-origin: center center;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease;
-        }
+    .memory-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
 
-        /* Photo inner framing layout */
-        .memory-card .photo-frame {
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            background: #e4e4e7;
-        }
-        .memory-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
+    .caption {
+      position: absolute;
+      bottom: 14px; left: 0;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+    }
+    .text-rose { color: #db2777; }
+    .text-gold { color: #d97706; }
+    .text-magic {
+      background: linear-gradient(to right, #ec4899, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: #ec4899;
+    }
 
-        /* Polaroid baseline layout text */
-        .caption {
-            position: absolute;
-            bottom: 12px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-weight: 700;
-            color: #3f3f46;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-        }
-        .memory-caption { color: #db2777; }
-        .thanks-caption { color: #4f46e5; }
+    /* 7-Card Layering Depths */
+    .card-6 { transform: translateY(0px) translateZ(0px) scale(1) rotate(1deg); z-index: 7; opacity: 1; filter: blur(0px); }
+    .card-5 { transform: translateY(6px) translateZ(-25px) scale(0.96) rotate(-1.5deg); z-index: 6; opacity: 0.95; filter: blur(0.3px); }
+    .card-4 { transform: translateY(12px) translateZ(-50px) scale(0.92) rotate(2deg); z-index: 5; opacity: 0.85; filter: blur(0.6px); }
+    .card-3 { transform: translateY(18px) translateZ(-75px) scale(0.88) rotate(-1deg); z-index: 4; opacity: 0.75; filter: blur(1px); }
+    .card-2 { transform: translateY(24px) translateZ(-100px) scale(0.84) rotate(2.5deg); z-index: 3; opacity: 0.65; filter: blur(1.5px); }
+    .card-1 { transform: translateY(30px) translateZ(-125px) scale(0.80) rotate(-2deg); z-index: 2; opacity: 0.55; filter: blur(2px); }
+    .card-0 { transform: translateY(36px) translateZ(-150px) scale(0.76) rotate(0deg); z-index: 1; opacity: 0.45; filter: blur(2.5px); }
 
-        /* Physical piling rotations and shifts */
-        .card-5 { transform: translateY(0px) scale(1) rotate(2deg); z-index: 6; }
-        .card-4 { transform: translateY(6px) scale(0.96) rotate(-1deg); z-index: 5; }
-        .card-3 { transform: translateY(12px) scale(0.92) rotate(3deg); z-index: 4; }
-        .card-2 { transform: translateY(18px) scale(0.88) rotate(-2deg); z-index: 3; }
-        .card-1 { transform: translateY(24px) scale(0.84) rotate(1deg); z-index: 2; }
-        .card-0 { transform: translateY(30px) scale(0.80) rotate(0deg); z-index: 1; }
+    .memory-card.dismissed {
+      transform: translateY(-100px) translateZ(120px) rotateX(55deg) scale(0.8) !important;
+      opacity: 0 !important;
+      filter: blur(12px) !important;
+      pointer-events: none;
+    }
 
-        /* Beautiful, controlled flight dismissal animation */
-        .memory-card.dismissed {
-            transform: translate(-150vw, -15vh) rotate(-55deg) !important;
-            opacity: 0;
-            pointer-events: none;
-        }
+    /* Interactive 3D Frame Setup for final image */
+    .card-0 {
+      transform-style: preserve-3d;
+      border: 2px solid #ec4899;
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
+      transition: transform 0.1s ease, opacity 0.6s ease;
+    }
 
-        /* Custom love story deck elements for Page 7 */
-        #loveStoryStack .memory-card {
-            background: #fffdfa;
-            border: 1.5px solid #fbcfe8;
-        }
-        #loveStoryStack .caption {
-            font-size: 0.95rem;
-        }
-        #loveStoryStack .memory-card.dismissed {
-            transform: translate(160vw, -15vh) rotate(55deg) !important;
-        }
+    /* --- THE 3D CAKE OVERLAY REVEAL --- */
+    .birthday-overlay {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+    }
+    
+    .birthday-overlay.show {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        .text-standard { color: #4c0519; }
-        .text-memory { color: #db2777; font-weight: bold; }
-        .text-thanks { color: #be123c; font-weight: bold; }
+    .bday-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      margin: 0;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ff007f, #ff7700, #ffec00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
+      animation: titleFloat 3s ease-in-out infinite alternate;
+    }
 
-        .stack-button-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-        .stack-action-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.1s ease;
-        }
-        .stack-action-btn:active { transform: scale(0.95); }
-        
-        .love-action-btn {
-            background: linear-gradient(135deg, #f43f5e, #be123c);
-            box-shadow: 0 6px 16px rgba(244, 63, 94, 0.4);
-        }
+    .bday-sub {
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-top: 8px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
 
-        .hint { color: #bca3ff; opacity: 0.7; font-size: 0.8rem; letter-spacing: 0.5px; }
-        .hint-love { color: #fecfef; }
+    .cake-container {
+      width: 110px; height: 110px;
+      margin-top: 20px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spinCake 8s linear infinite;
+    }
+    .cake-layer {
+      position: absolute;
+      background: linear-gradient(to bottom, #f43f5e, #ec4899);
+      border-radius: 50%;
+      box-shadow: 0 7px 0 #be123c, inset 0 3px 0 rgba(255,255,255,0.3);
+    }
+    .cake-bottom { width: 90px; height: 36px; bottom: 10px; left: 10px; }
+    .cake-top { width: 64px; height: 26px; bottom: 36px; left: 23px; background: linear-gradient(to bottom, #a855f7, #7e22ce); box-shadow: 0 5px 0 #6b21a8; }
+    .candle {
+      position: absolute;
+      width: 5px; height: 22px;
+      background: #fde047;
+      bottom: 58px; left: 52px;
+      border-radius: 2px;
+    }
+    .flame {
+      position: absolute;
+      width: 9px; height: 13px;
+      background: #f97316;
+      border-radius: 50% 50% 20% 20%;
+      bottom: 80px; left: 50px;
+      animation: flicker 0.2s alternate infinite;
+      box-shadow: 0 0 12px #f97316;
+    }
 
-        /* Screen 7 Layout Items */
-        .showcase-container-fixed {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .stack-button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .stack-action-btn {
+      padding: 12px 35px;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s ease;
+    }
+    .stack-action-btn:active { transform: scale(0.95); }
+    .hint { color: #bca3ff; opacity: 0.7; font-size: 0.8rem; letter-spacing: 0.5px; }
 
-        .signature { color: #ff4081; font-weight: bold; margin-top: 2px; font-size: 1.15rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); margin-bottom: 10px; }
-        .pretty-sub {
-            font-size: 1.35rem;
-            color: #fff;
-            font-weight: 700;
-            margin-top: 2px;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
-        }
-
-        /* --- THE 3D HAPPY BIRTHDAY SURPRISE PAGE OVERLAY FOR SCREEN 7 --- */
-        .birthday-overlay {
-            width: 100%;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-        
-        .birthday-overlay.show {
-            display: flex;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .bday-title {
-            font-size: 1.9rem;
-            font-weight: 900;
-            margin: 0;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ff007f, #ff7700, #ffec00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
-            animation: titleFloat 3s ease-in-out infinite alternate;
-        }
-
-        .bday-sub {
-            color: #e2e8f0;
-            font-size: 1rem;
-            margin-top: 6px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        /* CSS 3D Animated Cake Graphic */
-        .cake-container {
-            width: 100px; height: 100px;
-            margin-top: 15px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spinCake 8s linear infinite;
-        }
-        .cake-layer {
-            position: absolute;
-            background: linear-gradient(to bottom, #f43f5e, #ec4899);
-            border-radius: 50%;
-            box-shadow: 0 6px 0 #be123c, inset 0 3px 0 rgba(255,255,255,0.3);
-        }
-        .cake-bottom { width: 80px; height: 32px; bottom: 10px; left: 10px; }
-        .cake-top { width: 56px; height: 24px; bottom: 34px; left: 22px; background: linear-gradient(to bottom, #a855f7, #7e22ce); box-shadow: 0 5px 0 #6b21a8; }
-        .candle {
-            position: absolute;
-            width: 5px; height: 20px;
-            background: #fde047;
-            bottom: 53px; left: 47px;
-            border-radius: 2px;
-        }
-        .flame {
-            position: absolute;
-            width: 8px; height: 12px;
-            background: #f97316;
-            border-radius: 50% 50% 20% 20%;
-            bottom: 72px; left: 45px;
-            animation: flicker 0.2s alternate infinite;
-            box-shadow: 0 0 12px #f97316;
-        }
-
-        .custom-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 0, 25, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 110;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-        .custom-popup-overlay.open { opacity: 1; visibility: visible; }
-        
-        .popup-modal-content {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px 30px;
-            border-radius: 24px;
-            width: 85%;
-            max-width: 340px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transform: scale(0.7);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .custom-popup-overlay.open .popup-modal-content { transform: scale(1); }
-        .popup-modal-content h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            line-height: 1.4;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(255, 64, 129, 0.6);
-        }
-
-        @keyframes cardPopUp {
-            0% { transform: scale(0.85); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes castReveal {
-            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        @keyframes floatSticker {
-            0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
-        }
-        @keyframes titleFloat { 0% { transform: translateY(0px) rotate(-1deg); } 100% { transform: translateY(-6px) rotate(1deg); } }
-        @keyframes spinCake { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
-        @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.2); opacity: 1; } }
-    </style>
+    @keyframes cardPopUp {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes castReveal {
+      from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes floatSticker {
+      0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
+    }
+    @keyframes titleFloat { 0% { transform: translateY(0px) rotate(-1deg); } 100% { transform: translateY(-8px) rotate(1deg); } }
+    @keyframes spinCake { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+    @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.2); opacity: 1; } }
+  </style>
 </head>
 <body>
 
-    <canvas id="outerBgCanvas" class="bg-canvas"></canvas>
-    <canvas id="heartCanvas"></canvas>
+  <canvas id="outerBgCanvas" class="bg-canvas"></canvas>
+  <canvas id="heartCanvas"></canvas>
 
-    <div class="card-container" id="mainCard">
-        <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
+  <div class="card-container" id="mainCard">
+    <canvas id="cardBgCanvas" class="card-bg-canvas"></canvas>
+    
+    <div class="card-content">
         
-        <div class="card-content">
-            
-            <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>❤️‍🔥💞</span><span>✨</span></div>
-                <h1>My crush Meku!</h1>
-                <p>do you want to see your gift?</p>
-                <div class="btn-group">
-                    <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
-                    <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
-                </div>
+      <div id="screen1" class="screen active">
+        <div class="emoji-row"><span>🥰😇🥰</span><span>✨</span></div>
+        <h1>HeMeku!</h1>
+        <p>Do you want to see your gift?</p>
+        <div class="btn-group">
+          <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please</button>
+          <button class="btn btn-no" onclick="alert('Wrong button! 😉 Tap Yes Please!')">No Thanks</button>
+        </div>
+      </div>
+
+      <div id="screen2" class="screen">
+        <span class="cute-sticker">🔴⚽</span>
+        <h1 class="animate-fade">Favourite Fan</h1>
+        <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
+        <div class="btn-group animate-fade">
+          <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
+        </div>
+      </div>
+
+      <div id="screen3" class="screen">
+        <span class="cute-sticker">✨🎂</span>
+        <h1 class="animate-fade">Special Day</h1>
+        <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
+        <div class="btn-group animate-fade">
+          <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
+        </div>
+      </div>
+
+      <div id="screen4" class="screen">
+        <span class="cute-sticker">🌸👑</span>
+        <h1 class="animate-fade">Beautiful Vibes</h1>
+        <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too! ⚽🔴</p>
+        <div class="btn-group animate-fade">
+          <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
+        </div>
+      </div>
+
+      <div id="screen5" class="screen">
+        <h1 class="animate-fade" style="font-size: 1.7rem; margin-bottom: 2px;">Our Memories 📸</h1>
+        
+        <div class="birthday-overlay" id="birthdayPage">
+          <h1 class="bday-title">Happy Birthday!</h1>
+          <div class="bday-sub">To the one who completes my world ✨</div>
+          <div class="cake-container">
+            <div class="cake-layer cake-bottom"></div>
+            <div class="cake-layer cake-top"></div>
+            <div class="candle"></div>
+            <div class="flame"></div>
+          </div>
+        </div>
+
+        <div class="stack-container animate-fade" id="cardStack">
+          
+          <div class="memory-card card-0" id="tiltCard" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://i.postimg.cc/5tBhrx44/IMG-20260608-084403-774.jpg" alt="Birthday Queen">
             </div>
+            <div class="caption text-magic">✨ The Birthday Queen 👑</div>
+          </div>
 
-            <div id="screen2" class="screen">
-                <span class="cute-sticker">🔴⚽</span>
-                <h1 class="animate-fade">Favourite fan</h1>
-                <p class="animate-fade">Happy Birthday to my favorite Arsenal fan 🔴 You are genuinely such a cool person to chat with, and I always value our conversations. You have such a beautiful vibe and a wonderful attitude, and even though we don't get to hang out a lot, I’m really glad to know you. I hope your day is absolutely stunning, just like you.</p>
-                <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(3)">Read My Next Thought ✨</button>
-                </div>
+          <div class="memory-card card-1" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80" alt="Celebration">
             </div>
+            <div class="caption text-rose">🌹 Thank You More! ❤️</div>
+          </div>
 
-            <div id="screen3" class="screen">
-                <span class="cute-sticker">✨🎂</span>
-                <h1 class="animate-fade">Special day</h1>
-                <p class="animate-fade">Have an incredible time celebrating your special day today. Wishing you endless happiness, good health, and success in everything you do. It’s so rare to meet someone with such a naturally beautiful attitude and vibe. I’m truly grateful for our chats.</p>
-                <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(4)">Continue to Vibe... 👑</button>
-                </div>
+          <div class="memory-card card-2" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=500&q=80" alt="Lights">
             </div>
+            <div class="caption text-rose">💖 Our Memory</div>
+          </div>
 
-            <div id="screen4" class="screen">
-                <span class="cute-sticker">🌸👑</span>
-                <h1 class="animate-fade">Beautiful vibes</h1>
-                <p class="animate-fade">You have such a beautiful vibe and attitude, and even though we don't hang out a lot, I’m really glad to know you. Have an amazing birthday 🎂👑 Make sure you celebrate big today, eat plenty of good food, and make some unforgettable memories. Here’s to a beautiful year ahead—and hopefully plenty of Arsenal wins to celebrate too! ⚽🔴</p>
-                <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(5)">See Your Surprise 📸</button>
-                </div>
+          <div class="memory-card card-3" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=500&q=80" alt="Party">
             </div>
+            <div class="caption text-gold">👑 Celebrating your special day</div>
+          </div>
 
-            <div id="screen5" class="screen">
-                <h1 class="animate-fade" style="font-size: 1.6rem; margin-bottom: 2px;">Our Memories 📸</h1>
-                
-                <div class="stack-container animate-fade" id="cardStack">
-                    <div class="memory-card card-0" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg">
-                        </div>
-                        <div class="caption thanks-caption">✨ Thank You More!</div>
-                    </div>
-
-                    <div class="memory-card card-1" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg">
-                        </div>
-                        <div class="caption memory-caption">💖 Our Memory</div>
-                    </div>
-
-                    <div class="memory-card card-2" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg">
-                        </div>
-                        <div class="caption">🌅 Beautiful Days</div>
-                    </div>
-
-                    <div class="memory-card card-3" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg">
-                        </div>
-                        <div class="caption">🍦 Sweetest Moments</div>
-                    </div>
-
-                    <div class="memory-card card-4" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg">
-                        </div>
-                        <div class="caption">🎒 Adventures Together</div>
-                    </div>
-
-                    <div class="memory-card card-5" onclick="nextCard()">
-                        <div class="photo-frame">
-                            <img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg">
-                        </div>
-                        <div class="caption">📸 Tap to Begin</div>
-                    </div>
-                </div>
-                
-                <div class="stack-button-group animate-fade">
-                    <button class="stack-action-btn" id="deck1Btn" onclick="nextCard()">Next Card →</button>
-                    <div class="hint">Tap cards or use the action button</div>
-                </div>
-                
-                <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(6)">Open My Last Letter 📜</button>
-                </div>
+          <div class="memory-card card-4" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80" alt="Hearts">
             </div>
+            <div class="caption">💫 Falling more in love everyday</div>
+          </div>
 
-            <div id="screen6" class="screen">
-                <span class="cute-sticker">💎✨</span>
-                <h1 class="animate-fade" style="font-size: 1.9rem;">To a Lovely Person</h1>
-                <p class="animate-fade" style="font-size: 0.94rem; line-height: 1.5; margin-bottom: 20px;">
-                    I hope your birthday today is nothing short of amazing!<br><br>
-                    Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is. I don't mean it in any other way except that you are genuinely a lovely person who is so easy to appreciate.<br><br>
-                    Our timing might be short, but the story of how I got to know you still makes me smile. I've never gone this far out of my way for someone before, but I am truly grateful that the end of the year brought someone as wonderful as you into my world.
-                </p>
-                <div class="btn-group animate-fade">
-                    <button class="btn btn-yes" onclick="nextScreen(7)">Next Surprise 🌸</button>
-                </div>
+          <div class="memory-card card-5" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=500&q=80" alt="Balloons">
             </div>
+            <div class="caption">✨ Making wishes come true together</div>
+          </div>
 
-            <div id="screen7" class="screen">
-                <div class="showcase-container-fixed">
-                    <span class="cute-sticker">🌟✨</span>
-                    <h1 class="animate-fade" style="font-size: 1.8rem; margin-bottom: 10px;">For You Meku</h1>
-                    
-                    <div class="birthday-overlay" id="birthdayPage">
-                        <h1 class="bday-title">Happy Birthday!</h1>
-                        <div class="bday-sub">To the one who completes my world ✨</div>
-                        
-                        <div class="cake-container">
-                            <div class="cake-layer cake-bottom"></div>
-                            <div class="cake-layer cake-top"></div>
-                            <div class="candle"></div>
-                            <div class="flame"></div>
-                        </div>
-                    </div>
-
-                    <div class="stack-container animate-fade" id="loveStoryStack">
-                        <div class="memory-card card-0" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-thanks">🌹 Thank You More! ❤️</div>
-                        </div>
-                        <div class="memory-card card-1" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-memory">💖 Our Memory</div>
-                        </div>
-                        <div class="memory-card card-2" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-standard">👑 Celebrating your special day</div>
-                        </div>
-                        <div class="memory-card card-3" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-standard">💫 Falling more in love everyday</div>
-                        </div>
-                        <div class="memory-card card-4" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-standard">✨ Making wishes come true together</div>
-                        </div>
-                        <div class="memory-card card-5" onclick="nextLoveCard()">
-                            <div class="photo-frame">
-                                <img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg">
-                            </div>
-                            <div class="caption text-standard">🎁 Swipe to unlock your surprise...</div>
-                        </div>
-                    </div>
-
-                    <div class="stack-button-group animate-fade">
-                        <button class="stack-action-btn love-action-btn" id="deck2Btn" onclick="nextLoveCard()">Next Memory →</button>
-                        <div class="hint hint-love" id="hintText">Tap cards or use the action button</div>
-                    </div>
-                    
-                    <div class="pretty-sub animate-fade">Happy Birthday Pretty 👑</div>
-                    <p class="signature animate-fade">Happy June 8! 🎂💖</p>
-                </div>
-                
-                <div class="btn-group animate-fade" style="width: 100%; margin-top: 5px;">
-                    <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
-                    <button class="btn btn-loop" id="loopActionBtn" onclick="loopDeckButtonTrigger()">Happy Birthday Again Beautiful ✨</button>
-                </div>
+          <div class="memory-card card-6" onclick="nextCard()">
+            <div class="photo-frame">
+              <img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=500&q=80" alt="Gift Box">
             </div>
+            <div class="caption">🎁 Swipe up to unlock surprise...</div>
+          </div>
 
         </div>
-    </div>
-
-    <div class="custom-popup-overlay" id="surprisePopup">
-        <div class="popup-modal-content">
-            <h2>Happy Birthday Again Beautiful ✨🎂💖</h2>
-            <button class="pushable-btn" id="magicButton" onclick="transformButton()">
-                <span class="btn-edge"></span>
-                <span class="btn-front" id="btnText">Aww, Thank You! 🥰</span>
-            </button>
+        
+        <div class="stack-button-group animate-fade">
+          <button class="stack-action-btn" id="deckBtn" onclick="nextCard()">Next Card →</button>
+          <div class="hint" id="hintText">Swipe cards up or tap the button</div>
         </div>
+        
+        <div class="btn-group animate-fade">
+          <button class="btn btn-yes" onclick="nextScreen(6)">Open My Final Letter 📜</button>
+        </div>
+      </div>
+
+      <div id="screen6" class="screen">
+        <span class="cute-sticker">💎✨</span>
+        <h1 class="animate-fade" style="font-size: 1.8rem;">To a Lovely Person</h1>
+        <p class="animate-fade" style="font-size: 0.92rem; line-height: 1.5; margin-bottom: 20px;">
+          I hope your birthday today is nothing short of amazing!<br><br>
+          Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is.<br><br>
+          Our timing might be short, but the story of how I got to know you still makes me smile. I am truly grateful that the end of the year brought someone as wonderful as you into my world.
+        </p>
+        <div class="btn-group animate-fade">
+          <button class="btn btn-yes" onclick="nextScreen(1)" style="background: linear-gradient(45deg, #00e5ff, #bca3ff); color: #110022;">Restart Journey 🔄</button>
+        </div>
+      </div>
+
     </div>
+  </div>
 
-    <script>
-        let currentTopIndex = 5;
-        const stackCards = document.querySelectorAll('#cardStack .memory-card');
+  <script>
+    let currentTopIndex = 6; 
+    const stackCards = document.querySelectorAll('#cardStack .memory-card');
+    const birthdayPage = document.getElementById('birthdayPage');
+    const cardStackContainer = document.getElementById('cardStack');
+    const deckBtn = document.getElementById('deckBtn');
+    const hintText = document.getElementById('hintText');
+    const tiltCard = document.getElementById('tiltCard');
 
-        function nextCard() {
-            if (currentTopIndex <= 0) {
-                resetDeck();
-                return;
-            }
-            const cardToDismiss = stackCards[currentTopIndex];
-            cardToDismiss.classList.add('dismissed');
-            currentTopIndex--;
+    function nextCard() {
+      if (currentTopIndex < 0) {
+        resetDeck();
+        return;
+      }
 
-            const btn = document.getElementById('deck1Btn');
-            if (currentTopIndex === 0) {
-                btn.innerHTML = "🔄 See Again";
-            } else {
-                btn.innerHTML = "Next Card →";
-            }
-        }
+      if (currentTopIndex >= 0) {
+        const cardToDismiss = stackCards[currentTopIndex];
+        cardToDismiss.classList.add('dismissed');
+        currentTopIndex--;
+      }
 
-        function resetDeck() {
-            stackCards.forEach(card => card.classList.remove('dismissed'));
-            currentTopIndex = 5;
-            const btn = document.getElementById('deck1Btn');
-            btn.innerHTML = "Next Card →";
-        }
+      if (currentTopIndex === 0) {
+        hintText.innerHTML = "Move your finger over her photo to tilt it! ✨";
+      }
 
-        let loveTopIndex = 5;
-        const loveCards = document.querySelectorAll('#loveStoryStack .memory-card');
-        const birthdayPage = document.getElementById('birthdayPage');
-        const loveStoryStackContainer = document.getElementById('loveStoryStack');
-        const deck2Btn = document.getElementById('deck2Btn');
-        const hintText = document.getElementById('hintText');
-        const loopActionBtn = document.getElementById('loopActionBtn');
+      if (currentTopIndex < 0) {
+        cardStackContainer.style.display = 'none';
+        birthdayPage.classList.add('show');
+        deckBtn.innerHTML = "🔄 See Cards Again";
+        hintText.innerHTML = "Make a wish! 🎂";
+      } else {
+        deckBtn.innerHTML = "Next Card →";
+      }
+    }
 
-        function nextLoveCard() {
-            if (loveTopIndex < 0) {
-                resetLoveDeck();
-                return;
-            }
+    function resetDeck() {
+      stackCards.forEach(card => card.classList.remove('dismissed'));
+      birthdayPage.classList.remove('show');
+      cardStackContainer.style.display = 'block';
+      currentTopIndex = 6;
+      deckBtn.innerHTML = "Next Card →";
+      hintText.innerHTML = "Swipe cards up or tap the button";
+      tiltCard.style.transform = "translateY(36px) translateZ(-150px) scale(0.76) rotate(0deg)";
+    }
 
-            if (loveTopIndex >= 0) {
-                const cardToDismiss = loveCards[loveTopIndex];
-                cardToDismiss.classList.add('dismissed');
-                loveTopIndex--;
-            }
+    // --- 3D INTERACTIVE TILT ENGINE LOGIC ---
+    tiltCard.addEventListener('mousemove', (e) => {
+      if (currentTopIndex !== 0) return; 
+      const rect = tiltCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      const angleX = (yc - y) / 10; 
+      const angleY = (x - xc) / 10; 
+      tiltCard.style.transform = `scale(1.05) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+    });
 
-            if (loveTopIndex < 0) {
-                loveStoryStackContainer.style.display = 'none';
-                birthdayPage.classList.add('show');
-                deck2Btn.innerHTML = "🔄 See Our Story Again";
-                loopActionBtn.innerHTML = "Happy Birthday Again Beautiful ✨";
-                hintText.innerHTML = "Click the button to loop your memory cards";
-            } else {
-                deck2Btn.innerHTML = "Next Memory →";
-            }
-        }
+    tiltCard.addEventListener('touchmove', (e) => {
+      if (currentTopIndex !== 0) return;
+      const touch = e.touches[0];
+      const rect = tiltCard.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      const angleX = (yc - y) / 12;
+      const angleY = (x - xc) / 12;
+      tiltCard.style.transform = `scale(1.05) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+    }, {passive: true});
 
-        function resetLoveDeck() {
-            loveCards.forEach(card => card.classList.remove('dismissed'));
-            birthdayPage.classList.remove('show');
-            loveStoryStackContainer.style.display = 'block';
-            loveTopIndex = 5;
-            deck2Btn.innerHTML = "Next Memory →";
-            hintText.innerHTML = "Tap cards or use the action button";
-            loopActionBtn.innerHTML = "Happy Birthday Again Beautiful ✨";
-        }
+    tiltCard.addEventListener('mouseleave', () => {
+      if (currentTopIndex === 0) tiltCard.style.transform = "scale(1) rotateX(0deg) rotateY(0deg)";
+    });
+    tiltCard.addEventListener('touchend', () => {
+      if (currentTopIndex === 0) tiltCard.style.transform = "scale(1) rotateX(0deg) rotateY(0deg)";
+    });
 
-        function loopDeckButtonTrigger() {
-            if (loveTopIndex < 0) {
-                resetLoveDeck();
-            } else {
-                nextLoveCard();
-            }
-        }
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let touchStartY = 0;
-        let touchEndY = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, {passive: true});
-
-        document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            handleSwipeGesture();
-        }, {passive: true});
-
-        function handleSwipeGesture() {
-            const swipeDistanceX = touchEndX - touchStartX;
-            const swipeDistanceY = touchStartY - touchEndY; // Upward tracking
+    // --- SCREEN NAVIGATION ENGINE ---
+    function nextScreen(screenNumber) {
+      const currentScreen = document.querySelector('.screen.active');
+      if (currentScreen) {
+        currentScreen.style.opacity = '0';
+        currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
+        currentScreen.style.filter = 'blur(4px)';
+        
+        setTimeout(() => {
+          currentScreen.classList.remove('active');
+          currentScreen.style.filter = '';
+          
+          const nextTarget = document.getElementById('screen' + screenNumber);
+          if (nextTarget) {
+            nextTarget.classList.add('active');
+            resizeCardCanvas();
             
-            if (document.getElementById('screen5').classList.contains('active')) {
-                if (swipeDistanceX < -60) nextCard();
+            const heartLayer = document.getElementById('heartCanvas');
+            if(screenNumber === 5) {
+              heartLayer.classList.add('active');
+              resetDeck();
+            } else {
+              heartLayer.classList.remove('active');
             }
-            if (document.getElementById('screen7').classList.contains('active')) {
-                if (swipeDistanceY > 60 && loveTopIndex >= 0) {
-                    nextLoveCard();
-                } else if (swipeDistanceX > 60 && loveTopIndex >= 0) {
-                    nextLoveCard();
-                }
-            }
-        }
-
-        function nextScreen(screenNumber) {
-            const currentScreen = document.querySelector('.screen.active');
-            if (currentScreen) {
-                currentScreen.style.opacity = '0';
-                currentScreen.style.transform = 'translateY(-20px) scale(0.95)';
-                currentScreen.style.filter = 'blur(4px)';
-                
-                setTimeout(() => {
-                    currentScreen.classList.remove('active');
-                    currentScreen.style.filter = '';
-                    
-                    const nextTarget = document.getElementById('screen' + screenNumber);
-                    if (nextTarget) {
-                        nextTarget.classList.add('active');
-                        resizeCardCanvas();
-                        
-                        const heartLayer = document.getElementById('heartCanvas');
-                        if(screenNumber === 7) {
-                            heartLayer.classList.add('active');
-                            resetLoveDeck();
-                        } else {
-                            heartLayer.classList.remove('active');
-                        }
-                        if(screenNumber === 5) resetDeck();
-                        
-                        setTimeout(() => {
-                            nextTarget.style.opacity = '1';
-                            nextTarget.style.transform = 'translateY(0) scale(1)';
-                        }, 50);
-                    }
-                }, 400);
-            }
-        }
-
-        function openPopup() { document.getElementById('surprisePopup').classList.add('open'); }
-        function closePopup() { document.getElementById('surprisePopup').classList.remove('open'); }
-
-        function transformButton() {
-            const btn = document.getElementById('magicButton');
-            const text = document.getElementById('btnText');
-            const modal = document.querySelector('.popup-modal-content');
             
-            btn.classList.add('transformed');
-            text.innerHTML = "🔮 Activated! 🔮";
-
-            for (let i = 0; i < 15; i++) createOrb(modal);
-
             setTimeout(() => {
-                closePopup();
-                setTimeout(() => {
-                    btn.classList.remove('transformed');
-                    text.innerHTML = "Aww, Thank You! 🥰";
-                }, 400);
-            }, 1500);
+              nextTarget.style.opacity = '1';
+              nextTarget.style.transform = 'translateY(0) scale(1)';
+            }, 50);
+          }
+        }, 400);
+      }
+    }
+
+    // --- SWIPE GESTURE DETECTION ---
+    let touchStartY = 0;
+    let touchEndY = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartY = e.changedTouches[0].screenY;
+    }, {passive: true});
+    
+    document.addEventListener('touchend', e => {
+      touchEndY = e.changedTouches[0].screenY;
+      if (document.getElementById('screen5').classList.contains('active')) {
+        if (touchStartY - touchEndY > 60 && currentTopIndex >= 0) {
+          nextCard();
         }
+      }
+    }, {passive: true});
 
-        function createOrb(parent) {
-            const orb = document.createElement('div');
-            orb.classList.add('magic-orb');
-            const size = Math.random() * 20 + 10; 
-            orb.style.width = `${size}px`; orb.style.height = `${size}px`;
-            orb.style.left = `50%`; orb.style.top = `75%`;
+    // --- BACKGROUND FLOATING BALLOON ENGINE ---
+    const bgCanvas = document.getElementById('outerBgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgElements = [];
+    const themeColors = [{r: 255, g: 82, b: 142}, {r: 206, g: 104, b: 255}, {r: 51, g: 219, b: 255}, {r: 255, g: 210, b: 76}];
 
-            const angle = Math.random() * Math.PI * 2;
-            const distance = Math.random() * 120 + 60;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
-            
-            orb.style.setProperty('--translate-target', `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`);
-            parent.appendChild(orb);
-            setTimeout(() => orb.remove(), 1200);
-        }
+    function resizeOuterCanvas() { bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeOuterCanvas);
+    resizeOuterCanvas();
 
-        const bgCanvas = document.getElementById('outerBgCanvas');
-        const bgCtx = bgCanvas.getContext('2d');
-        let bgElements = [];
-        const totalBalloons = 12;
-        const totalSparkles = 35;
-        const mouse = { x: null, y: null };
+    class OuterBalloon {
+      constructor() { this.reset(); this.y = Math.random() * (bgCanvas.height + 200); }
+      reset() {
+        this.x = Math.random() * bgCanvas.width; this.y = bgCanvas.height + 100;
+        this.radius = Math.random() * 14 + 18;
+        this.color = themeColors[Math.floor(Math.random() * themeColors.length)];
+        this.speedY = Math.random() * 0.5 + 0.3; this.angle = Math.random() * Math.PI;
+        this.swingSpeed = Math.random() * 0.01 + 0.005;
+      }
+      update() {
+        this.y -= this.speedY; this.angle += this.swingSpeed; this.x += Math.sin(this.angle) * 0.4;
+        if (this.y < -this.radius * 3) this.reset();
+      }
+      draw() {
+        bgCtx.save(); bgCtx.beginPath();
+        bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
+        bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);
+        bgCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; bgCtx.stroke();
+        bgCtx.beginPath(); bgCtx.translate(this.x, this.y); bgCtx.scale(1, 1.3);
+        let grad = bgCtx.createRadialGradient(-this.radius*0.3, -this.radius*0.3, this.radius*0.1, 0, 0, this.radius);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
+        grad.addColorStop(0.3, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.35)`);
+        grad.addColorStop(1, `rgba(${this.color.r*0.3}, ${this.color.g*0.3}, ${this.color.b*0.3}, 0.35)`);
+        bgCtx.fillStyle = grad; bgCtx.arc(0, 0, this.radius, 0, Math.PI * 2); bgCtx.fill();
+        bgCtx.restore();
+      }
+    }
 
-        function resizeOuterCanvas() { bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeOuterCanvas);
-        resizeOuterCanvas();
+    class Sparkle {
+      constructor() { this.reset(); this.y = Math.random() * bgCanvas.height; }
+      reset() { this.x = Math.random() * bgCanvas.width; this.y = -20; this.size = Math.random() * 2.5 + 1; this.speedY = Math.random() * 0.4 + 0.2; this.speedX = Math.sin(Math.random() * 2) * 0.15; }
+      update() { this.y += this.speedY; this.x += this.speedX; if (this.y > bgCanvas.height) this.reset(); }
+      draw() {
+        const picked = themeColors[Math.floor(Math.random() * themeColors.length)];
+        bgCtx.save(); bgCtx.globalAlpha = 0.5;
+        bgCtx.shadowBlur = this.size * 3; bgCtx.shadowColor = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
+        bgCtx.fillStyle = `rgb(${picked.r}, ${picked.g}, ${picked.b})`; bgCtx.beginPath(); bgCtx.translate(this.x, this.y);
+        for (let i = 0; i < 4; i++) { bgCtx.lineTo(0, this.size * 2.5); bgCtx.lineTo(this.size * 0.5, this.size * 0.5); bgCtx.rotate(Math.PI / 2); }
+        bgCtx.closePath(); bgCtx.fill(); bgCtx.restore();
+      }
+    }
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX; mouse.y = e.clientY;
-            for(let i=0; i<2; i++) bgElements.push(new Sparkle(mouse.x, mouse.y, true));
-        });
-        window.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0]; mouse.x = touch.clientX; mouse.y = touch.clientY;
-            for(let i=0; i<2; i++) bgElements.push(new Sparkle(mouse.x, mouse.y, true));
-        });
+    // --- AMBIENT GLASS CARD PARTICLES ---
+    const cardCanvas = document.getElementById('cardBgCanvas');
+    const cardCtx = cardCanvas.getContext('2d');
+    let cardParticles = [];
 
-        const themeColors = [{r: 255, g: 82, b: 142}, {r: 206, g: 104, b: 255}, {r: 51, g: 219, b: 255}, {r: 255, g: 210, b: 76}];
+    function resizeCardCanvas() { const rect = cardCanvas.parentElement.getBoundingClientRect(); cardCanvas.width = rect.width; cardCanvas.height = rect.height; }
+    window.addEventListener('resize', resizeCardCanvas);
+    setTimeout(resizeCardCanvas, 150);
 
-        class OuterBalloon {
-            constructor() { this.type = 'balloon'; this.reset(); this.y = Math.random() * (bgCanvas.height + 200); }
-            reset() {
-                this.x = Math.random() * bgCanvas.width; this.y = bgCanvas.height + 100;
-                this.radius = Math.random() * 14 + 18;
-                this.color = themeColors[Math.floor(Math.random() * themeColors.length)];
-                this.speedY = Math.random() * 0.5 + 0.3; this.angle = Math.random() * Math.PI;
-                this.swingSpeed = Math.random() * 0.01 + 0.005;
-            }
-            update() {
-                this.y -= this.speedY; this.angle += this.swingSpeed; this.x += Math.sin(this.angle) * 0.4;
-                if (this.y < -this.radius * 3) this.reset();
-            }
-            draw() {
-                bgCtx.save(); bgCtx.beginPath();
-                bgCtx.moveTo(this.x, this.y + (this.radius * 1.3));
-                bgCtx.quadraticCurveTo(this.x + Math.sin(this.angle) * 8, this.y + (this.radius * 1.3) + 20, this.x, this.y + (this.radius * 1.3) + 45);
-                bgCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; bgCtx.stroke();
-                bgCtx.beginPath(); bgCtx.translate(this.x, this.y); bgCtx.scale(1, 1.3);
-                let grad = bgCtx.createRadialGradient(-this.radius*0.3, -this.radius*0.3, this.radius*0.1, 0, 0, this.radius);
-                grad.addColorStop(0, 'rgba(255, 255, 255, 0.7)');
-                grad.addColorStop(0.3, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.35)`);
-                grad.addColorStop(1, `rgba(${this.color.r*0.3}, ${this.color.g*0.3}, ${this.color.b*0.3}, 0.35)`);
-                bgCtx.fillStyle = grad; bgCtx.arc(0, 0, this.radius, 0, Math.PI * 2); bgCtx.fill();
-                bgCtx.restore();
-            }
-        }
+    class CardLiquidBlob {
+      constructor() {
+        this.x = Math.random() * 300; this.y = Math.random() * 400; this.radius = Math.random() * 50 + 50;
+        this.speedX = (Math.random() * 0.6) - 0.3; this.speedY = (Math.random() * 0.6) - 0.3;
+        this.color = ['rgba(255, 64, 129, ', 'rgba(0, 229, 255, ', 'rgba(156, 39, 176, '][Math.floor(Math.random() * 3)];
+        this.alpha = Math.random() * 0.12 + 0.08; this.grow = Math.random() > 0.5;
+      }
+      update() {
+        this.x += this.speedX; this.y += this.speedY;
+        if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
+        if (this.y < -50 || this.y > cardCanvas.height + 50) this.speedY *= -1;
+      }
+      draw() {
+        cardCtx.beginPath();
+        let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        gradient.addColorStop(0, this.color + this.alpha + ')'); gradient.addColorStop(1, this.color + '0)');
+        cardCtx.fillStyle = gradient; cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); cardCtx.fill();
+      }
+    }
 
-        class Sparkle {
-            constructor(x = null, y = null, isMouseTrail = false) {
-                this.type = 'sparkle'; this.isMouseTrail = isMouseTrail;
-                if (isMouseTrail) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.speedY = Math.random() * 1.2 - 0.4; this.speedX = Math.random() * 1.6 - 0.8; }
-                else { this.reset(); this.y = Math.random() * bgCanvas.height; }
-            }
-            reset() { this.x = Math.random() * bgCanvas.width; this.y = -20; this.size = Math.random() * 2.5 + 1; this.speedY = Math.random() * 0.4 + 0.2; this.speedX = Math.sin(Math.random() * 2) * 0.15; }
-            update() { this.y += this.speedY; this.x += this.speedX; if (this.isMouseTrail) this.size -= 0.05; else if (this.y > bgCanvas.height) this.reset(); }
-            draw() {
-                if (this.size <= 0) return;
-                const picked = themeColors[Math.floor(Math.random() * themeColors.length)];
-                bgCtx.save(); bgCtx.globalAlpha = this.isMouseTrail ? Math.max(0, this.size) : 0.5;
-                bgCtx.shadowBlur = this.size * 3; bgCtx.shadowColor = `rgb(${picked.r}, ${picked.g}, ${picked.b})`;
-                bgCtx.fillStyle = `rgb(${picked.r}, ${picked.g}, ${picked.b})`; bgCtx.beginPath(); bgCtx.translate(this.x, this.y);
-                for (let i = 0; i < 4; i++) { bgCtx.lineTo(0, this.size * 2.5); bgCtx.lineTo(this.size * 0.5, this.size * 0.5); bgCtx.rotate(Math.PI / 2); }
-                bgCtx.closePath(); bgCtx.fill(); bgCtx.restore();
-            }
-        }
+    // --- SCREEN 5 BACKGROUND HEART FLOW ---
+    const heartCanvas = document.getElementById('heartCanvas');
+    const heartCtx = heartCanvas.getContext('2d');
+    let heartParticlesArray = [];
 
-        const cardCanvas = document.getElementById('cardBgCanvas');
-        const cardCtx = cardCanvas.getContext('2d');
-        let cardParticles = [];
-        const totalBlobs = 12;
+    function resizeHeartCanvas() { heartCanvas.width = window.innerWidth; heartCanvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeHeartCanvas);
+    resizeHeartCanvas();
 
-        function resizeCardCanvas() { const rect = cardCanvas.parentElement.getBoundingClientRect(); cardCanvas.width = rect.width; cardCanvas.height = rect.height; }
-        window.addEventListener('resize', resizeCardCanvas);
-        setTimeout(resizeCardCanvas, 150);
+    class HeartParticle {
+      constructor() { this.reset(); this.y = Math.random() * heartCanvas.height; }
+      reset() {
+        this.x = Math.random() * heartCanvas.width; this.y = heartCanvas.height + Math.random() * 20;
+        this.size = Math.random() * 8 + 5; this.speedY = -(Math.random() * 1 + 0.5);
+        this.opacity = Math.random() * 0.5 + 0.2; this.swing = Math.random() * 0.02; this.swingStep = Math.random() * 100;
+      }
+      update() {
+        this.y += this.speedY; this.swingStep += this.swing; this.x += Math.sin(this.swingStep) * 0.3;
+        if (this.y < -20) this.reset();
+      }
+      draw() {
+        heartCtx.save(); heartCtx.globalAlpha = this.opacity; heartCtx.fillStyle = '#f43f5e'; heartCtx.beginPath();
+        const topCurveHeight = this.size * 0.3; heartCtx.moveTo(this.x, this.y + topCurveHeight);
+        heartCtx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+        heartCtx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
+        heartCtx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, topCurveHeight);
+        heartCtx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+        heartCtx.closePath(); heartCtx.fill(); heartCtx.restore();
+      }
+    }
 
-        class CardLiquidBlob {
-            constructor() {
-                this.x = Math.random() * 300; this.y = Math.random() * 400; this.radius = Math.random() * 50 + 50;
-                this.speedX = (Math.random() * 0.6) - 0.3; this.speedY = (Math.random() * 0.6) - 0.3;
-                this.color = ['rgba(255, 64, 129, ', 'rgba(0, 229, 255, ', 'rgba(156, 39, 176, '][Math.floor(Math.random() * 3)];
-                this.alpha = Math.random() * 0.12 + 0.08; this.grow = Math.random() > 0.5;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x < 0 || this.x > cardCanvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > cardCanvas.height) this.speedY *= -1;
-                if (this.grow) { this.radius += 0.08; if(this.radius > 120) this.grow = false; }
-                else { this.radius -= 0.08; if(this.radius < 50) this.grow = true; }
-            }
-            draw() {
-                cardCtx.beginPath();
-                let gradient = cardCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-                gradient.addColorStop(0, this.color + this.alpha + ')'); gradient.addColorStop(1, this.color + '0)');
-                cardCtx.fillStyle = gradient; cardCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); cardCtx.fill();
-            }
-        }
+    function init() {
+      bgElements = []; cardParticles = []; heartParticlesArray = [];
+      for (let i = 0; i < 12; i++) bgElements.push(new OuterBalloon());
+      for (let i = 0; i < 25; i++) bgElements.push(new Sparkle());
+      for (let i = 0; i < 10; i++) cardParticles.push(new CardLiquidBlob());
+      for (let i = 0; i < 20; i++) heartParticlesArray.push(new HeartParticle());
+    }
 
-        const heartCanvas = document.getElementById('heartCanvas');
-        const heartCtx = heartCanvas.getContext('2d');
-        let heartParticlesArray = [];
-        const numberOfHeartParticles = 25;
+    function runEngine() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      for (let i = 0; i < bgElements.length; i++) { bgElements[i].update(); bgElements[i].draw(); }
+      
+      cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
+      for (let i = 0; i < cardParticles.length; i++) cardParticles[i].draw();
+      
+      if (heartCanvas.classList.contains('active')) {
+        heartCtx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+        for (let i = 0; i < heartParticlesArray.length; i++) { heartParticlesArray[i].update(); heartParticlesArray[i].draw(); }
+      }
+      requestAnimationFrame(runEngine);
+    }
 
-        function resizeHeartCanvas() { heartCanvas.width = window.innerWidth; heartCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeHeartCanvas);
-        resizeHeartCanvas();
-
-        class HeartParticle {
-            constructor() { this.reset(); this.y = Math.random() * heartCanvas.height; }
-            reset() {
-                this.x = Math.random() * heartCanvas.width; this.y = heartCanvas.height + Math.random() * 20;
-                this.size = Math.random() * 8 + 5; this.speedY = -(Math.random() * 1 + 0.5);
-                this.opacity = Math.random() * 0.5 + 0.2; this.swing = Math.random() * 0.02; this.swingStep = Math.random() * 100;
-            }
-            update() {
-                this.y += this.speedY; this.swingStep += this.swing; this.x += Math.sin(this.swingStep) * 0.3;
-                if (this.y < -20) this.reset();
-            }
-            draw() {
-                heartCtx.save(); heartCtx.globalAlpha = this.opacity; heartCtx.fillStyle = '#f43f5e'; heartCtx.beginPath();
-                const topCurveHeight = this.size * 0.3; heartCtx.moveTo(this.x, this.y + topCurveHeight);
-                heartCtx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
-                heartCtx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
-                heartCtx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, topCurveHeight);
-                heartCtx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
-                heartCtx.closePath(); heartCtx.fill(); heartCtx.restore();
-            }
-        }
-
-        function init() {
-            bgElements = []; cardParticles = []; heartParticlesArray = [];
-            for (let i = 0; i < totalBalloons; i++) bgElements.push(new OuterBalloon());
-            for (let i = 0; i < totalSparkles; i++) bgElements.push(new Sparkle());
-            for (let i = 0; i < totalBlobs; i++) cardParticles.push(new CardLiquidBlob());
-            for (let i = 0; i < numberOfHeartParticles; i++) heartParticlesArray.push(new HeartParticle());
-        }
-
-        function runEngine() {
-            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-            for (let i = 0; i < bgElements.length; i++) {
-                bgElements[i].update(); bgElements[i].draw();
-                if (bgElements[i].type === 'sparkle' && bgElements[i].isMouseTrail && bgElements[i].size <= 0) { bgElements.splice(i, 1); i--; }
-            }
-            cardCtx.clearRect(0, 0, cardCanvas.width, cardCanvas.height);
-            for (let i = 0; i < cardParticles.length; i++) cardParticles[i].update(); cardParticles[i].draw();
-            
-            if (document.getElementById('heartCanvas').classList.contains('active')) {
-                heartCtx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
-                for (let i = 0; i < heartParticlesArray.length; i++) { heartParticlesArray[i].update(); heartParticlesArray[i].draw(); }
-            }
-            requestAnimationFrame(runEngine);
-        }
-
-        init();
-        runEngine();
-    </script>
+    init();
+    runEngine();
+  </script>
 </body>
 </html>

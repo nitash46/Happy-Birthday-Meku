@@ -275,10 +275,10 @@
         .f6 { transform: rotateY(257.14deg) translateZ(190px); }
         .f7 { transform: rotateY(308.57deg) translateZ(190px); }
 
-        /* Screen 7 Layout Elements */
+        /* Screen 7 Layout Elements & Integrated Cake Room */
         .scrollable-showcase-container {
             width: 100%;
-            height: 40vh;
+            height: 46vh;
             overflow-y: scroll;
             padding-right: 4px;
             display: flex;
@@ -289,19 +289,136 @@
         .scrollable-showcase-container::-webkit-scrollbar { width: 4px; }
         .scrollable-showcase-container::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 10px; }
 
-        .showcase-wrapper {
+        /* Container box styling */
+        .cake-room-container {
+            position: relative;
             width: 100%;
-            max-width: 245px;
-            margin: 15px auto;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            max-width: 270px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 20px;
+            border-radius: 20px;
+            transition: background 0.6s ease;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .showcase-photo {
-            display: block;
-            width: 100%;
-            height: auto;
+
+        /* Dark mode simulation overlay when lights go off */
+        .cake-room-container.dark-mode {
+            background: rgba(10, 5, 20, 0.95);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 64, 129, 0.2);
+        }
+
+        /* Interactive Light Button Styling */
+        .light-switch-btn {
+            position: absolute;
+            top: 10px;
+            background: #ffffff33;
+            border: 1px solid #ffffff66;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .light-switch-btn:hover {
+            background: #ffffff55;
+            transform: scale(1.05);
+        }
+
+        /* CSS Cake Art Elements */
+        .romantic-cake {
+            position: relative;
+            width: 130px;
+            height: 75px;
+            margin-top: 45px;
+        }
+        .cake-layer {
+            position: absolute;
+            height: 28px;
+            border-radius: 8px 8px 0 0;
+        }
+        .cake-layer-bottom {
+            bottom: 0;
+            width: 130px;
+            background: #ff4d94;
+        }
+        .cake-layer-top {
+            bottom: 25px;
+            width: 100px;
+            left: 15px;
+            background: #ff69b4;
+        }
+        .cake-plate {
+            position: absolute;
+            bottom: -8px;
+            width: 154px;
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            left: -12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        /* Candles & Fire Glowing Art */
+        .cake-candle {
+            position: absolute;
+            bottom: 53px;
+            width: 6px;
+            height: 20px;
+            background: linear-gradient(to right, #fff, #ffe6eb);
+            border-radius: 2px;
+        }
+        .candle-flame {
+            position: absolute;
+            top: -12px;
+            left: -2px;
+            width: 10px;
+            height: 14px;
+            background: #ffaa00;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 10px #ffaa00, 0 0 20px #ff4500;
+            animation: cakeFlameFlicker 0.6s infinite alternate linear;
+            transition: box-shadow 0.6s ease;
+        }
+
+        .dark-mode .candle-flame {
+            box-shadow: 0 0 25px #ffcc00, 0 0 50px #ff5500, 0 0 70px #ff2200;
+            background: #fffb00;
+        }
+
+        @keyframes cakeFlameFlicker {
+            0% { transform: scale(1) rotate(-1deg); }
+            100% { transform: scale(1.15) rotate(1deg); }
+        }
+
+        /* Glowing text reveal styles */
+        .romantic-birthday-text {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.8s ease-in-out;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            position: absolute;
+            top: 48px;
+            z-index: 5;
+            pointer-events: none;
+            width: 90%;
+        }
+        .romantic-birthday-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 30px #ff1493;
         }
 
         .signature { color: #ff4081; font-weight: bold; margin-bottom: 10px; font-size: 1.15rem; }
@@ -366,7 +483,7 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Surprise Popup Window */
+        /* Surprise Popup Window Layout Framework Updates */
         .custom-popup-overlay {
             position: fixed;
             top: 0;
@@ -386,15 +503,128 @@
             transition: all 0.5s ease;
         }
         .custom-popup-overlay.open { opacity: 1; visibility: visible; }
-        
-        .popup-modal-content {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px 24px;
+
+        /* Integrated Custom Morphing Button Area Content layout elements */
+        .card-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .button-action-stage {
+            margin: 20px 0 5px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Premium Morphing Thank You Button Style */
+        .thank-you-btn {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.05rem;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 85%;
+            max-width: 280px;
+            outline: none;
+        }
+
+        /* The Animated 'Activated' State */
+        .thank-you-btn.activated {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 0 25px rgba(56, 239, 125, 0.75);
+            transform: scale(1.08);
+            letter-spacing: 1px;
+            animation: buttonPulse 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes buttonPulse {
+            0% { box-shadow: 0 0 15px rgba(56, 239, 125, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(56, 239, 125, 0.9); }
+        }
+
+        /* Back to Home Button Style */
+        .back-home-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            outline: none;
+        }
+        .back-home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Immersive Popup Overlay Matrix */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 5, 25, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        .modal-overlay.active-popup {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Volumetric Popup Window Box */
+        .modal-box {
+            background: linear-gradient(145deg, #241442 0%, #150a2b 100%);
+            border: 1px solid rgba(255, 105, 180, 0.25);
             border-radius: 24px;
             width: 85%;
-            max-width: 340px;
+            max-width: 320px;
+            padding: 30px 24px;
             text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            transform: translateY(30px) scale(0.9);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+        }
+        .modal-overlay.active-popup .modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-sparkles { font-size: 2.2rem; margin-bottom: 10px; }
+        .modal-box h3 { font-size: 1.4rem; color: #38ef7d; margin-bottom: 12px; font-weight: bold; }
+        .modal-box p { font-size: 0.95rem; line-height: 1.5; opacity: 0.85; margin-bottom: 20px; }
+
+        .modal-close-btn {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+            outline: none;
         }
 
         @keyframes cardPopUp {
@@ -419,7 +649,7 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>💯</span><span>✨</span></div>
+                <div class="emoji-row"><span>🥳🥳</span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -495,9 +725,33 @@
                 <div id="autoShowcaseContainer" class="scrollable-showcase-container">
                     <span class="cute-sticker">👑✨</span>
                     <h1 style="font-size: 2rem;">For You Meku</h1>
-                    <div class="showcase-wrapper">
-                        <img class="showcase-photo" src="https://picsum.photos/400/600.jpg">
+                    
+                    <div class="cake-room-container" id="cakeRoom">
+                        <button class="light-switch-btn" id="lightBtn" onclick="toggleRoomLights()">
+                            💡 Turn Off Lights
+                        </button>
+
+                        <div id="mekuMessage" class="romantic-birthday-text">
+                            ✨ Happy Birthday to you Meku ✨
+                        </div>
+
+                        <div class="romantic-cake">
+                            <div class="cake-plate"></div>
+                            <div class="cake-layer cake-layer-bottom"></div>
+                            <div class="cake-layer cake-layer-top"></div>
+                            
+                            <div class="cake-candle" style="left: 35px;">
+                                <div class="candle-flame"></div>
+                            </div>
+                            <div class="cake-candle" style="left: 60px;">
+                                <div class="candle-flame"></div>
+                            </div>
+                            <div class="cake-candle" style="left: 85px;">
+                                <div class="candle-flame"></div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="pretty-sub">Happy Birthday Pretty 👑</div>
                     <p class="signature">Happy June 8! 🎂💖</p>
                 </div>
@@ -509,10 +763,32 @@
         </div>
     </div>
 
-    <div class="custom-popup-overlay" id="surprisePopup" onclick="closePopup()">
-        <div class="popup-modal-content" onclick="event.stopPropagation()">
-            <h2 style="color: #fff; font-size: 1.6rem; margin-bottom: 15px;">Happy Birthday Meku! ✨🎂💖</h2>
-            <p style="font-size: 0.95rem; margin-bottom: 0; color: #ffd6f3;">You are absolutely amazing!</p>
+    <div class="custom-popup-overlay" id="surprisePopup">
+        <div class="card-content-wrapper" onclick="event.stopPropagation()">
+            <h2>Happy Birthday Meku!</h2>
+            <div class="emoji-row" style="font-size: 2.2rem; margin-bottom: 5px;">✨ 🎂 💖</div>
+            <p style="font-size: 1.05rem; color: #ffd6f3; margin-bottom: 5px;">You are absolutely amazing!</p>
+
+            <div class="button-action-stage">
+                <button id="actionBtn" class="thank-you-btn" onclick="triggerActivation()">
+                    <span id="btnText">❤️ Thank You</span>
+                </button>
+            </div>
+
+            <div class="navigation-stage">
+                <button class="back-home-btn" onclick="goToFirstPage()">
+                    ⬅️ Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="amazingModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-sparkles">✨🌟🎉</div>
+            <h3>Meku is Activated!</h3>
+            <p>You have unlocked 100% pure happiness and love today! Keep shining bright! 💎🚀</p>
+            <button class="modal-close-btn" onclick="closeAmazingPopup()">Awesome!</button>
         </div>
     </div>
 
@@ -538,6 +814,26 @@
             }, 35);
         }
 
+        /* LIGHT SWITCH ACTION ENGINE */
+        function toggleRoomLights() {
+            const room = document.getElementById('cakeRoom');
+            const button = document.getElementById('lightBtn');
+            const birthdayText = document.getElementById('mekuMessage');
+            
+            if (room.classList.contains('dark-mode')) {
+                room.classList.remove('dark-mode');
+                birthdayText.classList.remove('visible');
+                button.innerHTML = "💡 Turn Off Lights";
+            } else {
+                room.classList.add('dark-mode');
+                button.innerHTML = "💡 Turn On Lights";
+                
+                setTimeout(() => {
+                    birthdayText.classList.add('visible');
+                }, 300);
+            }
+        }
+
         /* CARD DISPLAY TRANSITION CONTROLLER */
         function nextScreen(num) {
             const active = document.querySelector('.screen.active');
@@ -559,8 +855,50 @@
             }
         }
 
+        /* POPUP MODAL HOOK CONTROLLERS */
         function openPopup() { document.getElementById('surprisePopup').classList.add('open'); }
         function closePopup() { document.getElementById('surprisePopup').classList.remove('open'); }
+
+        /* MORPHING BUTTON INTERACTION ENGINE */
+        function triggerActivation() {
+            const btn = document.getElementById('actionBtn');
+            const txt = document.getElementById('btnText');
+            const modal = document.getElementById('amazingModal');
+            
+            btn.classList.add('activated');
+            txt.innerHTML = "✨ Activated ✨";
+            
+            setTimeout(() => {
+                modal.classList.add('active-popup');
+            }, 400);
+        }
+
+        function closeAmazingPopup() {
+            const modal = document.getElementById('amazingModal');
+            modal.classList.remove('active-popup');
+        }
+
+        /* HOME HUB NAVIGATION TRANSLATION ROUTER */
+        function goToFirstPage() {
+            closePopup(); // Ensure overlay backdrop is cleared out nicely
+            
+            const activeScreen = document.querySelector('.screen.active');
+            if (activeScreen) {
+                activeScreen.style.opacity = '0';
+                activeScreen.classList.remove('active');
+            }
+            
+            const firstScreen = document.getElementById('screen1');
+            if (firstScreen) {
+                firstScreen.classList.add('active');
+                setTimeout(() => {
+                    firstScreen.style.opacity = '1';
+                    firstScreen.style.transform = 'translateY(0) scale(1)';
+                }, 50);
+            } else {
+                window.location.reload();
+            }
+        }
 
         /* 15 MOVING 3D BALLOONS BACKGROUND GENERATOR */
         const balloonColors = ['#ff4081', '#00e5ff', '#bca3ff', '#ff758c', '#ffea00', '#ff5722', '#4caf50'];
@@ -570,7 +908,7 @@
             for (let i = 0; i < maxBalloons; i++) {
                 setTimeout(() => {
                     createIndividualBalloon(container);
-                }, i * 600); // Stagger entry
+                }, i * 600);
             }
         }
 

@@ -315,14 +315,20 @@
             align-items: center;
         }
 
-        /* 3D Spacing Positions */
-        .f1 { transform: rotateY(0deg) translateZ(190px); }
-        .f2 { transform: rotateY(51.43deg) translateZ(190px); }
-        .f3 { transform: rotateY(102.86deg) translateZ(190px); }
-        .f4 { transform: rotateY(154.29deg) translateZ(190px); }
-        .f5 { transform: rotateY(205.71deg) translateZ(190px); }
-        .f6 { transform: rotateY(257.14deg) translateZ(190px); }
-        .f7 { transform: rotateY(308.57deg) translateZ(190px); }
+        /* 3D Spacing Positions (Updated mathematically for 13 faces) */
+        .f1 { transform: rotateY(0deg) translateZ(340px); }
+        .f2 { transform: rotateY(27.69deg) translateZ(340px); }
+        .f3 { transform: rotateY(55.38deg) translateZ(340px); }
+        .f4 { transform: rotateY(83.07deg) translateZ(340px); }
+        .f5 { transform: rotateY(110.76deg) translateZ(340px); }
+        .f6 { transform: rotateY(138.45deg) translateZ(340px); }
+        .f7 { transform: rotateY(166.14deg) translateZ(340px); }
+        .f8 { transform: rotateY(193.83deg) translateZ(340px); }
+        .f9 { transform: rotateY(221.52deg) translateZ(340px); }
+        .f10 { transform: rotateY(249.21deg) translateZ(340px); }
+        .f11 { transform: rotateY(276.9deg) translateZ(340px); }
+        .f12 { transform: rotateY(304.59deg) translateZ(340px); }
+        .f13 { transform: rotateY(332.28deg) translateZ(340px); }
 
         /* Cake Room Box Layout */
         .cake-room-container {
@@ -570,13 +576,20 @@
                 <h1 style="font-size: 1.8rem;">Beautiful Pictures 📸</h1>
                 <div class="mobile-stage">
                     <div class="cube-carousel" id="cube">
-                        <div class="slide-face f1"><div class="index-badge">1 / 7</div><img src="https://i.postimg.cc/NF5zNvGr/IMG-20260609-170020-593.jpg"></div>
-                        <div class="slide-face f2"><div class="index-badge">2 / 7</div><img src="https://i.postimg.cc/6qymHx6v/IMG-20260609-170026-400.jpg"></div>
-                        <div class="slide-face f3"><div class="index-badge">3 / 7</div><img src="https://i.postimg.cc/7hfWBrPJ/IMG-20260609-170034-191.jpg"></div>
-                        <div class="slide-face f4"><div class="index-badge">4 / 7</div><img src="https://i.postimg.cc/HnVhS1WM/IMG-20260609-170037-719.jpg"></div>
-                        <div class="slide-face f5"><div class="index-badge">5 / 7</div><img src="https://i.postimg.cc/4ymS8R4b/IMG-20260609-170039-966.jpg"></div>
-                        <div class="slide-face f6"><div class="index-badge">6 / 7</div><img src="https://i.postimg.cc/9MxktQ24/IMG-20260609-170044-946.jpg"></div>
-                        <div class="slide-face f7"><div class="index-badge">7 / 7</div><img src="https://i.postimg.cc/NF5zNvGr/IMG-20260609-170020-593.jpg"></div>
+                        <div class="slide-face f1"><div class="index-badge">1 / 13</div><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1000"></div>
+                        <div class="slide-face f2"><div class="index-badge">2 / 13</div><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1000"></div>
+                        <div class="slide-face f3"><div class="index-badge">3 / 13</div><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1000"></div>
+                        <div class="slide-face f4"><div class="index-badge">4 / 13</div><img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=1000"></div>
+                        <div class="slide-face f5"><div class="index-badge">5 / 13</div><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000"></div>
+                        <div class="slide-face f6"><div class="index-badge">6 / 13</div><img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1000"></div>
+                        <div class="slide-face f7"><div class="index-badge">7 / 13</div><img src="https://images.unsplash.com/photo-1507504038482-76214372a54a?q=80&w=1000"></div>
+                        
+                        <div class="slide-face f8"><div class="index-badge">8 / 13</div><img src="https://i.postimg.cc/NF5zNvGr/IMG-20260609-170020-593.jpg"></div>
+                        <div class="slide-face f9"><div class="index-badge">9 / 13</div><img src="https://i.postimg.cc/6qymHx6v/IMG-20260609-170026-400.jpg"></div>
+                        <div class="slide-face f10"><div class="index-badge">10 / 13</div><img src="https://i.postimg.cc/7hfWBrPJ/IMG-20260609-170034-191.jpg"></div>
+                        <div class="slide-face f11"><div class="index-badge">11 / 13</div><img src="https://i.postimg.cc/HnVhS1WM/IMG-20260609-170037-719.jpg"></div>
+                        <div class="slide-face f12"><div class="index-badge">12 / 13</div><img src="https://i.postimg.cc/4ymS8R4b/IMG-20260609-170039-966.jpg"></div>
+                        <div class="slide-face f13"><div class="index-badge">13 / 13</div><img src="https://i.postimg.cc/9MxktQ24/IMG-20260609-170044-946.jpg"></div>
                     </div>
                 </div>
                 <div class="carousel-controls">
@@ -649,11 +662,11 @@
     </div>
 
     <script>
-        /* 3D CAROUSEL CONTROLS ENGINE */
+        /* 3D CAROUSEL CONTROLS ENGINE (Updated rotation increments for 13 panels) */
         let angleHub = 0;
         const cube = document.getElementById('cube');
         function turnCube(dir) {
-            angleHub += dir * 51.43;
+            angleHub += dir * 27.69;
             cube.style.transform = `rotateY(${angleHub}deg)`;
         }
 

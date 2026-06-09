@@ -569,7 +569,7 @@
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="handleFirstTap()">Yes Please ☺️</button>
-                    <button class="btn btn-no" onclick="alert('Wrong Button Mekuye 😉 Tap Yes Please')">No Thanks ☹️</button>
+                    <button class="btn btn-no" onclick="alert('Wrong Button Mekuye 😉 Tap Yes Please 🙏')">No Thanks 😞</button>
                 </div>
             </div>
 
@@ -711,6 +711,7 @@
                     'showinfo': 0,
                     'iv_load_policy': 3,
                     'loop': 1,
+                    'start': 5,          /* Jumps exactly 5 seconds forward inside the timeline */
                     'playlist': 'P3wSn5K9quo'
                 },
                 events: {
@@ -722,21 +723,29 @@
 
         function onPlayerReady(event) {
             playerIsReady = true;
-            player.setVolume(20); // Kept quiet and gentle as requested
+            player.setVolume(20); // Gentle low volume setup
         }
 
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.ENDED) {
+                player.seekTo(5);  /* Loops back to the 5-second mark instead of starting blank */
                 player.playVideo();
             }
         }
 
         function handleFirstTap() {
             if (playerIsReady && player) {
+                player.seekTo(5); // Forces an exact jump to 5 seconds instantly on click
                 player.playVideo();
                 widget.style.display = "flex";
             } else {
-                setTimeout(() => { if(player) { player.playVideo(); widget.style.display = "flex"; } }, 400);
+                setTimeout(() => { 
+                    if(player) { 
+                        player.seekTo(5);
+                        player.playVideo(); 
+                        widget.style.display = "flex"; 
+                    } 
+                }, 400);
             }
             nextScreen(2);
         }
@@ -783,9 +792,8 @@
 
         /* STICKER POOL */
         const stickerPool = [
-            '🎉','🎂','🌸','🥳','🎈',
+            '🎉','🎂','🌸','🥰','🥳','🎈',
             
-        ];
 
         /* EXPLOSION SYSTEM */
         function activateCelebrationState(e) {

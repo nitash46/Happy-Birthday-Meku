@@ -494,7 +494,7 @@
             100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Shockwave Explosion Particles - UPDATED: Slowed down with cubic ease out */
+        /* Shockwave Explosion Particles */
         .bomb-particle {
             position: fixed;
             z-index: 9999;
@@ -570,13 +570,13 @@
                 <h1 style="font-size: 1.8rem;">Beautiful Pictures 📸</h1>
                 <div class="mobile-stage">
                     <div class="cube-carousel" id="cube">
-                        <div class="slide-face f1"><div class="index-badge">1 / 7</div><img src="https://i.postimg.cc/50J51BB3/IMG-20260525-200722-687.jpg"></div>
-                        <div class="slide-face f2"><div class="index-badge">2 / 7</div><img src="https://i.postimg.cc/HLX0fZyV/IMG-20260525-200732-676.jpg"></div>
-                        <div class="slide-face f3"><div class="index-badge">3 / 7</div><img src="https://i.postimg.cc/FK3b2WLn/IMG-20260606-210916-126.jpg"></div>
-                        <div class="slide-face f4"><div class="index-badge">4 / 7</div><img src="https://i.postimg.cc/V6w91qqG/IMG-20260606-210916-188.jpg"></div>
-                        <div class="slide-face f5"><div class="index-badge">5 / 7</div><img src="https://i.postimg.cc/4yLFmLwv/IMG-20260525-200742-452.jpg"></div>
-                        <div class="slide-face f6"><div class="index-badge">6 / 7</div><img src="https://i.postimg.cc/RhsbNsGZ/IMG-20260606-210915-548.jpg"></div>
-                        <div class="slide-face f7"><div class="index-badge">7 / 7</div><img src="https://i.postimg.cc/NFJP5JbG/IMG-20260606-210915-642.jpg"></div>
+                        <div class="slide-face f1"><div class="index-badge">1 / 7</div><img src="https://i.postimg.cc/NF5zNvGr/IMG-20260609-170020-593.jpg"></div>
+                        <div class="slide-face f2"><div class="index-badge">2 / 7</div><img src="https://i.postimg.cc/6qymHx6v/IMG-20260609-170026-400.jpg"></div>
+                        <div class="slide-face f3"><div class="index-badge">3 / 7</div><img src="https://i.postimg.cc/7hfWBrPJ/IMG-20260609-170034-191.jpg"></div>
+                        <div class="slide-face f4"><div class="index-badge">4 / 7</div><img src="https://i.postimg.cc/HnVhS1WM/IMG-20260609-170037-719.jpg"></div>
+                        <div class="slide-face f5"><div class="index-badge">5 / 7</div><img src="https://i.postimg.cc/4ymS8R4b/IMG-20260609-170039-966.jpg"></div>
+                        <div class="slide-face f6"><div class="index-badge">6 / 7</div><img src="https://i.postimg.cc/9MxktQ24/IMG-20260609-170044-946.jpg"></div>
+                        <div class="slide-face f7"><div class="index-badge">7 / 7</div><img src="https://i.postimg.cc/NF5zNvGr/IMG-20260609-170020-593.jpg"></div>
                     </div>
                 </div>
                 <div class="carousel-controls">
@@ -695,7 +695,6 @@
             }
         }
 
-        /* UPDATED: Particles move slower, drift gracefully, and float slightly upwards */
         function createExplodingBombParticle(originX, originY) {
             const particle = document.createElement('div');
             particle.classList.add('bomb-particle');
@@ -704,10 +703,8 @@
             particle.style.top = `${originY}px`;
             
             const angle = Math.random() * Math.PI * 2;
-            // Lowered max distance from 220 to 120 for a more gentle explosion spread
             const distance = Math.random() * 90 + 30; 
             const destinationX = Math.cos(angle) * distance;
-            // Subtracted additional pixels to naturally carry the explosion layout upwards
             const destinationY = Math.sin(angle) * distance - (Math.random() * 45 + 15); 
             const randomRotation = Math.random() * 360 - 180;
             
@@ -716,7 +713,6 @@
             particle.style.setProperty('--r', `${randomRotation}deg`);
             
             document.body.appendChild(particle);
-            // Particle stays active on viewport longer to accommodate slow animation speed
             setTimeout(() => { particle.remove(); }, 2200);
         }
 

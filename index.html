@@ -252,7 +252,8 @@
             height: 220px; 
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Swifter, smoother easing for high performance swipe acceleration */
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .slide-face {
@@ -703,7 +704,7 @@
             const btn = document.getElementById('reactiveCelebrationBtn');
             
             btn.classList.add('activated');
-            btn.innerHTML = "Activated! 🥳🎉";
+            btn.innerHTML = "Activated 🥳🎉";
             
             // Generate dense explosion of particle sticker showers
             for (let i = 0; i < 35; i++) {
@@ -781,8 +782,8 @@
         /* 40 DIVERSE STICKER RAIN SHOWERS ENGINE */
         const stickerPool = [
             '🎉','✨','🎂','💖','👑','🌸','🥰','💝','🥳','🎈',
-            '⚽','🔴','💎','🌟','🎁','🍰','🍭','🍷','🌹','🎸',
-            '🎤','🎼','🦄','🐈','🧸','🍯','🍿','🍫','🍪','🥂',
+            ,'💎','🌟','🎁','🍰','🍷','🌹','🎸',
+            '🎤','🎼','🦄','🧸','🍯','🍿','🍫','🥂',
             '🎨','⚡','🔮','❤️','🧡','💛','💚','💙','💜','🤍'
         ];
 
@@ -837,11 +838,14 @@
                 document.addEventListener('touchend', endDrag);
             }
         }
+        
+        /* Accelerated drag scaling engine multiplier for speed and snappy rotational feel */
         function doDrag(e) {
             if (!isDragging) return;
             const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
             const deltaX = x - startX;
-            angleHub = currentAngle + (deltaX * 0.4);
+            // Increased movement scaling factor from 0.4 to 1.35 for quick card spinning transitions
+            angleHub = currentAngle + (deltaX * 1.35);
             cube.style.transform = `rotateY(${angleHub}deg)`;
         }
         function endDrag() {

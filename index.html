@@ -245,6 +245,28 @@
             margin: 10px auto 0 auto;
         }
 
+        /* Audio Controller Button Layout */
+        .audio-toggle-widget {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none; /* Becomes visible after music starts */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 1.1rem;
+        }
+
         /* 3D Polaroids Carousel Hub */
         .mobile-stage {
             width: 100%;
@@ -527,6 +549,10 @@
     <div class="balloon-background-layer" id="balloonSpace"></div>
     <div class="sticker-rain-layer" id="stickerSpace"></div>
 
+    <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <button class="audio-toggle-widget" id="musicWidget" onclick="toggleMusicPlayback()">🎵</button>
+
     <div class="card-container">
         <div class="card-content">
             
@@ -535,8 +561,8 @@
                 <h1>Happy Birthday Beautiful</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
-                    <button class="btn btn-yes" onclick="nextScreen(2)">Yes Please ☺️</button>
-                    <button class="btn btn-no" onclick="alert('Wrong Button Mekuye 😉 Tap Yes Please 🙏')">No Thanks ☹️</button>
+                    <button class="btn btn-yes" onclick="handleFirstTap()">Yes Please ☺️</button>
+                    <button class="btn btn-no" onclick="alert('Wrong Button Mekuye 😉 Tap Yes Please')">No Thanks ☹️</button>
                 </div>
             </div>
 
@@ -653,6 +679,32 @@
     </div>
 
     <script>
+        /* INTERACTIVE AUDIO PLAYER INTERACTION ENGINE */
+        const music = document.getElementById('bgMusic');
+        const widget = document.getElementById('musicWidget');
+
+        function handleFirstTap() {
+            // Start audio cleanly on interaction to bypass browser restrictions
+            music.play().then(() => {
+                widget.style.display = "flex"; // Show manual toggle button once playing
+            }).catch(err => console.log("Audio play blocked or failed:", err));
+            
+            // Advance to second screen
+            nextScreen(2);
+        }
+
+        function toggleMusicPlayback() {
+            if (music.paused) {
+                music.play();
+                widget.innerHTML = "🎵";
+                widget.style.background = "rgba(255, 255, 255, 0.25)";
+            } else {
+                music.pause();
+                widget.innerHTML = "🔇";
+                widget.style.background = "rgba(255, 0, 0, 0.2)";
+            }
+        }
+
         /* 3D CAROUSEL CONTROLS ENGINE (Updated rotation increments for 9 panels: 360 / 9 = 40) */
         let angleHub = 0;
         const cube = document.getElementById('cube');
@@ -680,7 +732,8 @@
 
         /* STICKER POOL */
         const stickerPool = [
-            '🎉','✨','🎂','👑','🌸','🥰','🥳','🎈','🌟','🎁','🌹',
+            '🎉','✨','🎂','👑','🌸','🥰','🥳','🎈',
+            '⚽','🔴','💎','🌟','🎁','🌹',
         ];
 
         /* EXPLOSION BOMB SHOCKWAVE SYSTEM */

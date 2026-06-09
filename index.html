@@ -747,14 +747,15 @@
         }
 
         /* 40 DIVERSE STICKER RAIN SHOWERS ENGINE */
-        const stickerPool =   '🎉','✨','🎂','🌸','🥰','🥳','🎈','❤️',''🤍'
+        const stickerPool = [
+            '🎉','✨','🎂','👑','🌸','🥰','🥳','🎈','🌹,'❤️','🤍'
         ];
 
         /* HIGH-PERFORMANCE PARTY BOMB SHOCKWAVE SYSTEM */
         function activateCelebrationState(event) {
             const btn = document.getElementById('reactiveCelebrationBtn');
             btn.classList.add('activated');
-            btn.innerHTML = "Activated 🥳🎉";
+            btn.innerHTML = "Activated! 🥳🎉";
             
             // Acquire the precise center coordinates of the tapped button
             const rect = btn.getBoundingClientRect();

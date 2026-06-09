@@ -245,7 +245,7 @@
             margin: 10px auto 0 auto;
         }
 
-        /* Audio Control Mute Widget Button */
+        /* Audio Controller Disc Button */
         .audio-toggle-widget {
             position: fixed;
             top: 15px;
@@ -257,7 +257,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: none; /* Becomes visible after the user clicks the first button */
+            display: none; /* Appears immediately after first touch */
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -541,6 +541,18 @@
         @keyframes floatSticker {
             0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
         }
+
+        /* Fully Hidden Container for the background YouTube Iframe */
+        #video-container {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -549,7 +561,9 @@
     <div class="balloon-background-layer" id="balloonSpace"></div>
     <div class="sticker-rain-layer" id="stickerSpace"></div>
 
-    <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <div id="video-container">
+        <div id="player"></div>
+    </div>
 
     <button class="audio-toggle-widget" id="musicWidget" onclick="toggleMusicPlayback()">🎵</button>
 
@@ -679,28 +693,78 @@
     </div>
 
     <script>
-        /* INTERACTIVE AUDIO PLAYER INTERACTION ENGINE */
-        const music = document.getElementById('bgMusic');
+        /* YOUTUBE IRAME PLAYER API RUNTIME LOADER */
+        let player;
         const widget = document.getElementById('musicWidget');
+        let playerIsReady = false;
+
+        // Automatically inject YouTube API script tag
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100',
+                width: '100',
+                videoId: 'P3wSn5K9quo', // Target YouTube Romantic Piano video ID
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'iv_load_policy': 3,
+                    'loop': 1,
+                    'playlist': 'P3wSn5K9quo' // Loops background video seamlessly
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            playerIsReady = true;
+            // Kept strictly quiet and gentle (20% volume) so it's not loud
+            player.setVolume(20); 
+        }
+
+        function onPlayerStateChange(event) {
+            // Re-enforces loops manually if browser event rules drop playlist loops
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo();
+            }
+        }
 
         function handleFirstTap() {
-            // Audio unblocks smoothly on user touch action
-            music.play().then(() => {
-                widget.style.display = "flex"; // Show music disc widget
-            }).catch(err => console.log("Audio block bypass log:", err));
-            
+            // Trigger background streaming music perfectly on click interaction
+            if (playerIsReady && player) {
+                player.playVideo();
+                widget.style.display = "flex"; // Present manual pause button
+            } else {
+                // Fallback attempt if script loads slow
+                setTimeout(() => { if(player) { player.playVideo(); widget.style.display = "flex"; } }, 400);
+            }
             nextScreen(2);
         }
 
         function toggleMusicPlayback() {
-            if (music.paused) {
-                music.play();
-                widget.innerHTML = "🎵";
-                widget.style.background = "rgba(255, 255, 255, 0.25)";
-            } else {
-                music.pause();
+            if (!player) return;
+            const state = player.getPlayerState();
+            
+            if (state === YT.PlayerState.PLAYING) {
+                player.pauseVideo();
                 widget.innerHTML = "🔇";
                 widget.style.background = "rgba(255, 0, 0, 0.2)";
+            } else {
+                player.playVideo();
+                widget.innerHTML = "🎵";
+                widget.style.background = "rgba(255, 255, 255, 0.25)";
             }
         }
 

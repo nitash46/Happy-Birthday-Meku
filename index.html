@@ -250,10 +250,6 @@
             animation: pulseGlow 1.5s infinite alternate;
         }
 
-        @annotation {
-            transform: scale(1);
-        }
-
         @keyframes pulseGlow {
             0% { transform: scale(1); }
             100% { transform: scale(1.04); box-shadow: 0 0 25px rgba(0, 242, 254, 0.8), 0 0 15px rgba(255, 64, 129, 0.4); }
@@ -650,7 +646,7 @@
                 <div class="scrollable-letter-box">
                     <p style="font-size: 0.94rem; line-height: 1.5; margin-bottom: 0;">
                       I Hope you have the absolute best time celebrating today 🥂✨ <br><br>
-                        Honestly, from the moment I first saw you 🧐, Your style is honestly unforgettable you looked absolutely beautiful 🎀🥰, and You always know how to look good 😇🤗.You being a Christian and a singer just makes your whole vibe even better 😎🥰. Honestly, if you weren't a Christian I don't think we'd be chatting 🤒🫩, so I'm glad you are  😇🤗🤪. 
+                        Honestly, from the moment I first saw you 🧐, Your style is honestly unforgettable you looked absolutely beautiful 🎀🥰, and You always know how to look good 😇🤗.You being a Christian and a singer just makes your whole vibe even better 😎🥰. Honestly, if you weren't a Christian I don't think we'd be chatting 🤒🫩, so I'm glad you are  😇🤗🤪. <br><br>
                         I don't mean it in any other way 🤗😊 but seriously you’re truly a lovely person 👌✌️, and I really appreciate you for who you are .🤝👏.<br><br>
                         Our timing might be short 😔, but the story of how I got to know you still makes me smile 🤪😁. I've never gone this far out of my way for someone before 🤔🤑, but I’m seriously so thankful 🙏🥳 that the end of the year introduced me to someone with such an amazing vibe 🫡😇✨️.
                     </p>
@@ -748,7 +744,10 @@
 
         /* 40 DIVERSE STICKER RAIN SHOWERS ENGINE */
         const stickerPool = [
-            '🎉','✨','🎂','👑','🌸','🥰','🥳','🎈','🌹,'❤️','🤍'
+            '🎉','✨','🎂','💖','👑','🌸','🥰','💝','🥳','🎈',
+            '⚽','🔴','💎','🌟','🎁','🍰','🍭','🍷','🌹','🎸',
+            '🎤','🎼','🦄','🐈','🧸','🍯','🍿','🍫','🍪','🥂',
+            '🎨','⚡','🔮','❤️','🧡','💛','💚','💙','💜','🤍'
         ];
 
         /* HIGH-PERFORMANCE PARTY BOMB SHOCKWAVE SYSTEM */
@@ -757,7 +756,7 @@
             btn.classList.add('activated');
             btn.innerHTML = "Activated! 🥳🎉";
             
-            // Acquire the precise center coordinates of the tapped button
+            // Acquire the precise center coordinates of the tapped button safely
             const rect = btn.getBoundingClientRect();
             const bombOriginX = rect.left + rect.width / 2;
             const bombOriginY = rect.top + rect.height / 2;
@@ -784,7 +783,7 @@
             const angle = Math.random() * Math.PI * 2;
             const distance = Math.random() * 220 + 80; // Distance traveled outward
             const destinationX = Math.cos(angle) * distance;
-            const destinationY = Math.sin(angle) * distance + (Math.random() * 40); // Slight drop due to gravity
+            const destinationY = Math.sin(angle) * distance + (Math.random() * 40); 
             const randomRotation = Math.random() * 720 - 360;
             
             // Assign CSS variable directions dynamically
@@ -836,149 +835,3 @@
                 }, i * 600);
             }
         }
-
-        function createIndividualBalloon(parent) {
-            const balloon = document.createElement('div');
-            balloon.classList.add('web-3d-balloon');
-            
-            const sizeMultiplier = Math.random() * 0.5 + 0.8; 
-            balloon.style.width = `${50 * sizeMultiplier}px`;
-            balloon.style.height = `${62 * sizeMultiplier}px`;
-            balloon.style.left = `${Math.random() * 100}%`;
-            
-            const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
-            balloon.style.backgroundColor = color;
-            
-            const stringNode = document.createElement('div');
-            stringNode.classList.add('web-3d-balloon-string');
-            balloon.appendChild(stringNode);
-            
-            const duration = Math.random() * 8 + 10; 
-            balloon.style.animationDuration = `${duration}s`;
-            
-            parent.appendChild(balloon);
-            
-            balloon.addEventListener('animationend', () => {
-                balloon.remove();
-                createIndividualBalloon(parent);
-            });
-        }
-
-        function spawnSingleStickerElement() {
-            const container = document.getElementById('stickerSpace');
-            if(!container) return;
-            const item = document.createElement('div');
-            item.classList.add('falling-sticker');
-            item.innerText = stickerPool[Math.floor(Math.random() * stickerPool.length)];
-            item.style.left = `${Math.random() * 100}%`;
-            
-            const speed = Math.random() * 3 + 3; 
-            item.style.animationDuration = `${speed}s`;
-            
-            container.appendChild(item);
-            setTimeout(() => item.remove(), speed * 1000);
-        }
-
-        function initiateStickerRainEngine() {
-            setInterval(spawnSingleStickerElement, 350);
-        }
-
-        /* AMBIENT CANVAS BACKGROUND INITIALIZATION */
-        const cvs = document.getElementById('outerBgCanvas');
-        const ctx = cvs.getContext('2d');
-        let pts = [];
-
-        function resizeCvs() {
-            cvs.width = window.innerWidth;
-            cvs.height = window.innerHeight;
-        }
-
-        if (window.PointerEvent) {
-            cube.addEventListener('pointerdown', startDrag);
-        } else {
-            cube.addEventListener('mousedown', startDrag);
-            cube.addEventListener('touchstart', startDrag);
-        }
-
-        let startX = 0, currentAngle = 0, isDragging = false;
-        function startDrag(e) {
-            isDragging = true;
-            startX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-            currentAngle = angleHub;
-            if (window.PointerEvent) {
-                document.addEventListener('pointermove', doDrag);
-                document.addEventListener('pointerup', endDrag);
-            } else {
-                document.addEventListener('mousemove', doDrag);
-                document.addEventListener('mouseup', endDrag);
-                document.addEventListener('touchmove', doDrag);
-                document.addEventListener('touchend', endDrag);
-            }
-        }
-        function doDrag(e) {
-            if (!isDragging) return;
-            const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-            const deltaX = x - startX;
-            angleHub = currentAngle + (deltaX * 1.35);
-            cube.style.transform = `rotateY(${angleHub}deg)`;
-        }
-        function endDrag() {
-            isDragging = false;
-            if (window.PointerEvent) {
-                document.removeEventListener('pointermove', doDrag);
-                document.removeEventListener('pointerup', endDrag);
-            } else {
-                document.removeEventListener('mousemove', doDrag);
-                document.removeEventListener('mouseup', endDrag);
-                document.removeEventListener('touchmove', doDrag);
-                document.removeEventListener('touchend', endDrag);
-            }
-        }
-
-        function initPts() {
-            pts = [];
-            for(let i=0; i<45; i++) {
-                pts.push({
-                    x: Math.random() * cvs.width,
-                    y: Math.random() * cvs.height,
-                    r: Math.random() * 2 + 1,
-                    vX: (Math.random() - 0.5) * 0.4,
-                    vY: (Math.random() - 0.5) * 0.4
-                });
-            }
-        }
-
-        function runBg() {
-            ctx.clearRect(0, 0, cvs.width, cvs.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-            pts.forEach(p => {
-                p.x += p.vX; p.y += p.vY;
-                if(p.x < 0 || p.x > cvs.width) p.vX *= -1;
-                if(p.y < 0 || p.y > cvs.height) p.vY *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-                ctx.fill();
-            });
-            requestAnimationFrame(runBg);
-        }
-
-        window.addEventListener('resize', () => { resizeCvs(); initPts(); });
-        
-        window.onload = () => {
-            resizeCvs();
-            initPts();
-            runBg();
-            spawn3DBalloonBackground();
-            initiateStickerRainEngine();
-            
-            const innerCvs = document.getElementById('cardBgCanvas');
-            if(innerCvs) {
-                innerCvs.width = 400; innerCvs.height = 650;
-                const innerCtx = innerCvs.getContext('2d');
-                innerCtx.fillStyle = 'rgba(255,255,255,0.015)';
-                innerCtx.fillRect(0,0,400,650);
-            }
-        };
-    </script>
-</body>
-</html>

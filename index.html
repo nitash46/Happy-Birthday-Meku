@@ -34,7 +34,7 @@
             z-index: 1;
         }
 
-        /* Moving 3D Balloon Web Background Container */
+        /* Moving 3D Balloon Background Container */
         .balloon-background-layer {
             position: fixed;
             top: 0;
@@ -58,18 +58,22 @@
             overflow: hidden;
         }
 
-        /* Glassmorphism Card Container */
+        /* Large Upsized Card Container to Eliminate All Scrollbars */
         .card-container {
             position: relative;
             z-index: 10;
-            width: 92%;
-            max-width: 390px;
-            height: auto;
+            width: 95%;
+            max-width: 430px;
+            height: 85vh;
+            min-height: 580px;
+            max-height: 720px;
             border-radius: 32px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 126, 179, 0.15);
             animation: cardPopUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            display: flex;
+            flex-direction: column;
         }
 
         .card-bg-canvas {
@@ -86,16 +90,23 @@
         .card-content {
             position: relative;
             z-index: 2;
-            padding: 30px 20px;
+            padding: 30px 24px;
             text-align: center;
             background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            flex-grow: 1;
         }
 
         h1 {
             font-size: 2.1rem;
             color: #ffffff;
             margin-top: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 800;
         }
 
@@ -103,10 +114,10 @@
             font-size: 0.98rem;
             color: #fecfef;
             opacity: 0.95;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             font-weight: 400;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            line-height: 1.55;
+            line-height: 1.5;
             text-align: center;
         }
 
@@ -114,7 +125,9 @@
             display: none;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             width: 100%;
+            height: 100%;
             opacity: 0;
             transform: translateY(25px) scale(0.95);
             transition: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
@@ -128,7 +141,7 @@
 
         .emoji-row {
             font-size: 2.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: center;
             gap: 15px;
@@ -137,7 +150,7 @@
 
         .cute-sticker {
             font-size: 3rem; 
-            margin-bottom: 12px; 
+            margin-bottom: 6px; 
             display: inline-block;
             animation: floatSticker 4s ease-in-out infinite;
         }
@@ -147,7 +160,7 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
-            margin-top: 15px;
+            margin-top: auto;
             justify-content: center;
         }
         
@@ -190,17 +203,18 @@
             color: #110022;
             box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
             width: 100%;
+            padding: 16px 20px;
         }
         .btn-finale:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
         }
 
-        /* 3D Polaroids Carousel Hub (Screen 5) */
+        /* 3D Polaroids Carousel Hub */
         .mobile-stage {
             width: 100%;
             height: 32vh;
-            margin: 15px 0;
+            margin: 10px 0;
             perspective: 1200px;
             display: flex;
             justify-content: center;
@@ -209,7 +223,7 @@
 
         .cube-carousel {
             width: 170px; 
-            height: 220px; 
+            height: 225px; 
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
@@ -266,7 +280,7 @@
             align-items: center;
         }
 
-        /* 3D Math Spacing Formats */
+        /* 3D Transform Rotations */
         .f1 { transform: rotateY(0deg) translateZ(190px); }
         .f2 { transform: rotateY(51.43deg) translateZ(190px); }
         .f3 { transform: rotateY(102.86deg) translateZ(190px); }
@@ -275,55 +289,49 @@
         .f6 { transform: rotateY(257.14deg) translateZ(190px); }
         .f7 { transform: rotateY(308.57deg) translateZ(190px); }
 
-        /* Screen 7 Layout Elements & Integrated Cake Room */
-        .scrollable-showcase-container {
+        /* Screen 7 Container Box Layout */
+        .finale-showcase-wrapper {
             width: 100%;
-            height: 46vh;
-            overflow-y: scroll;
-            padding-right: 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            scroll-behavior: smooth;
+            justify-content: center;
+            flex-grow: 1;
         }
-        .scrollable-showcase-container::-webkit-scrollbar { width: 4px; }
-        .scrollable-showcase-container::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 10px; }
 
-        /* Container box styling */
+        /* Room box scaled nicely to leave perfect room for the big cake */
         .cake-room-container {
             position: relative;
             width: 100%;
-            max-width: 270px;
-            min-height: 200px;
+            max-width: 320px;
+            height: 220px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            padding-bottom: 20px;
-            border-radius: 20px;
+            padding-bottom: 25px;
+            border-radius: 24px;
             transition: background 0.6s ease;
-            margin: 20px 0;
+            margin: 10px 0;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Dark mode simulation overlay when lights go off */
         .cake-room-container.dark-mode {
             background: rgba(10, 5, 20, 0.95);
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
             border: 1px solid rgba(255, 64, 129, 0.2);
         }
 
-        /* Interactive Light Button Styling */
         .light-switch-btn {
             position: absolute;
-            top: 10px;
+            top: 12px;
             background: #ffffff33;
             border: 1px solid #ffffff66;
             color: white;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
@@ -334,73 +342,75 @@
             transform: scale(1.05);
         }
 
-        /* CSS Cake Art Elements */
+        /* UPSIZED AND EXPANDED ROMANTIC CAKE ART */
         .romantic-cake {
             position: relative;
-            width: 130px;
-            height: 75px;
-            margin-top: 45px;
+            width: 175px;
+            height: 95px;
+            margin-top: 30px;
         }
         .cake-layer {
             position: absolute;
-            height: 28px;
-            border-radius: 8px 8px 0 0;
+            border-radius: 12px 12px 0 0;
         }
         .cake-layer-bottom {
             bottom: 0;
-            width: 130px;
+            width: 175px;
+            height: 38px;
             background: #ff4d94;
+            box-shadow: inset 0 6px 0 rgba(255, 255, 255, 0.2);
         }
         .cake-layer-top {
-            bottom: 25px;
-            width: 100px;
-            left: 15px;
+            bottom: 36px;
+            width: 130px;
+            height: 34px;
+            left: 22.5px;
             background: #ff69b4;
+            box-shadow: inset 0 5px 0 rgba(255, 255, 255, 0.3);
         }
         .cake-plate {
             position: absolute;
-            bottom: -8px;
-            width: 154px;
-            height: 12px;
-            background: #f0f0f0;
+            bottom: -10px;
+            width: 205px;
+            height: 16px;
+            background: #f5f5f5;
             border-radius: 50%;
-            left: -12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            left: -15px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.35);
         }
 
-        /* Candles & Fire Glowing Art */
+        /* Larger Candles & Enhanced Fire Glowing Art */
         .cake-candle {
             position: absolute;
-            bottom: 53px;
-            width: 6px;
-            height: 20px;
-            background: linear-gradient(to right, #fff, #ffe6eb);
-            border-radius: 2px;
+            bottom: 68px;
+            width: 7px;
+            height: 24px;
+            background: linear-gradient(to right, #fff, #ffe6eb, #fff);
+            border-radius: 3px;
         }
         .candle-flame {
             position: absolute;
-            top: -12px;
-            left: -2px;
-            width: 10px;
-            height: 14px;
+            top: -16px;
+            left: -3.5px;
+            width: 14px;
+            height: 20px;
             background: #ffaa00;
             border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px #ffaa00, 0 0 20px #ff4500;
+            box-shadow: 0 0 12px #ffaa00, 0 0 25px #ff4500;
             animation: cakeFlameFlicker 0.6s infinite alternate linear;
             transition: box-shadow 0.6s ease;
         }
 
         .dark-mode .candle-flame {
-            box-shadow: 0 0 25px #ffcc00, 0 0 50px #ff5500, 0 0 70px #ff2200;
+            box-shadow: 0 0 30px #ffcc00, 0 0 60px #ff5500, 0 0 85px #ff2200;
             background: #fffb00;
         }
 
         @keyframes cakeFlameFlicker {
             0% { transform: scale(1) rotate(-1deg); }
-            100% { transform: scale(1.15) rotate(1deg); }
+            100% { transform: scale(1.18) rotate(2deg); }
         }
 
-        /* Glowing text reveal styles */
         .romantic-birthday-text {
             opacity: 0;
             transform: translateY(-10px);
@@ -421,16 +431,16 @@
             text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 30px #ff1493;
         }
 
-        .signature { color: #ff4081; font-weight: bold; margin-bottom: 10px; font-size: 1.15rem; }
+        .signature { color: #ff4081; font-weight: bold; margin-bottom: 5px; font-size: 1.15rem; }
         .pretty-sub {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             color: #fff;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
         }
 
-        /* 3D Web Floating Balloons Design */
+        /* 3D Floating Balloons */
         .web-3d-balloon {
             position: absolute;
             bottom: -150px;
@@ -467,7 +477,7 @@
             100% { transform: translateY(-115vh) rotate(15deg); opacity: 0; }
         }
 
-        /* Dynamic Sticker Styles */
+        /* Falling Sticker Engine */
         .falling-sticker {
             position: absolute;
             top: -60px;
@@ -483,7 +493,7 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Surprise Popup Window Layout Framework Updates */
+        /* Surprise Overlay Menu Layer */
         .custom-popup-overlay {
             position: fixed;
             top: 0;
@@ -504,7 +514,6 @@
         }
         .custom-popup-overlay.open { opacity: 1; visibility: visible; }
 
-        /* Integrated Custom Morphing Button Area Content layout elements */
         .card-content-wrapper {
             display: flex;
             flex-direction: column;
@@ -520,7 +529,7 @@
             width: 100%;
         }
 
-        /* Premium Morphing Thank You Button Style */
+        /* Premium Morphing Thank You Button */
         .thank-you-btn {
             background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
             color: white;
@@ -537,7 +546,6 @@
             outline: none;
         }
 
-        /* The Animated 'Activated' State */
         .thank-you-btn.activated {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             box-shadow: 0 0 25px rgba(56, 239, 125, 0.75);
@@ -570,7 +578,7 @@
             border-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Immersive Popup Overlay Matrix */
+        /* Immersive Popup Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -593,7 +601,6 @@
             pointer-events: auto;
         }
 
-        /* Volumetric Popup Window Box */
         .modal-box {
             background: linear-gradient(145deg, #241442 0%, #150a2b 100%);
             border: 1px solid rgba(255, 105, 180, 0.25);
@@ -649,7 +656,7 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>🥳🥳</span><span>✨</span></div>
+                <div class="emoji-row"><span>❣️💘</span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -710,11 +717,11 @@
 
             <div id="screen6" class="screen">
                 <span class="cute-sticker">💎✨</span>
-                <h1 style="font-size: 1.9rem;">To a Lovely Person</h1>
-                <p style="font-size: 0.94rem; line-height: 1.5; margin-bottom: 20px;">
+                <h1 style="font-size: 1.8rem;">To a Lovely Person</h1>
+                <p style="font-size: 0.92rem; line-height: 1.45; margin-bottom: 12px;">
                     I hope your birthday today is nothing short of amazing!<br><br>
-                    Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is. I don't mean it in any other way except that you are genuinely a lovely person who is so easy to appreciate.<br><br>
-                    Our timing might be short, but the story of how I got to know you still makes me smile. I've never gone this far out of my way for someone before, but I am truly grateful that the end of the year brought someone as wonderful as you into my world.
+                    Honestly, from the moment I first saw you, your style left a huge impression—you looked absolutely gorgeous, and you really know how to pull off a great look. Learning that you’re a Christian and a singer just added to how refreshing your energy is.<br><br>
+                    Our timing might be short, but the story of how I got to know you still makes me smile. I am truly grateful that the end of the year brought someone as wonderful as you into my world.
                 </p>
                 <div class="btn-group">
                     <button class="btn btn-yes" onclick="nextScreen(7)">Next Surprise 🌸</button>
@@ -722,9 +729,9 @@
             </div>
 
             <div id="screen7" class="screen">
-                <div id="autoShowcaseContainer" class="scrollable-showcase-container">
+                <div class="finale-showcase-wrapper">
                     <span class="cute-sticker">👑✨</span>
-                    <h1 style="font-size: 2rem;">For You Meku</h1>
+                    <h1 style="font-size: 1.9rem; margin-bottom: 2px;">For You Meku</h1>
                     
                     <div class="cake-room-container" id="cakeRoom">
                         <button class="light-switch-btn" id="lightBtn" onclick="toggleRoomLights()">
@@ -740,13 +747,13 @@
                             <div class="cake-layer cake-layer-bottom"></div>
                             <div class="cake-layer cake-layer-top"></div>
                             
-                            <div class="cake-candle" style="left: 35px;">
+                            <div class="cake-candle" style="left: 42px;">
                                 <div class="candle-flame"></div>
                             </div>
-                            <div class="cake-candle" style="left: 60px;">
+                            <div class="cake-candle" style="left: 84px;">
                                 <div class="candle-flame"></div>
                             </div>
-                            <div class="cake-candle" style="left: 85px;">
+                            <div class="cake-candle" style="left: 126px;">
                                 <div class="candle-flame"></div>
                             </div>
                         </div>
@@ -801,19 +808,6 @@
             cube.style.transform = `rotateY(${angleHub}deg)`;
         }
 
-        /* AUTO SCROLL ELEMENT ENGINE (SCREEN 7) */
-        let scrollTimer = null, scrollDir = 1;
-        function startShowcase() {
-            const el = document.getElementById('autoShowcaseContainer');
-            if(!el) return;
-            el.scrollTop = 0;
-            scrollTimer = setInterval(() => {
-                if(el.scrollTop + el.clientHeight >= el.scrollHeight - 2) scrollDir = -1;
-                else if(el.scrollTop <= 0) scrollDir = 1;
-                el.scrollTop += scrollDir * 1;
-            }, 35);
-        }
-
         /* LIGHT SWITCH ACTION ENGINE */
         function toggleRoomLights() {
             const room = document.getElementById('cakeRoom');
@@ -845,7 +839,6 @@
                     const target = document.getElementById('screen' + num);
                     if(target) {
                         target.classList.add('active');
-                        if(num === 7) startShowcase();
                         setTimeout(() => {
                             target.style.opacity = '1';
                             target.style.transform = 'translateY(0) scale(1)';
@@ -880,7 +873,7 @@
 
         /* HOME HUB NAVIGATION TRANSLATION ROUTER */
         function goToFirstPage() {
-            closePopup(); // Ensure overlay backdrop is cleared out nicely
+            closePopup(); 
             
             const activeScreen = document.querySelector('.screen.active');
             if (activeScreen) {
@@ -974,6 +967,48 @@
             cvs.height = window.innerHeight;
         }
 
+        if (window.PointerEvent) {
+            cube.addEventListener('pointerdown', startDrag);
+        } else {
+            cube.addEventListener('mousedown', startDrag);
+            cube.addEventListener('touchstart', startDrag);
+        }
+
+        let startX = 0, currentAngle = 0, isDragging = false;
+        function startDrag(e) {
+            isDragging = true;
+            startX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+            currentAngle = angleHub;
+            if (window.PointerEvent) {
+                document.addEventListener('pointermove', doDrag);
+                document.addEventListener('pointerup', endDrag);
+            } else {
+                document.addEventListener('mousemove', doDrag);
+                document.addEventListener('mouseup', endDrag);
+                document.addEventListener('touchmove', doDrag);
+                document.addEventListener('touchend', endDrag);
+            }
+        }
+        function doDrag(e) {
+            if (!isDragging) return;
+            const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+            const deltaX = x - startX;
+            angleHub = currentAngle + (deltaX * 0.4);
+            cube.style.transform = `rotateY(${angleHub}deg)`;
+        }
+        function endDrag() {
+            isDragging = false;
+            if (window.PointerEvent) {
+                document.removeEventListener('pointermove', doDrag);
+                document.removeEventListener('pointerup', endDrag);
+            } else {
+                document.removeEventListener('mousemove', doDrag);
+                document.removeEventListener('mouseup', endDrag);
+                document.removeEventListener('touchmove', doDrag);
+                document.removeEventListener('touchend', endDrag);
+            }
+        }
+
         function initPts() {
             pts = [];
             for(let i=0; i<45; i++) {
@@ -1012,10 +1047,10 @@
             
             const innerCvs = document.getElementById('cardBgCanvas');
             if(innerCvs) {
-                innerCvs.width = 390; innerCvs.height = 650;
+                innerCvs.width = 430; innerCvs.height = 720;
                 const innerCtx = innerCvs.getContext('2d');
                 innerCtx.fillStyle = 'rgba(255,255,255,0.015)';
-                innerCtx.fillRect(0,0,390,650);
+                innerCtx.fillRect(0,0,430,720);
             }
         };
     </script>

@@ -151,7 +151,8 @@
             justify-content: center;
         }
         
-        .screen:not(#screen7) .btn-group {
+        /* Layout formatting for screens */
+        .screen:not(#screen7):not(#screen8) .btn-group {
             flex-direction: row;
         }
 
@@ -196,7 +197,7 @@
             box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
         }
 
-        /* Interactive Dynamic Transform Button Style */
+        /* Attractive Multi-State Activation Button Layout */
         .btn-reactive {
             background: rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.85);
@@ -208,7 +209,7 @@
             color: #fff;
             transform: scale(1.02);
         }
-        /* Activated State Styling */
+        /* Activated Active Mode Styles */
         .btn-reactive.activated {
             background: linear-gradient(45deg, #ff007f, #7928ca);
             color: #ffffff;
@@ -292,7 +293,7 @@
             align-items: center;
         }
 
-        /* 3D Spacing Formats */
+        /* 3D Spacing Positions */
         .f1 { transform: rotateY(0deg) translateZ(190px); }
         .f2 { transform: rotateY(51.43deg) translateZ(190px); }
         .f3 { transform: rotateY(102.86deg) translateZ(190px); }
@@ -301,7 +302,7 @@
         .f6 { transform: rotateY(257.14deg) translateZ(190px); }
         .f7 { transform: rotateY(308.57deg) translateZ(190px); }
 
-        /* Screen 7 Layout - No Scroll / Fixed Layout */
+        /* Screen 7 & 8 Native Static Container Layout */
         .static-showcase-container {
             width: 100%;
             display: flex;
@@ -309,11 +310,11 @@
             align-items: center;
         }
 
-        /* Enlarged Cake Room Box Element */
+        /* Large Dynamic Cake Room Box */
         .cake-room-container {
             position: relative;
             width: 100%;
-            min-height: 250px; /* Made the box significantly bigger */
+            min-height: 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -353,10 +354,10 @@
             transform: scale(1.05);
         }
 
-        /* Cake Graphics Art */
+        /* Cake Graphics Art Layout */
         .romantic-cake {
             position: relative;
-            width: 160px; /* Scaled up cake */
+            width: 160px;
             height: 95px;
             margin-top: 50px;
         }
@@ -388,7 +389,7 @@
             box-shadow: 0 5px 12px rgba(0,0,0,0.3);
         }
 
-        /* Candle Flame Elements */
+        /* Candle Lighting Graphics */
         .cake-candle {
             position: absolute;
             bottom: 67px;
@@ -449,7 +450,7 @@
             text-shadow: 0 0 12px rgba(255, 207, 239, 0.6);
         }
 
-        /* 3D Web Floating Balloons Design */
+        /* 3D Web Floating Background Balloons */
         .web-3d-balloon {
             position: absolute;
             bottom: -150px;
@@ -486,7 +487,7 @@
             100% { transform: translateY(-115vh) rotate(15deg); opacity: 0; }
         }
 
-        /* Dynamic Sticker Styles */
+        /* Falling Sticker Rain Animations */
         .falling-sticker {
             position: absolute;
             top: -60px;
@@ -502,7 +503,7 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Surprise Popup Window */
+        /* Surprise Modal Layout */
         .custom-popup-overlay {
             position: fixed;
             top: 0;
@@ -555,7 +556,7 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>💥❣️</span><span>✨</span></div>
+                <div class="emoji-row"><span>❣️❣️💔</span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -663,7 +664,19 @@
                 </div>
                 
                 <div class="btn-group">
-                    <button class="btn btn-finale" onclick="openPopup()">Tap For One More Surprise 🎁</button>
+                    <button class="btn btn-finale" onclick="nextScreen(8)">Tap For One More Surprise 🎁</button>
+                </div>
+            </div>
+
+            <div id="screen8" class="screen">
+                <span class="cute-sticker">🥳💥</span>
+                <h1>Ultimate Surprise Layer</h1>
+                <p>You have unlocked the final hidden segment of your birthday sequence! Click the button below to fully activate your birthday energy matrix! ✨</p>
+                
+                <div class="btn-group">
+                    <button class="btn btn-yes" onclick="openPopup()" style="margin-bottom: 5px;">
+                        Open Gift Box 🎁
+                    </button>
                     <button id="reactiveCelebrationBtn" class="btn btn-reactive" onclick="activateCelebrationState()">
                         Happy Birthday Again ✨
                     </button>
@@ -681,7 +694,7 @@
     </div>
 
     <script>
-        /* 3D CAROUSEL HUB CONFIGURATION */
+        /* 3D CAROUSEL CONTROLS ENGINE */
         let angleHub = 0;
         const cube = document.getElementById('cube');
         function turnCube(dir) {
@@ -713,11 +726,10 @@
         function activateCelebrationState() {
             const btn = document.getElementById('reactiveCelebrationBtn');
             
-            // Apply attractive activated class styles
             btn.classList.add('activated');
             btn.innerHTML = "Activated! 🥳🎉";
             
-            // Unleash extra dense explosion of falling stickers instantly
+            // Generate dense explosion of particle sticker showers
             for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
                     spawnSingleStickerElement();

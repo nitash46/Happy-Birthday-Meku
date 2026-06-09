@@ -494,19 +494,20 @@
             100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Shockwave Explosion Particles */
+        /* Shockwave Explosion Particles - UPDATED: Slowed down with cubic ease out */
         .bomb-particle {
             position: fixed;
             z-index: 9999;
             font-size: 2.5rem;
             user-select: none;
             pointer-events: none;
-            animation: bombBlastEffect 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            animation: bombBlastEffect 2.2s cubic-bezier(0.1, 0.4, 0.2, 1) forwards;
         }
 
         @keyframes bombBlastEffect {
             0% { transform: translate(0, 0) scale(0.3); opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)) scale(1.2) rotate(var(--r)); opacity: 0; }
+            40% { opacity: 0.95; }
+            100% { transform: translate(var(--x), var(--y)) scale(1.1) rotate(var(--r)); opacity: 0; }
         }
 
         @keyframes cardPopUp {
@@ -677,7 +678,6 @@
         const stickerPool = [
             '🎉','✨','🎂','👑','🌸','🥰','🥳','🎈',
             '⚽','🔴','💎','🌟','🎁','🌹',
-            
         ];
 
         /* EXPLOSION BOMB SHOCKWAVE SYSTEM */
@@ -695,6 +695,7 @@
             }
         }
 
+        /* UPDATED: Particles move slower, drift gracefully, and float slightly upwards */
         function createExplodingBombParticle(originX, originY) {
             const particle = document.createElement('div');
             particle.classList.add('bomb-particle');
@@ -703,17 +704,20 @@
             particle.style.top = `${originY}px`;
             
             const angle = Math.random() * Math.PI * 2;
-            const distance = Math.random() * 220 + 80; 
+            // Lowered max distance from 220 to 120 for a more gentle explosion spread
+            const distance = Math.random() * 90 + 30; 
             const destinationX = Math.cos(angle) * distance;
-            const destinationY = Math.sin(angle) * distance + (Math.random() * 30); 
-            const randomRotation = Math.random() * 720 - 360;
+            // Subtracted additional pixels to naturally carry the explosion layout upwards
+            const destinationY = Math.sin(angle) * distance - (Math.random() * 45 + 15); 
+            const randomRotation = Math.random() * 360 - 180;
             
             particle.style.setProperty('--x', `${destinationX}px`);
             particle.style.setProperty('--y', `${destinationY}px`);
             particle.style.setProperty('--r', `${randomRotation}deg`);
             
             document.body.appendChild(particle);
-            setTimeout(() => { particle.remove(); }, 900);
+            // Particle stays active on viewport longer to accommodate slow animation speed
+            setTimeout(() => { particle.remove(); }, 2200);
         }
 
         /* SAFE DISPLAY SCREEN SWAPPER ENGINE */
@@ -736,7 +740,6 @@
                         }
                         
                         targetScreen.style.display = 'flex';
-                        // Force layout recalculation
                         targetScreen.offsetHeight; 
                         targetScreen.classList.add('active');
                         targetScreen.style.opacity = '1';

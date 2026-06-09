@@ -151,7 +151,6 @@
             justify-content: center;
         }
         
-        /* Layout formatting for screens */
         .screen:not(#screen7):not(#screen8) .btn-group {
             flex-direction: row;
         }
@@ -197,30 +196,44 @@
             box-shadow: 0 12px 25px rgba(0, 229, 255, 0.5);
         }
 
-        /* Attractive Multi-State Activation Button Layout */
+        /* Interactive Celebration Multi-State Activation Button Layout */
         .btn-reactive {
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(45deg, #fe5196, #f77062);
+            color: #ffffff;
             width: 100%;
+            box-shadow: 0 6px 20px rgba(254, 81, 150, 0.3);
         }
         .btn-reactive:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            transform: scale(1.02);
+            transform: scale(1.03) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(254, 81, 150, 0.5);
         }
-        /* Activated Active Mode Styles */
+        
+        /* Activated State Design Modifier */
         .btn-reactive.activated {
-            background: linear-gradient(45deg, #ff007f, #7928ca);
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.6), 0 0 40px rgba(121, 40, 202, 0.4);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6), 0 0 40px rgba(79, 172, 254, 0.4);
             animation: pulseGlow 1.5s infinite alternate;
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 0, 127, 0.5); }
-            100% { transform: scale(1.04); box-shadow: 0 0 30px rgba(255, 0, 127, 0.8), 0 0 15px rgba(0, 229, 255, 0.4); }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.04); box-shadow: 0 0 25px rgba(0, 242, 254, 0.8), 0 0 15px rgba(255, 64, 129, 0.4); }
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.85rem;
+            padding: 10px 15px;
+            max-width: 180px;
+            margin: 10px auto 0 auto;
+        }
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
         }
 
         /* 3D Polaroids Carousel Hub */
@@ -302,7 +315,7 @@
         .f6 { transform: rotateY(257.14deg) translateZ(190px); }
         .f7 { transform: rotateY(308.57deg) translateZ(190px); }
 
-        /* Screen 7 & 8 Native Static Container Layout */
+        /* Screen 7 & 8 Native Container Layout */
         .static-showcase-container {
             width: 100%;
             display: flex;
@@ -310,16 +323,16 @@
             align-items: center;
         }
 
-        /* Large Dynamic Cake Room Box */
+        /* Cake Room Box Layout */
         .cake-room-container {
             position: relative;
             width: 100%;
-            min-height: 250px;
+            min-height: 230px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            padding-bottom: 30px;
+            padding-bottom: 25px;
             border-radius: 24px;
             transition: all 0.6s ease;
             margin: 15px 0 20px 0;
@@ -354,7 +367,7 @@
             transform: scale(1.05);
         }
 
-        /* Cake Graphics Art Layout */
+        /* Cake Graphic Illustration Layout */
         .romantic-cake {
             position: relative;
             width: 160px;
@@ -389,7 +402,7 @@
             box-shadow: 0 5px 12px rgba(0,0,0,0.3);
         }
 
-        /* Candle Lighting Graphics */
+        /* Candle Lighting Animations */
         .cake-candle {
             position: absolute;
             bottom: 67px;
@@ -503,37 +516,6 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Surprise Modal Layout */
-        .custom-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 0, 25, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-        .custom-popup-overlay.open { opacity: 1; visibility: visible; }
-        
-        .popup-modal-content {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px 24px;
-            border-radius: 24px;
-            width: 85%;
-            max-width: 340px;
-            text-align: center;
-        }
-
         @keyframes cardPopUp {
             0% { transform: scale(0.85); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
@@ -556,7 +538,7 @@
         <div class="card-content">
             
             <div id="screen1" class="screen active">
-                <div class="emoji-row"><span>❣️❣️💔</span><span>✨</span></div>
+                <div class="emoji-row"><span>🖖👌</span></span><span>✨</span></div>
                 <h1>Hello there Meku! lovely ❣️</h1>
                 <p>do you want to see your gift?</p>
                 <div class="btn-group">
@@ -669,27 +651,18 @@
             </div>
 
             <div id="screen8" class="screen">
-                <span class="cute-sticker">🥳💥</span>
-                <h1>Ultimate Surprise Layer</h1>
-                <p>You have unlocked the final hidden segment of your birthday sequence! Click the button below to fully activate your birthday energy matrix! ✨</p>
+                <span class="cute-sticker">✨🎂💖</span>
+                <h1 style="font-size: 1.9rem; margin-bottom: 10px;">Happy Birthday Meku!</h1>
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #ffd6f3;">You are absolutely amazing!</p>
                 
                 <div class="btn-group">
-                    <button class="btn btn-yes" onclick="openPopup()" style="margin-bottom: 5px;">
-                        Open Gift Box 🎁
-                    </button>
                     <button id="reactiveCelebrationBtn" class="btn btn-reactive" onclick="activateCelebrationState()">
-                        Happy Birthday Again ✨
+                        Happy Birthday Again Beautiful ✨
                     </button>
+                    <button class="btn btn-back" onclick="nextScreen(1)">⬅️ Back to Home</button>
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <div class="custom-popup-overlay" id="surprisePopup" onclick="closePopup()">
-        <div class="popup-modal-content" onclick="event.stopPropagation()">
-            <h2 style="color: #fff; font-size: 1.6rem; margin-bottom: 15px;">Happy Birthday Meku! ✨🎂💖</h2>
-            <p style="font-size: 0.95rem; margin-bottom: 0; color: #ffd6f3;">You are absolutely amazing!</p>
         </div>
     </div>
 
@@ -730,10 +703,10 @@
             btn.innerHTML = "Activated! 🥳🎉";
             
             // Generate dense explosion of particle sticker showers
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 35; i++) {
                 setTimeout(() => {
                     spawnSingleStickerElement();
-                }, i * 60);
+                }, i * 50);
             }
         }
 
@@ -747,6 +720,12 @@
                     active.classList.remove('active');
                     const target = document.getElementById('screen' + num);
                     if(target) {
+                        // Reset button if returning to home
+                        if(num === 1) {
+                            const btn = document.getElementById('reactiveCelebrationBtn');
+                            btn.classList.remove('activated');
+                            btn.innerHTML = "Happy Birthday Again Beautiful ✨";
+                        }
                         target.classList.add('active');
                         setTimeout(() => {
                             target.style.opacity = '1';
@@ -756,9 +735,6 @@
                 }, 400);
             }
         }
-
-        function openPopup() { document.getElementById('surprisePopup').classList.add('open'); }
-        function closePopup() { document.getElementById('surprisePopup').classList.remove('open'); }
 
         /* 15 MOVING 3D BALLOONS BACKGROUND GENERATOR */
         const balloonColors = ['#ff4081', '#00e5ff', '#bca3ff', '#ff758c', '#ffea00', '#ff5722', '#4caf50'];
